@@ -1,9 +1,12 @@
 package PokeZoo.bbdd.pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Food {
+public class Food implements Serializable {
+
+	private static final long serialVersionUID = -5466144742054535258L;
 
 	// Primary key
 	private int idFood = 0;
@@ -66,6 +69,10 @@ public class Food {
 
 	public void setCaretaker(ArrayList<Caretaker> caretaker) {
 		this.caretaker = caretaker;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
