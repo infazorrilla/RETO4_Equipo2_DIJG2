@@ -11,8 +11,8 @@ public class Food {
 	// Atrib
 	private int quantity = 0;
 	private int dailyConsume = 0;
-	private String name = null;
-	private String description = null;
+	private String nameFo = null;
+	private String descriptionFo = null;
 
 	// link food with pokemon
 	// private Pokemon pokemon = null;
@@ -44,20 +44,20 @@ public class Food {
 		this.dailyConsume = dailyConsume;
 	}
 
-	public String getName() {
-		return name;
+	public String getNameFo() {
+		return nameFo;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameFo(String nameFo) {
+		this.nameFo = nameFo;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescriptionFo() {
+		return descriptionFo;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescriptionFo(String descriptionFo) {
+		this.descriptionFo = descriptionFo;
 	}
 
 	public ArrayList<Caretaker> getCaretaker() {
@@ -70,7 +70,7 @@ public class Food {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(caretaker, dailyConsume, description, idFood, name, quantity);
+		return Objects.hash(caretaker, dailyConsume, descriptionFo, idFood, nameFo, quantity);
 	}
 
 	@Override
@@ -83,14 +83,14 @@ public class Food {
 			return false;
 		Food other = (Food) obj;
 		return Objects.equals(caretaker, other.caretaker) && dailyConsume == other.dailyConsume
-				&& Objects.equals(description, other.description) && idFood == other.idFood
-				&& Objects.equals(name, other.name) && quantity == other.quantity;
+				&& Objects.equals(descriptionFo, other.descriptionFo) && idFood == other.idFood
+				&& Objects.equals(nameFo, other.nameFo) && quantity == other.quantity;
 	}
 
 	@Override
 	public String toString() {
-		return "Food [idFood=" + idFood + ", quantity=" + quantity + ", dailyConsume=" + dailyConsume + ", name=" + name
-				+ ", description=" + description + ", caretaker=" + caretaker + "]";
+		return "Food [idFood=" + idFood + ", quantity=" + quantity + ", dailyConsume=" + dailyConsume + ", nameFo="
+				+ nameFo + ", descriptionFo=" + descriptionFo + ", caretaker=" + caretaker + "]";
 	}
 
 }
