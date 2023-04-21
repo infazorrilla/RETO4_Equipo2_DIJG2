@@ -21,7 +21,7 @@ public class Pokemon implements Serializable {
 	private String descriptionPo = null;
 
 	// link Pokemon with Food
-	private ArrayList<Food> food = null;
+	private Food food = null;
 
 	// link Pokemon with Enclosure
 	private ArrayList<Enclosure> enclosure = null;
@@ -82,11 +82,11 @@ public class Pokemon implements Serializable {
 		this.descriptionPo = descriptionPo;
 	}
 
-	public ArrayList<Food> getFood() {
+	public Food getFood() {
 		return food;
 	}
 
-	public void setFood(ArrayList<Food> food) {
+	public void setFood(Food food) {
 		this.food = food;
 	}
 
