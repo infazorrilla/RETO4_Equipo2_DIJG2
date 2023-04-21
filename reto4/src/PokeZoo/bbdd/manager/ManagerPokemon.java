@@ -1,18 +1,79 @@
 package PokeZoo.bbdd.manager;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.login.AccountNotFoundException;
 
 import PokeZoo.bbdd.pojo.Pokemon;
+import PokeZoo.bbdd.utils.DBUtils;
 
 public class ManagerPokemon implements managerGeneral<Pokemon>{
 
 	@Override
 	public List<Pokemon> selectAll() throws SQLException, AccountNotFoundException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pokemon> ret = null;
+
+		String sql = "select * from Pokemon";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret) {
+					ret = new ArrayList<Pokemon>();
+				}
+
+				Pokemon poke = new Pokemon();
+
+				// añadir datos del Pokemon aqui
+				poke.setIdPokemon(resultSet.getInt("idPokemon"));
+				poke.setFood(null);
+				poke.setNamePo(resultSet.getString("namePo"));
+				poke.setTypeP(resultSet.getString("typeP"));
+
+				ret.add(poke);
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+		return ret;
 	}
 
 	@Override
