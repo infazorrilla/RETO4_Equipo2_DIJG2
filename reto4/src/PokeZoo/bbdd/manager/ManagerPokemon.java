@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.security.auth.login.AccountNotFoundException;
 
 import PokeZoo.bbdd.pojo.Pokemon;
@@ -17,7 +15,7 @@ import PokeZoo.bbdd.utils.DBUtils;
 public class ManagerPokemon implements managerGeneral<Pokemon> {
 
 	@Override
-	public List<Pokemon> selectAll() throws SQLException, AccountNotFoundException, Exception {
+	public ArrayList<Pokemon> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Pokemon> ret = null;
 
 		String sql = "select * from Pokemon";

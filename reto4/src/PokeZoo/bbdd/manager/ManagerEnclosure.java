@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.security.auth.login.AccountNotFoundException;
 
 import PokeZoo.bbdd.pojo.Enclosure;
@@ -17,7 +15,7 @@ import PokeZoo.bbdd.utils.DBUtils;
 public class ManagerEnclosure implements managerGeneral<Enclosure>{
 
 	@Override
-	public List<Enclosure> selectAll() throws SQLException, AccountNotFoundException, Exception {
+	public ArrayList<Enclosure> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Enclosure> ret = null;
 
 		String sql = "select * from Enclosure";

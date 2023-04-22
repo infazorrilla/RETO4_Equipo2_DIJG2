@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.security.auth.login.AccountNotFoundException;
 
 import PokeZoo.bbdd.pojo.Food;
@@ -17,7 +15,7 @@ import PokeZoo.bbdd.utils.DBUtils;
 public class ManagerFood implements managerGeneral<Food>{
 
 	@Override
-	public List<Food> selectAll() throws SQLException, AccountNotFoundException, Exception {
+	public ArrayList<Food> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Food> ret = null;
 
 		String sql = "select * from Food";
@@ -74,6 +72,61 @@ public class ManagerFood implements managerGeneral<Food>{
 				// Nothing
 			}
 		}
+		return ret;
+	}
+	
+	public Food selectFoodById(int id) throws SQLException, AccountNotFoundException, Exception {
+		Food ret = null;
+		
+		String sql = "SELECT * FROM Food WHERE idFood = '" + id + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				if (null == ret) {
+					ret = new Food();
+				}
+				// añadir datos del Pokemon aqui
+				ret.setIdFood(resultSet.getInt("idFood"));
+				ret.setQuantityFo(resultSet.getInt("quantityFo"));
+				ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+				ret.setNameFo(resultSet.getString("nameFo"));
+				ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		
 		return ret;
 	}
 

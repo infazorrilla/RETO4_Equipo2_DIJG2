@@ -1,8 +1,7 @@
 package PokeZoo.bbdd.manager;
 
 import java.sql.SQLException;
-import java.util.List;
-
+import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
 /**
@@ -18,7 +17,7 @@ public interface managerGeneral <T>{
 	 * @throws NotFoundException
 	 * @throws Exception
 	 */
-	public List <T> selectAll () throws SQLException, AccountNotFoundException, Exception;
+	public ArrayList <T> selectAll () throws SQLException, AccountNotFoundException, Exception;
 	
 	/**
 	 * Insert a new T on Data Base
