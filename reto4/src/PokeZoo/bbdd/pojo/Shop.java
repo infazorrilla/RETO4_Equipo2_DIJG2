@@ -12,4 +12,24 @@ public class Shop implements Serializable{
 	private int capacityS = 0;
 	//private Admin admin = null;
 	
+	// Getters ans Setters
+	public int getIdShop() {
+		return idShop;
+	}
+	public void setIdShop(int idShop) {
+		this.idShop = idShop;
+	}
+	public String getNameS() {
+		return nameS;
+	}
+	public void setNameS(String nameS) {
+		this.nameS = nameS;
+	}
+	public int getCapacityS() {
+		return capacityS;
+	}
+	public void setCapacityS(int capacityS) {
+		this.capacityS = capacityS;
+	}
+	
 }

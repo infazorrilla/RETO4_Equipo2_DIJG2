@@ -12,8 +12,8 @@ public class Food implements Serializable {
 	private int idFood = 0;
 
 	// Atrib
-	private int quantity = 0;
-	private int dailyConsume = 0;
+	private int quantityFo = 0;
+	private int dailyConsumeFo = 0;
 	private String nameFo = null;
 	private String descriptionFo = null;
 
@@ -31,20 +31,20 @@ public class Food implements Serializable {
 		this.idFood = idFood;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public int getQuantityFo() {
+		return quantityFo;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setQuantityFo(int quantity) {
+		this.quantityFo = quantity;
 	}
 
-	public int getDailyConsume() {
-		return dailyConsume;
+	public int getDailyConsumeFo() {
+		return dailyConsumeFo;
 	}
 
-	public void setDailyConsume(int dailyConsume) {
-		this.dailyConsume = dailyConsume;
+	public void setDailyConsumeFo(int dailyConsume) {
+		this.dailyConsumeFo = dailyConsume;
 	}
 
 	public String getNameFo() {
@@ -77,7 +77,7 @@ public class Food implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(caretaker, dailyConsume, descriptionFo, idFood, nameFo, quantity);
+		return Objects.hash(caretaker, dailyConsumeFo, descriptionFo, idFood, nameFo, quantityFo);
 	}
 
 	@Override
@@ -89,14 +89,14 @@ public class Food implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Food other = (Food) obj;
-		return Objects.equals(caretaker, other.caretaker) && dailyConsume == other.dailyConsume
+		return Objects.equals(caretaker, other.caretaker) && dailyConsumeFo == other.dailyConsumeFo
 				&& Objects.equals(descriptionFo, other.descriptionFo) && idFood == other.idFood
-				&& Objects.equals(nameFo, other.nameFo) && quantity == other.quantity;
+				&& Objects.equals(nameFo, other.nameFo) && quantityFo == other.quantityFo;
 	}
 
 	@Override
 	public String toString() {
-		return "Food [idFood=" + idFood + ", quantity=" + quantity + ", dailyConsume=" + dailyConsume + ", nameFo="
+		return "Food [idFood=" + idFood + ", quantity=" + quantityFo + ", dailyConsume=" + dailyConsumeFo + ", nameFo="
 				+ nameFo + ", descriptionFo=" + descriptionFo + ", caretaker=" + caretaker + "]";
 	}
 

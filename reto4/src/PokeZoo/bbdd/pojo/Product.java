@@ -1,6 +1,7 @@
 package PokeZoo.bbdd.pojo;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Objects;
 
 public class Product implements Serializable {
@@ -13,11 +14,14 @@ public class Product implements Serializable {
 	// attributes
 	private String namePr = "";
 	private String descriptionPr = "";
+	private Blob photoPr = null;
 	private double valuePr = 0;
+	private int quantityPr = 0;
 
 	// link Product with shop
 	private Shop shop = null;
 
+	// Getters and Setters
 	public int getIdProduct() {
 		return idProduct;
 	}
@@ -42,12 +46,28 @@ public class Product implements Serializable {
 		this.descriptionPr = descriptionPr;
 	}
 
+	public Blob getPhotoPr() {
+		return photoPr;
+	}
+
+	public void setPhotoPr(Blob photoPr) {
+		this.photoPr = photoPr;
+	}
+
 	public double getValuePr() {
 		return valuePr;
 	}
 
 	public void setValuePr(double valuePr) {
 		this.valuePr = valuePr;
+	}
+
+	public int getQuantityPr() {
+		return quantityPr;
+	}
+
+	public void setQuantityPr(int quantityPr) {
+		this.quantityPr = quantityPr;
 	}
 
 	public Shop getShop() {
@@ -62,11 +82,13 @@ public class Product implements Serializable {
 		return serialVersionUID;
 	}
 
+	// HashCode method
 	@Override
 	public int hashCode() {
-		return Objects.hash(descriptionPr, idProduct, namePr, shop, valuePr);
+		return Objects.hash(descriptionPr, idProduct, namePr, photoPr, quantityPr, shop, valuePr);
 	}
 
+	// Equals method
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -77,14 +99,16 @@ public class Product implements Serializable {
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(descriptionPr, other.descriptionPr) && idProduct == other.idProduct
-				&& Objects.equals(namePr, other.namePr) && Objects.equals(shop, other.shop)
+				&& Objects.equals(namePr, other.namePr) && Objects.equals(photoPr, other.photoPr)
+				&& quantityPr == other.quantityPr && Objects.equals(shop, other.shop)
 				&& Double.doubleToLongBits(valuePr) == Double.doubleToLongBits(other.valuePr);
 	}
 
+	// ToString method
 	@Override
 	public String toString() {
 		return "Product [idProduct=" + idProduct + ", namePr=" + namePr + ", descriptionPr=" + descriptionPr
-				+ ", valuePr=" + valuePr + ", shop=" + shop + "]";
+				+ ", photoPr=" + photoPr + ", valuePr=" + valuePr + ", quantityPr=" + quantityPr + ", shop=" + shop
+				+ "]";
 	}
-
 }

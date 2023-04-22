@@ -3,7 +3,7 @@ package PokeZoo.bbdd.pojo;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Worker implements Serializable{
+public abstract class Worker implements Serializable{
 
 	private static final long serialVersionUID = 7668215370937135696L;
 

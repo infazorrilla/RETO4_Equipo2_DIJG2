@@ -2,6 +2,7 @@ package PokeZoo.bbdd.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -83,7 +84,7 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 	public void insert(Pokemon t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-		
+
 		try {
 			Class.forName(DBUtils.DRIVER);
 
@@ -105,27 +106,90 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 	}
 
 	@Override
 	public void update(Pokemon t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
+		try {
+			Class.forName(DBUtils.DRIVER);
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			String sql = "UPDATE Pokemon SET codFood = ?, namePo = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ? WHERE idPokemon = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, t.getFood().getIdFood());
+			preparedStatement.setString(2, t.getNamePo());
+			preparedStatement.setString(3, t.getTypeP());
+			preparedStatement.setString(4, t.getTypeS());
+			preparedStatement.setString(5, t.getDescriptionPo());
+			preparedStatement.setInt(6, t.getNumPokedex());
+			preparedStatement.setInt(7, t.getIdPokemon());
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			};
+		}
 	}
 
 	@Override
 	public void delete(Pokemon t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			String sql = "DELETE FROM Pokemon WHERE idPokemon = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, t.getIdPokemon());
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+				// Nothing
+			};
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			};
+		}
 	}
-
 }

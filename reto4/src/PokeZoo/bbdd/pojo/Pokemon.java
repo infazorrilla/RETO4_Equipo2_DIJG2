@@ -5,6 +5,9 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Defines a Pokemon object from the Pokemon table in the data base.
+ */
 public class Pokemon implements Serializable {
 
 	private static final long serialVersionUID = 4268344699422278647L;
