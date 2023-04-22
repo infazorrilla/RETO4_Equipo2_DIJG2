@@ -1,6 +1,7 @@
 package PokeZoo.bbdd.pojo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Shop implements Serializable{
 
@@ -8,8 +9,8 @@ public class Shop implements Serializable{
 
 	// attributes
 	private int idShop = 0;
-	private String nameS = "";
-	private int capacityS = 0;
+	private String nameSh = "";
+	private int capacitySh = 0;
 	//private Admin admin = null;
 	
 	// Getters ans Setters
@@ -19,17 +20,39 @@ public class Shop implements Serializable{
 	public void setIdShop(int idShop) {
 		this.idShop = idShop;
 	}
-	public String getNameS() {
-		return nameS;
+	public String getNameSh() {
+		return nameSh;
 	}
-	public void setNameS(String nameS) {
-		this.nameS = nameS;
+	public void setNameSh(String nameS) {
+		this.nameSh = nameS;
 	}
-	public int getCapacityS() {
-		return capacityS;
+	public int getCapacitySh() {
+		return capacitySh;
 	}
-	public void setCapacityS(int capacityS) {
-		this.capacityS = capacityS;
+	public void setCapacitySh(int capacityS) {
+		this.capacitySh = capacityS;
+	}
+	
+	@Override
+	public String toString() {
+		return "Shop [idShop=" + idShop + ", nameSh=" + nameSh + ", capacitySh=" + capacitySh + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(capacitySh, idShop, nameSh);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Shop other = (Shop) obj;
+		return capacitySh == other.capacitySh && idShop == other.idShop && Objects.equals(nameSh, other.nameSh);
 	}
 	
 }
