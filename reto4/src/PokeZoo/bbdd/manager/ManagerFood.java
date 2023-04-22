@@ -125,8 +125,7 @@ public class ManagerFood implements managerGeneral<Food>{
 			} catch (Exception e) {
 				// Nothing
 			}
-		}
-		
+		}		
 		return ret;
 	}
 

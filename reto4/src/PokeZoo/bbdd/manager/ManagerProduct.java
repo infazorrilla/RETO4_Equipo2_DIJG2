@@ -43,7 +43,9 @@ public class ManagerProduct implements managerGeneral<Product> {
 				product.setIdProduct(resultSet.getInt("idProduct"));
 				product.setNamePr(resultSet.getString("namePr"));
 				product.setDescriptionPr(resultSet.getString("descripcionPr"));
+				product.setPhotoPr(resultSet.getBlob("photoPr"));
 				product.setValuePr(resultSet.getDouble("valuePr"));
+				product.setQuantityPr(resultSet.getInt("quantityPr"));
 
 				ret.add(product);
 			}
@@ -73,6 +75,63 @@ public class ManagerProduct implements managerGeneral<Product> {
 		}
 		return ret;
 	}
+	
+	public Product selectProductById(int id) {
+		Product ret = null;
+		
+		String sql = "SELECT * FROM Product WHERE idProduct = '" + id + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				if (null == ret) {
+					ret = new Product();
+				}
+				// añadir datos del Pokemon aqui
+				ret.setIdProduct(resultSet.getInt("idProduct"));
+				ret.setNamePr(resultSet.getString("namePr"));
+				ret.setDescriptionPr(resultSet.getString("descriptionPr"));
+				ret.setPhotoPr(resultSet.getBlob("photoPr"));
+				ret.setValuePr(resultSet.getDouble("valuePr"));
+				ret.setQuantityPr(resultSet.getInt("quantityPr"));
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		
+		return ret;
+	}
+
 
 	@Override
 	public void insert(Product t) throws SQLException, Exception {
@@ -184,5 +243,4 @@ public class ManagerProduct implements managerGeneral<Product> {
 			};
 		}
 	}
-
 }
