@@ -77,6 +77,64 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 		}
 		return ret;
 	}
+	
+	public Pokemon selectPokemonById(int id) {
+		Pokemon ret = null;
+		String sql = "select * from Pokemon WHERE idPokemon = " + id;
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				if (null == ret) {
+					ret = new Pokemon();
+				}
+				// añadir datos del Pokemon aqui
+				ret.setIdPokemon(resultSet.getInt("idPokemon"));				
+				ret.setNamePo(resultSet.getString("namePo"));
+				ret.setTypeP(resultSet.getString("typeP"));
+				ret.setTypeS(resultSet.getString("typeS"));
+				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
+				ret.setNumPokedex(resultSet.getInt("numPokedex"));
+				ret.setPhotopo(resultSet.getBlob("photoPo"));
+				ret.setFood(null);
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+		return ret;
+	}
 
 	@Override
 	public void insert(Pokemon t) throws SQLException, Exception {

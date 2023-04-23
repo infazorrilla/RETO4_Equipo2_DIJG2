@@ -1,22 +1,20 @@
 package PokeZoo.bbdd.pojo;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class Caretaker extends Employee{
+public class Employee extends Worker{
 
-	private static final long serialVersionUID = -6508944650395536291L;
+	private static final long serialVersionUID = -1438995998386231744L;
 
-	//link caretaker with food
-	private ArrayList<Food> food = null;
+	private int idEmployee = 0;
 
 	// Getters and Setters
-	public ArrayList<Food> getFood() {
-		return food;
+	public int getIdEmployee() {
+		return idEmployee;
 	}
 
-	public void setFood(ArrayList<Food> food) {
-		this.food = food;
+	public void setIdEmployee(int idEmployee) {
+		this.idEmployee = idEmployee;
 	}
 
 	public static long getSerialversionuid() {
@@ -27,7 +25,7 @@ public class Caretaker extends Employee{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(food);
+		result = prime * result + Objects.hash(idEmployee);
 		return result;
 	}
 
@@ -39,12 +37,13 @@ public class Caretaker extends Employee{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Caretaker other = (Caretaker) obj;
-		return Objects.equals(food, other.food);
+		Employee other = (Employee) obj;
+		return idEmployee == other.idEmployee;
 	}
 
 	@Override
 	public String toString() {
-		return "Caretaker [food=" + food + "]";
+		return "Employee [idEmployee=" + idEmployee + "]";
 	}
+	
 }

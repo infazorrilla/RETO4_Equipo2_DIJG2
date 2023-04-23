@@ -12,6 +12,8 @@ public abstract class Worker implements Serializable{
 	private String nameW = "";
 	private String surnameW = "";
 	private String phoneW = "";
+	
+	// 
 	private User user = null;
 	
 	// Getters and Setters	
