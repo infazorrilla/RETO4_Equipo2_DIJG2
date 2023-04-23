@@ -75,10 +75,10 @@ public class ManagerProduct implements managerGeneral<Product> {
 		}
 		return ret;
 	}
-	
+
 	public Product selectProductById(int id) {
 		Product ret = null;
-		
+
 		String sql = "SELECT * FROM Product WHERE idProduct = '" + id + "'";
 
 		Connection connection = null;
@@ -128,25 +128,32 @@ public class ManagerProduct implements managerGeneral<Product> {
 				// Nothing
 			}
 		}
-		
+
 		return ret;
 	}
-
 
 	@Override
 	public void insert(Product t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
 
+		String sql = "";
 		try {
 			Class.forName(DBUtils.DRIVER);
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
 			statement = connection.createStatement();
-			String sql = "INSERT INTO Product (namePr, descriptionPr, photoPr, valuePr, quantityPr, idShop) "
-					+ "VALUES ('" + t.getNamePr() + "', '" + t.getDescriptionPr() + "', '" + t.getPhotoPr() + "'"
-					+ ", '" + t.getValuePr() + "', '" + t.getQuantityPr() + "', '" + t.getShop().getIdShop() + "', NULL);";
+			if (t.getIdProduct() == 0) {
+				sql = "INSERT INTO Product (namePr, descriptionPr, photoPr, valuePr, quantityPr, idShop) " + "VALUES ('"
+						+ t.getNamePr() + "', '" + t.getDescriptionPr() + "', '" + t.getPhotoPr() + "'" + ", '"
+						+ t.getValuePr() + "', '" + t.getQuantityPr() + "', '" + t.getShop().getIdShop() + "', NULL);";
+			} else {
+				sql = "INSERT INTO Product (idProduct, namePr, descriptionPr, photoPr, valuePr, quantityPr, idShop) "
+						+ "VALUES ('" + t.getIdProduct() + "', '" + t.getNamePr() + "', '" + t.getDescriptionPr()
+						+ "', '" + t.getPhotoPr() + "'" + ", '" + t.getValuePr() + "', '" + t.getQuantityPr() + "', '"
+						+ t.getShop().getIdShop() + "', NULL);";
+			}
 
 			statement.executeUpdate(sql);
 
@@ -205,7 +212,8 @@ public class ManagerProduct implements managerGeneral<Product> {
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
+			;
 		}
 	}
 
@@ -234,13 +242,15 @@ public class ManagerProduct implements managerGeneral<Product> {
 					preparedStatement.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
+			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
+			;
 		}
 	}
 }

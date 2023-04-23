@@ -52,14 +52,14 @@ class EnclosureTest {
 	
 	@Test
 	public void testDeleteEnclosure() {
-		Enclosure enclosureToBeDelete = new Enclosure();
+		Enclosure enclosureToDelete = new Enclosure();
 		
-		enclosureToBeDelete.setIdEnclosure(40);
-		enclosureToBeDelete.setTypeEn("prueba");
-		enclosureToBeDelete.setNumberEn(40);
+		enclosureToDelete.setIdEnclosure(40);
+		enclosureToDelete.setTypeEn("prueba");
+		enclosureToDelete.setNumberEn(40);
 		
 		try {
-			manager.delete(enclosureToBeDelete);
+			manager.delete(enclosureToDelete);
 			
 			Enclosure expectedEnclosure = manager.selectEnclosureById(40);
 			

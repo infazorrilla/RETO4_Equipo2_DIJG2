@@ -7,18 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import javax.security.auth.login.AccountNotFoundException;
 
-import PokeZoo.bbdd.pojo.Pokemon;
+import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerPokemon implements managerGeneral<Pokemon> {
+public class ManagerUser implements managerGeneral<User>{
 
 	@Override
-	public ArrayList<Pokemon> selectAll() throws SQLException, AccountNotFoundException, Exception {
-		ArrayList<Pokemon> ret = null;
+	public ArrayList<User> selectAll() throws SQLException, AccountNotFoundException, Exception {
+		ArrayList<User> ret = null;
 
-		String sql = "select * from Pokemon";
+		String sql = "SELECT * FROM User";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -34,53 +35,50 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 
 			while (resultSet.next()) {
 				if (null == ret) {
-					ret = new ArrayList<Pokemon>();
+					ret = new ArrayList<User>();
 				}
-				Pokemon poke = new Pokemon();
 
-				// añadir datos del Pokemon aqui
-				poke.setIdPokemon(resultSet.getInt("idPokemon"));
-				poke.setFood(null);
-				poke.setNamePo(resultSet.getString("namePo"));
-				poke.setTypeP(resultSet.getString("typeP"));
-				poke.setTypeS(resultSet.getString("typeS"));
-				poke.setDescriptionPo(resultSet.getString("descriptionPo"));
-				poke.setNumPokedex(resultSet.getInt("numPokedex"));
-				poke.setPhotopo(resultSet.getBlob("photoPo"));
+				User user = new User();
 
-				ret.add(poke);
+				// añadir datos de Shop aqui
+				user.setIdUser(resultSet.getInt("idUser"));
+				user.setAdmin(resultSet.getBoolean("isAdmin"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPasswd(resultSet.getString("passwd"));
+				
+				ret.add(user);
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
 		} catch (Exception e) {
 			System.out.println("Error generico - " + e.getMessage());
 		} finally {
-
 			try {
 				if (resultSet != null)
 					resultSet.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 		return ret;
 	}
 
-	public Pokemon selectPokemonById(int id) {
-		Pokemon ret = null;
-		String sql = "select * from Pokemon WHERE idPokemon = " + id;
+	public User selectUserById(int id) {
+		User ret = null;
+
+		String sql = "SELECT * FROM User WHERE idUser = " + id;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -96,48 +94,43 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 
 			if (resultSet.next()) {
 				if (null == ret) {
-					ret = new Pokemon();
+					ret = new User();
 				}
-				// añadir datos del Pokemon aqui
-				ret.setIdPokemon(resultSet.getInt("idPokemon"));
-				ret.setNamePo(resultSet.getString("namePo"));
-				ret.setTypeP(resultSet.getString("typeP"));
-				ret.setTypeS(resultSet.getString("typeS"));
-				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
-				ret.setNumPokedex(resultSet.getInt("numPokedex"));
-				ret.setPhotopo(resultSet.getBlob("photoPo"));
-				ret.setFood(null);
+				// añadir datos de Shop aqui
+				ret.setIdUser(resultSet.getInt("idUser"));
+				ret.setAdmin(resultSet.getBoolean("isAdmin"));
+				ret.setUsername(resultSet.getString("username"));
+				ret.setPasswd(resultSet.getString("passwd"));
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
 		} catch (Exception e) {
 			System.out.println("Error generico - " + e.getMessage());
 		} finally {
-
 			try {
 				if (resultSet != null)
 					resultSet.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 		return ret;
 	}
-
+	
 	@Override
-	public void insert(Pokemon t) throws SQLException, Exception {
+	public void insert(User t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
 		
@@ -149,14 +142,12 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
 			statement = connection.createStatement();
-			if(t.getIdPokemon() == 0) {
-				sql = "INSERT INTO Pokemon (codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
+			if(t.getIdUser() == 0) {
+				sql = "INSERT INTO User (isAdmin, username, passwd) "
+						+ "VALUES ('" + t.isAdmin() + "', '" + t.getUsername() + ", '" + t.getPasswd() + "');";
 			}else {
-				sql = "INSERT INTO Pokemon (idPokemon, codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
+				sql = "INSERT INTO User (idUser, isAdmin, username, passwd) "
+						+ "VALUES ('" + t.getIdUser() + "', '" + t.isAdmin() + "', '" + t.getUsername() + ", '" + t.getPasswd() + "');";
 			}
 			
 			statement.executeUpdate(sql);
@@ -181,49 +172,13 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 	}
 
 	@Override
-	public void update(Pokemon t) throws SQLException, Exception {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			Class.forName(DBUtils.DRIVER);
-			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
-
-			String sql = "UPDATE Pokemon SET codFood = ?, namePo = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ? WHERE idPokemon = ?";
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, t.getFood().getIdFood());
-			preparedStatement.setString(2, t.getNamePo());
-			preparedStatement.setString(3, t.getTypeP());
-			preparedStatement.setString(4, t.getTypeS());
-			preparedStatement.setString(5, t.getDescriptionPo());
-			preparedStatement.setInt(6, t.getNumPokedex());
-			preparedStatement.setInt(7, t.getIdPokemon());
-
-			preparedStatement.executeUpdate();
-		} catch (SQLException sqle) {
-			System.out.println("Error con la BBDD - " + sqle.getMessage());
-		} catch (Exception e) {
-			System.out.println("Error generico - " + e.getMessage());
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (Exception e) {
-				// Nothing
-			}
-			;
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-				// Nothing
-			}
-			;
-		}
+	public void update(User t) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void delete(Pokemon t) throws SQLException, Exception {
+	public void delete(User t) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -232,9 +187,9 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "DELETE FROM Pokemon WHERE idPokemon = ?";
+			String sql = "DELETE FROM User WHERE idUser = ?";
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, t.getIdPokemon());
+			preparedStatement.setInt(1, t.getIdUser());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {

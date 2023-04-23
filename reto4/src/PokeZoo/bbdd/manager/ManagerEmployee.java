@@ -7,18 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import javax.security.auth.login.AccountNotFoundException;
 
-import PokeZoo.bbdd.pojo.Enclosure;
+import PokeZoo.bbdd.pojo.Employee;
+import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerEnclosure implements managerGeneral<Enclosure> {
+public class ManagerEmployee implements managerGeneral<Employee> {
 
-	@Override 
-	public ArrayList<Enclosure> selectAll() throws SQLException, AccountNotFoundException, Exception {
-		ArrayList<Enclosure> ret = null;
+	@Override
+	public ArrayList<Employee> selectAll() throws SQLException, AccountNotFoundException, Exception {
+		ArrayList<Employee> ret = null;
 
-		String sql = "select * from Enclosure";
+		String sql = "SELECT dni, nameWo, surnameWo, phoneWo, w.idUser, isAdmin, username, passwd\r\n"
+				+ "FROM Worker AS w \r\n" + "JOIN User AS u ON w.idUser = u.idUser;";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -34,17 +37,26 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 
 			while (resultSet.next()) {
 				if (null == ret) {
-					ret = new ArrayList<Enclosure>();
+					ret = new ArrayList<Employee>();
 				}
 
-				Enclosure enclo = new Enclosure();
+				Employee employee = new Employee();
 
-				// añadir datos del Pokemon aqui
-				enclo.setIdEnclosure(resultSet.getInt("idEnclosure"));
-				enclo.setTypeEn(resultSet.getString("typeEn"));
-				enclo.setNumberEn(resultSet.getInt("numberEn"));
+				// añadir datos de Shop aqui
+				employee.setDni(resultSet.getString("dni"));
+				employee.setNameWo(resultSet.getString("nameWo"));
+				employee.setSurnameWo(resultSet.getString("surnameWo"));
+				employee.setPhoneWo(resultSet.getString("phoneWo"));
 
-				ret.add(enclo);
+				User user = new User();
+				user.setIdUser(resultSet.getInt("idUser"));
+				user.setAdmin(resultSet.getBoolean("isAdmin"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPasswd(resultSet.getString("passwd"));
+
+				employee.setUser(user);
+
+				ret.add(employee);
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -73,9 +85,11 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 		return ret;
 	}
 
-	public Enclosure selectEnclosureById(int id) {
-		Enclosure ret = null;
-		String sql = "SELECT * FROM Enclosure WHERE idEnclosure = " + id;
+	public Employee selectEmployeeByDni(String dni) {
+		Employee ret = null;
+
+		String sql = "SELECT dni, nameWo, surnameWo, phoneWo, w.idUser, isAdmin, username, passwd\r\n"
+				+ "FROM Worker AS w \r\n" + "JOIN User AS u ON w.idUser = u.idUser WHERE dni = '" + dni + ";";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -91,12 +105,21 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 
 			while (resultSet.next()) {
 				if (null == ret) {
-					ret = new Enclosure();
+					ret = new Employee();
 				}
-				// añadir datos del Pokemon aqui
-				ret.setIdEnclosure(resultSet.getInt("idEnclosure"));
-				ret.setTypeEn(resultSet.getString("typeEn"));
-				ret.setNumberEn(resultSet.getInt("numberEn"));
+				// añadir datos de Shop aqui
+				ret.setDni(resultSet.getString("dni"));
+				ret.setNameWo(resultSet.getString("nameWo"));
+				ret.setSurnameWo(resultSet.getString("surnameWo"));
+				ret.setPhoneWo(resultSet.getString("phoneWo"));
+
+				User user = new User();
+				user.setIdUser(resultSet.getInt("idUser"));
+				user.setAdmin(resultSet.getBoolean("isAdmin"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPasswd(resultSet.getString("passwd"));
+
+				ret.setUser(user);
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -126,10 +149,9 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 	}
 
 	@Override
-	public void insert(Enclosure t) throws SQLException, Exception {
+	public void insert(Employee t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-		String sql = "";
 
 		try {
 			Class.forName(DBUtils.DRIVER);
@@ -137,13 +159,9 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
 			statement = connection.createStatement();
-			if (t.getIdEnclosure() == 0) {
-				sql = "INSERT INTO Enclosure (typeEn, numberEn)" + "VALUES ('" + t.getTypeEn() + "', '"
-						+ t.getNumberEn() + "');";
-			} else {
-				sql = "INSERT INTO Enclosure (idEnclosure, typeEn, numberEn)" + "VALUES ('" + t.getIdEnclosure() +"', '" + t.getTypeEn() + "', '"
-						+ t.getNumberEn() + "');";
-			}
+
+			String sql = "INSERT INTO Worker (dni, nameWo, surnameWo, phoneWo) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
+					+ ", '" + t.getSurnameWo() + "', '" + t.getPhoneWo() + "');";
 
 			statement.executeUpdate(sql);
 		} catch (SQLException sqle) {
@@ -167,45 +185,13 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 	}
 
 	@Override
-	public void update(Enclosure t) throws SQLException, Exception {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	public void update(Employee t) throws SQLException, Exception {
+		// TODO Auto-generated method stub
 
-		try {
-			Class.forName(DBUtils.DRIVER);
-			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
-
-			String sql = "UPDATE Enclosure SET typeEn = ?, numberEn = ? WHERE idEnclosure = ?";
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, t.getTypeEn());
-			preparedStatement.setInt(2, t.getNumberEn());
-			preparedStatement.setInt(3, t.getIdEnclosure());
-
-			preparedStatement.executeUpdate();
-		} catch (SQLException sqle) {
-			System.out.println("Error con la BBDD - " + sqle.getMessage());
-		} catch (Exception e) {
-			System.out.println("Error generico - " + e.getMessage());
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (Exception e) {
-				// Nothing
-			}
-			;
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-				// Nothing
-			}
-			;
-		}
 	}
 
 	@Override
-	public void delete(Enclosure t) throws SQLException, Exception {
+	public void delete(Employee t) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -214,9 +200,9 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "DELETE FROM Enclosure WHERE idEnclosure = ?";
+			String sql = "DELETE FROM Worker WHERE dni = ?";
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, t.getIdEnclosure());
+			preparedStatement.setString(1, t.getDni());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
@@ -236,8 +222,7 @@ public class ManagerEnclosure implements managerGeneral<Enclosure> {
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			}
-			;
+			};
 		}
 	}
 }

@@ -36,7 +36,44 @@ class FoodTest {
 	}
 	
 	@Test
-	public void test2() {
-		// hmmmmm
+	public void testInsertNewFood() {
+		Food newFoodInsertTest = new Food();
+		
+		newFoodInsertTest.setIdFood(100);
+		newFoodInsertTest.setQuantityFo(500);
+		newFoodInsertTest.setDailyConsumeFo(100);
+		newFoodInsertTest.setNameFo("prueba");
+		newFoodInsertTest.setDescriptionFo("prueba");
+		
+		try {
+			manager.insert(newFoodInsertTest);
+			
+			Food expectedFood = manager.selectFoodById(100);
+			
+			assertEquals(newFoodInsertTest, expectedFood);
+		} catch (Exception e) {
+			// Nothing
+		}
+	}
+	
+	@Test
+	public void testDeleteFood() {
+		Food foodToDelete = new Food();
+		
+		foodToDelete.setIdFood(100);
+		foodToDelete.setQuantityFo(500);
+		foodToDelete.setDailyConsumeFo(100);
+		foodToDelete.setNameFo("prueba");
+		foodToDelete.setDescriptionFo("prueba");
+		
+		try {
+			manager.delete(foodToDelete);
+			
+			Food expectedFood = manager.selectFoodById(40);
+			
+			assertEquals(null, expectedFood); // selectFoodById returns null if nothing was found
+		} catch (Exception e) {
+			// Nothing
+		}
 	}
 }

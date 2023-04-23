@@ -35,8 +35,40 @@ class ShopTest {
 	}
 	
 	@Test
-	void test2() {
-		// ¯\_(ツ)_/¯
+	public void testInsertNewShop() {
+		Shop newShopInsertTest = new Shop();
+		
+		newShopInsertTest.setIdShop(100);
+		newShopInsertTest.setNameSh("prueba");
+		newShopInsertTest.setCapacitySh(100);
+		
+		try {
+			manager.insert(newShopInsertTest);
+			
+			Shop expectedShop = manager.selectShopById(100);
+			
+			assertEquals(newShopInsertTest, expectedShop);
+		} catch (Exception e) {
+			// Nothing
+		}
 	}
-
+	
+	@Test
+	public void testDeletePokemon() {
+		Shop shopToDelete = new Shop();
+		
+		shopToDelete.setIdShop(100);
+		shopToDelete.setNameSh("prueba");
+		shopToDelete.setCapacitySh(100);
+		
+		try {
+			manager.delete(shopToDelete);
+			
+			Shop expectedProduct = manager.selectShopById(100);
+			
+			assertEquals(null, expectedProduct); // selectProductById returns null if nothing was found
+		} catch (Exception e) {
+			// Nothing
+		}
+	}
 }

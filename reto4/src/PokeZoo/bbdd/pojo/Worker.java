@@ -9,9 +9,9 @@ public abstract class Worker implements Serializable{
 
 	// Attributes
 	private String dni = "";
-	private String nameW = "";
-	private String surnameW = "";
-	private String phoneW = "";
+	private String nameWo = "";
+	private String surnameWo = "";
+	private String phoneWo = "";
 	
 	// 
 	private User user = null;
@@ -23,23 +23,23 @@ public abstract class Worker implements Serializable{
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-	public String getNameW() {
-		return nameW;
+	public String getNameWo() {
+		return nameWo;
 	}
-	public void setNameW(String nameW) {
-		this.nameW = nameW;
+	public void setNameWo(String nameW) {
+		this.nameWo = nameW;
 	}
-	public String getSurnameW() {
-		return surnameW;
+	public String getSurnameWo() {
+		return surnameWo;
 	}
-	public void setSurnameW(String surnameW) {
-		this.surnameW = surnameW;
+	public void setSurnameWo(String surnameW) {
+		this.surnameWo = surnameW;
 	}
-	public String getPhoneW() {
-		return phoneW;
+	public String getPhoneWo() {
+		return phoneWo;
 	}
-	public void setPhoneW(String phoneW) {
-		this.phoneW = phoneW;
+	public void setPhoneWo(String phoneW) {
+		this.phoneWo = phoneW;
 	}
 	public User getUser() {
 		return user;
@@ -54,14 +54,14 @@ public abstract class Worker implements Serializable{
 	// To String
 	@Override
 	public String toString() {
-		return "Worker [dni=" + dni + ", nameW=" + nameW + ", surnameW=" + surnameW + ", phoneW=" + phoneW + ", user="
+		return "Worker [dni=" + dni + ", nameW=" + nameWo + ", surnameW=" + surnameWo + ", phoneW=" + phoneWo + ", user="
 				+ user + "]";
 	}
 	
 	// HashCode
 	@Override
 	public int hashCode() {
-		return Objects.hash(dni, nameW, phoneW, surnameW, user);
+		return Objects.hash(dni, nameWo, phoneWo, surnameWo, user);
 	}
 	
 	// Equals
@@ -74,8 +74,8 @@ public abstract class Worker implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Worker other = (Worker) obj;
-		return Objects.equals(dni, other.dni) && Objects.equals(nameW, other.nameW)
-				&& Objects.equals(phoneW, other.phoneW) && Objects.equals(surnameW, other.surnameW)
+		return Objects.equals(dni, other.dni) && Objects.equals(nameWo, other.nameWo)
+				&& Objects.equals(phoneWo, other.phoneWo) && Objects.equals(surnameWo, other.surnameWo)
 				&& Objects.equals(user, other.user);
 	}
 	

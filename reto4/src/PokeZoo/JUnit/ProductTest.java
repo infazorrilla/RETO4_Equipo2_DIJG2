@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import PokeZoo.bbdd.manager.ManagerProduct;
 import PokeZoo.bbdd.pojo.Product;
+import PokeZoo.bbdd.pojo.Shop;
 
 class ProductTest {
 
@@ -37,8 +38,52 @@ class ProductTest {
 	}
 	
 	@Test
-	void test2() {
-		// ¯\_(ツ)_/¯
+	public void testInsertNewProduct() {
+		Product newProductInsertTest = new Product();
+		
+		newProductInsertTest.setIdProduct(100);
+		newProductInsertTest.setNamePr("prueba");
+		newProductInsertTest.setDescriptionPr("prueba");
+		newProductInsertTest.setPhotoPr(null);
+		newProductInsertTest.setValuePr(0);
+		newProductInsertTest.setQuantityPr(0);
+		Shop shop = new Shop();
+		shop.setIdShop(1);
+		newProductInsertTest.setShop(shop);
+		
+		try {
+			manager.insert(newProductInsertTest);
+			
+			Product expectedProduct = manager.selectProductById(100);
+			
+			assertEquals(newProductInsertTest, expectedProduct);
+		} catch (Exception e) {
+			// Nothing
+		}
 	}
-
+	
+	@Test
+	public void testDeletePokemon() {
+		Product productToDelete = new Product();
+		
+		productToDelete.setIdProduct(100);
+		productToDelete.setNamePr("prueba");
+		productToDelete.setDescriptionPr("prueba");
+		productToDelete.setPhotoPr(null);
+		productToDelete.setValuePr(0);
+		productToDelete.setQuantityPr(0);
+		Shop shop = new Shop();
+		shop.setIdShop(1);
+		productToDelete.setShop(shop);
+		
+		try {
+			manager.delete(productToDelete);
+			
+			Product expectedProduct = manager.selectProductById(100);
+			
+			assertEquals(null, expectedProduct); // selectProductById returns null if nothing was found
+		} catch (Exception e) {
+			// Nothing
+		}
+	}
 }
