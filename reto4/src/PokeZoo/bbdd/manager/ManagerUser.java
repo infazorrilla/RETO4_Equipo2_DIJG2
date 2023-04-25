@@ -212,4 +212,64 @@ public class ManagerUser implements ManagerInterface<User>{
 			};
 		}
 	}
+	
+	/**
+	 * 
+	 * @param userName String to be check in database
+	 * @param passwd String to be check in database
+	 * @return 0 if user Not Found, 1 if user Found and is not admin, 2 if user exists and is admin, 3 if user exists and is Blocked
+	 */
+	public int checkUserExists(String userName, String passwd) {
+		int ret = 0;
+		
+		String sql = "SELECT * FROM User WHERE username = '" + userName + "' AND passwd = '" + passwd + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				if(resultSet.getInt("isBlock") == 1) {
+					ret = 3;
+				}else if(resultSet.getInt("isAdmin") == 1) {
+					ret = 2;
+				}else {
+					ret = 1;
+				}
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+			sqle.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}		
+		return ret;		
+	}
 }
