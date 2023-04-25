@@ -14,7 +14,7 @@ import PokeZoo.bbdd.pojo.Employee;
 import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerEmployee implements managerGeneral<Employee> {
+public class ManagerEmployee implements ManagerInterface<Employee> {
 
 	@Override
 	public ArrayList<Employee> selectAll() throws SQLException, AccountNotFoundException, Exception {

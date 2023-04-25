@@ -12,7 +12,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerFood implements managerGeneral<Food>{
+public class ManagerFood implements ManagerInterface<Food>{
 
 	@Override
 	public ArrayList<Food> selectAll() throws SQLException, AccountNotFoundException, Exception {

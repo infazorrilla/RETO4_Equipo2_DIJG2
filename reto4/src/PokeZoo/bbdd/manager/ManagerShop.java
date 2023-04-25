@@ -13,7 +13,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import PokeZoo.bbdd.pojo.Shop;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerShop implements managerGeneral<Shop>{
+public class ManagerShop implements ManagerInterface<Shop>{
 
 	@Override
 	public ArrayList<Shop> selectAll() throws SQLException, AccountNotFoundException, Exception {

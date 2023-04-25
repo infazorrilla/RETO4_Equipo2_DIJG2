@@ -7,7 +7,7 @@ import javax.security.auth.login.AccountNotFoundException;
 /**
  * Cada manager debe de implementar estos metodos
  */
-public interface managerGeneral <T>{
+public interface ManagerInterface <T>{
 
 	/**
 	 * Return all instances of T in Data Base

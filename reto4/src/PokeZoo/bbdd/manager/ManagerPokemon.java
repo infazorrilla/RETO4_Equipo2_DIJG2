@@ -12,7 +12,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import PokeZoo.bbdd.pojo.Pokemon;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerPokemon implements managerGeneral<Pokemon> {
+public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
 	@Override
 	public ArrayList<Pokemon> selectAll() throws SQLException, AccountNotFoundException, Exception {
