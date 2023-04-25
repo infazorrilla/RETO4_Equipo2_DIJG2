@@ -18,11 +18,8 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-<<<<<<< HEAD
-=======
 import PokeZoo.bbdd.manager.ManagerUser;
 
->>>>>>> branch 's2' of https://github.com/infazorrilla/RETO4_Equipo2_DIJG2.git
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -190,30 +187,22 @@ public class Views {
 		panelPokedex.setBounds(10, 111, 714, 314);
 		panelMain.add(panelPokedex);
 		panelPokedex.setLayout(null);
-<<<<<<< HEAD
 		
 		JLabel lblSelectedPokemonImage = new JLabel();
 		lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png")).getImage().getScaledInstance(140, 110, Image.SCALE_DEFAULT)));
 		lblSelectedPokemonImage.setForeground(new Color(0, 0, 0));
 		lblSelectedPokemonImage.setBackground(new Color(255, 255, 255));
 		lblSelectedPokemonImage.setBounds(531, -50, 173, 222);
-=======
 
 		JScrollPane scrollPaneAllPokemons = new JScrollPane();
 		scrollPaneAllPokemons.setBounds(29, 11, 197, 303);
 		panelPokedex.add(scrollPaneAllPokemons);
 
-		JLabel lblSelectedPokemonImage = new JLabel("(imagen del Pokemon aqui)");
-		lblSelectedPokemonImage.setBounds(531, 11, 173, 222);
->>>>>>> branch 's2' of https://github.com/infazorrilla/RETO4_Equipo2_DIJG2.git
-		panelPokedex.add(lblSelectedPokemonImage);
-
 		JLabel lblInfoName = new JLabel("Nombre :");
 		lblInfoName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblInfoName.setBounds(20, 11, 85, 30);
 		panelPokedex.add(lblInfoName);
-<<<<<<< HEAD
-		
+
 		JTextField textPokemonName = new JTextField("Charizard");
 		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonName.setBounds(131, 15, 139, 30);
@@ -228,20 +217,17 @@ public class Views {
 		textPokemonAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonAlias.setBounds(131, 50, 139, 30);
 		panelPokedex.add(textPokemonAlias);
-		
-=======
 
 		JLabel lblPokemonName = new JLabel("NamePo");
 		lblPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPokemonName.setBounds(382, 11, 139, 44);
 		panelPokedex.add(lblPokemonName);
 
->>>>>>> branch 's2' of https://github.com/infazorrilla/RETO4_Equipo2_DIJG2.git
 		JLabel lblInfoTypes = new JLabel("Tipo/s :");
 		lblInfoTypes.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblInfoTypes.setBounds(20, 90, 85, 30);
 		panelPokedex.add(lblInfoTypes);
-<<<<<<< HEAD
+
 		
 		JTextField textPokemonType = new JTextField("Fuego");
 		textPokemonType.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -252,8 +238,6 @@ public class Views {
 		textPokemonType2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonType2.setBounds(271, 90, 122, 30);
 		panelPokedex.add(textPokemonType2);
-		
-=======
 
 		JLabel lblPokemonTypeP = new JLabel("typeP");
 		lblPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -265,31 +249,26 @@ public class Views {
 		lblPokemonTypeS.setBounds(382, 135, 139, 44);
 		panelPokedex.add(lblPokemonTypeS);
 
->>>>>>> branch 's2' of https://github.com/infazorrilla/RETO4_Equipo2_DIJG2.git
 		JLabel lblDescription = new JLabel("Descripcion :");
 		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDescription.setBounds(20, 120, 200, 44);
 		panelPokedex.add(lblDescription);
-<<<<<<< HEAD
 		
 		JTextField textPokemonDescription = new JTextField();
 		textPokemonDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		textPokemonDescription.setBounds(20, 160, 423, 100);
 		panelPokedex.add(textPokemonDescription);
-		
-		JLabel lblPokedexImage = new JLabel();
-		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
-		panelPokedex.add(lblPokedexImage);
-		
-=======
 
 		JLabel lbldescripcion = new JLabel("DescriptionPo");
 		lbldescripcion.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbldescripcion.setBounds(281, 244, 423, 70);
 		panelPokedex.add(lbldescripcion);
+		
+		JLabel lblPokedexImage = new JLabel();
+		lblPokedexImage.setBounds(0, 0, 714, 314);
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		panelPokedex.add(lblPokedexImage);
 
->>>>>>> branch 's2' of https://github.com/infazorrilla/RETO4_Equipo2_DIJG2.git
 		panelShop = new JPanel();
 		panelShop.setVisible(false);
 		panelShop.setBounds(10, 111, 714, 314);
