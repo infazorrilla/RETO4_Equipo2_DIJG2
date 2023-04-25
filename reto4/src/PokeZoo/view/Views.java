@@ -5,13 +5,13 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -128,18 +128,36 @@ public class Views {
 		panelMain.add(panelMap);
 		panelMap.setLayout(null);
 		
+		JLabel lblMapa = new JLabel();
+		lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap.png")).getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
+		lblMapa.setBounds(30, 86, 636, 217);
+		panelMap.add(lblMapa);
+		
 		JLabel lblPokemonQuestion = new JLabel("¿Que Pokemon estas Buscando? :");
 		lblPokemonQuestion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPokemonQuestion.setBounds(23, 26, 278, 22);
 		panelMap.add(lblPokemonQuestion);
 		
-		JComboBox comboBoxAllPokemons = new JComboBox();
-		comboBoxAllPokemons.setBounds(327, 29, 352, 22);
-		panelMap.add(comboBoxAllPokemons);
+		TextField textFieldAllPokemons = new TextField();
+		textFieldAllPokemons.setBounds(327, 29, 222, 22);
+		panelMap.add(textFieldAllPokemons);
 		
-		JLabel lblMapImage = new JLabel("(Imagen del mapa aqui)");
-		lblMapImage.setBounds(23, 62, 656, 252);
-		panelMap.add(lblMapImage);
+		JButton btnMapSearch = new JButton("Buscar");
+		btnMapSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldAllPokemons.getText().equalsIgnoreCase("charmander")) {
+					lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap2.png")).getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
+				}
+				else if(textFieldAllPokemons.getText().equalsIgnoreCase("charizard")) {
+					lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap3.png")).getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
+				}
+				else {
+					lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap.png")).getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
+				}		
+			}	
+		});
+		btnMapSearch.setBounds(577, 28, 89, 23);
+		panelMap.add(btnMapSearch);
 		
 		panelPokedex = new JPanel();
 		panelPokedex.setVisible(false);
