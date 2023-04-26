@@ -556,13 +556,12 @@ public class Views {
 		}
 		
 		for (Employee employee : allEmployees) {
-			/*String dni = i.get
-			employee.setDni(resultSet.getString("dni"));
-			employee.setNameWo(resultSet.getString("nameWo"));
-			employee.setSurnameWo(resultSet.getString("surnameWo"));
-			employee.setPhoneWo(resultSet.getString("phoneWo"));
-
-			model.addRow(new String[] { titulo, horario, Integer.toString(salaPr), precio });*/
+			String dni = employee.getDni();
+			String name = employee.getNameWo();
+			String surName = employee.getSurnameWo();
+			String phone = employee.getPhoneWo();
+				
+			model.addRow(new String[] { dni, name, surName, phone });
 		}
 	}
 	
