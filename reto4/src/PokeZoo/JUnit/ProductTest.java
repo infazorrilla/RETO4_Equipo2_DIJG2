@@ -63,7 +63,7 @@ class ProductTest {
 	}
 	
 	@Test
-	public void testDeletePokemon() {
+	public void testDeleteProduct() {
 		Product productToDelete = new Product();
 		
 		productToDelete.setIdProduct(100);

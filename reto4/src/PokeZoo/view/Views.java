@@ -65,7 +65,7 @@ public class Views {
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
 		// TODO BORRAR MAS TARDE SOLO PARA DEBUG
-		//changeToAdminZone();
+		changeToAdminZone();
 	}
 
 	/**
@@ -195,6 +195,10 @@ public class Views {
 		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
 		btnAddNewEmployee.setBounds(10, 336, 141, 23);
 		panelAdminEmployee.add(btnAddNewEmployee);
+		
+		JButton btnModifyEmployee = new JButton("Modificar Empleado");
+		btnModifyEmployee.setBounds(201, 336, 141, 23);
+		panelAdminEmployee.add(btnModifyEmployee);
 
 		lblInfoTabla = new JLabel("");
 		lblInfoTabla.setBounds(42, 53, 135, 14);
