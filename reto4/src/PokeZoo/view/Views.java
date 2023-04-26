@@ -62,6 +62,7 @@ public class Views {
 	public Views() {
 		initialize();
 		this.frame.setVisible(true);
+		this.frame.setResizable(false);
 		// TODO borrar luego
 		changeToAdminZone();
 	}
