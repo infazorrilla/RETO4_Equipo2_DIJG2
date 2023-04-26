@@ -9,9 +9,9 @@ public abstract class Worker implements Serializable{
 
 	// Attributes
 	private String dni = "";
-	private String name = "";
-	private String surname = "";
-	private String phone = "";
+	private String nameWo = "";
+	private String surnameWo = "";
+	private String phoneWo = "";
 	
 	// 
 	private User user = null;

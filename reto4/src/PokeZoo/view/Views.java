@@ -28,6 +28,7 @@ import PokeZoo.bbdd.pojo.Employee;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 public class Views {
 
@@ -64,7 +65,7 @@ public class Views {
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
 		// TODO borrar luego
-		changeToAdminZone();
+		//changeToAdminZone();
 	}
 
 	/**
@@ -216,18 +217,17 @@ public class Views {
 		panelPokedex.setLayout(null);
 
 		JLabel lblSelectedPokemonImage = new JLabel();
-		lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png"))
-				.getImage().getScaledInstance(140, 110, Image.SCALE_DEFAULT)));
 		lblSelectedPokemonImage.setForeground(new Color(0, 0, 0));
 		lblSelectedPokemonImage.setBackground(new Color(255, 255, 255));
 		lblSelectedPokemonImage.setBounds(531, -50, 173, 222);
+		panelPokedex.add(lblSelectedPokemonImage);
 
 		JLabel lblInfoName = new JLabel("Nombre :");
 		lblInfoName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblInfoName.setBounds(20, 11, 85, 30);
 		panelPokedex.add(lblInfoName);
 
-		JTextField textPokemonName = new JTextField("Charizard");
+		JTextField textPokemonName = new JTextField();
 		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonName.setBounds(131, 15, 139, 30);
 		panelPokedex.add(textPokemonName);
@@ -237,7 +237,7 @@ public class Views {
 		lblInfoAlias.setBounds(20, 50, 85, 30);
 		panelPokedex.add(lblInfoAlias);
 
-		JTextField textPokemonAlias = new JTextField("Chorizo");
+		JTextField textPokemonAlias = new JTextField();
 		textPokemonAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonAlias.setBounds(131, 50, 139, 30);
 		panelPokedex.add(textPokemonAlias);
@@ -247,12 +247,12 @@ public class Views {
 		lblInfoTypes.setBounds(20, 90, 85, 30);
 		panelPokedex.add(lblInfoTypes);
 
-		JTextField textPokemonTypeP = new JTextField("Fuego");
+		JTextField textPokemonTypeP = new JTextField();
 		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonTypeP.setBounds(131, 90, 139, 30);
 		panelPokedex.add(textPokemonTypeP);
 
-		JTextField textPokemonTypeS = new JTextField("Volador");
+		JTextField textPokemonTypeS = new JTextField();
 		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonTypeS.setBounds(281, 90, 122, 30);
 		panelPokedex.add(textPokemonTypeS);
@@ -262,15 +262,58 @@ public class Views {
 		lblDescription.setBounds(20, 120, 200, 44);
 		panelPokedex.add(lblDescription);
 
-		JTextField textPokemonDescription = new JTextField();
+		JTextArea textPokemonDescription = new JTextArea();
 		textPokemonDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		textPokemonDescription.setBounds(20, 160, 423, 100);
 		panelPokedex.add(textPokemonDescription);
 
+		JTextField textSearch = new JTextField();
+		textSearch.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		textSearch.setBounds(100, 268, 150, 40);
+		panelPokedex.add(textSearch);
+
+		JButton btnSearch = new JButton();
+		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnSearch.setBounds(250, 268, 40, 40);
+		btnSearch.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokeLupa.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		btnSearch.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		if(textSearch.getText().equalsIgnoreCase("Charizard")||textSearch.getText().equalsIgnoreCase("6")){
+		textPokemonName.setText("Charizard");
+		textPokemonAlias.setText("Chorizo");
+		textPokemonTypeP.setText("Fuego");
+		textPokemonTypeS.setText("Volador");
+		textPokemonDescription.setText("Escupe un fuego tan caliente que funde las rocas. \nCausa incendios forestales sin querer.");
+		lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png")).getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+		}else if(textSearch.getText().equalsIgnoreCase("Venusaur")||textSearch.getText().equalsIgnoreCase("3")){
+		textPokemonName.setText("Venusaur");
+		textPokemonAlias.setText("Venardo");
+		textPokemonTypeP.setText("Planta");
+		textPokemonTypeS.setText("Veneno");
+		textPokemonDescription.setText("La planta florece cuando absorbe energía solar, \nlo cual le obliga a buscar siempre la luz del sol.");
+		//lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Venusaur.png")).getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+		}else if(textSearch.getText().equalsIgnoreCase("Blastoise")||textSearch.getText().equalsIgnoreCase("9")){
+		textPokemonName.setText("Blastoise");
+		textPokemonAlias.setText("Blas");
+		textPokemonTypeP.setText("Agua");
+		textPokemonTypeS.setText("");
+		textPokemonDescription.setText("Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. \nEn momentos de apuro, se esconde en el caparazón.");
+		//lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Blastoise.png")).getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+		}else {
+		textPokemonName.setText("");
+		textPokemonAlias.setText("");
+		textPokemonTypeP.setText("");
+		textPokemonTypeS.setText("");
+		textPokemonDescription.setText("");
+		lblSelectedPokemonImage.setIcon(null);
+		}
+		}
+		});
+		panelPokedex.add(btnSearch);
+
 		JLabel lblPokedexImage = new JLabel();
 		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage()
-				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
 		// PANEL MAIN TIENDA
