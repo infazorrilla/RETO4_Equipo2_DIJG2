@@ -20,8 +20,8 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 	public ArrayList<Employee> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Employee> ret = null;
 
-		String sql = "SELECT dni, nameWo, surnameWo, phoneWo, w.idUser, isAdmin, username, passwd\r\n"
-				+ "FROM Worker AS w \r\n" + "JOIN User AS u ON w.idUser = u.idUser;";
+		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
+				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser;";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -44,9 +44,9 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 				// añadir datos de Shop aqui
 				employee.setDni(resultSet.getString("dni"));
-				employee.setNameWo(resultSet.getString("nameWo"));
-				employee.setSurnameWo(resultSet.getString("surnameWo"));
-				employee.setPhoneWo(resultSet.getString("phoneWo"));
+				employee.setNameWo(resultSet.getString("nameEm"));
+				employee.setSurnameWo(resultSet.getString("surnameEm"));
+				employee.setPhoneWo(resultSet.getString("phoneEm"));
 
 				User user = new User();
 				user.setIdUser(resultSet.getInt("idUser"));
@@ -88,8 +88,8 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 	public Employee selectEmployeeByDni(String dni) {
 		Employee ret = null;
 
-		String sql = "SELECT dni, nameWo, surnameWo, phoneWo, w.idUser, isAdmin, username, passwd\r\n"
-				+ "FROM Worker AS w \r\n" + "JOIN User AS u ON w.idUser = u.idUser WHERE dni = '" + dni + ";";
+		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
+				+ "FROM Worker AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + ";";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -109,9 +109,9 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 				}
 				// añadir datos de Shop aqui
 				ret.setDni(resultSet.getString("dni"));
-				ret.setNameWo(resultSet.getString("nameWo"));
-				ret.setSurnameWo(resultSet.getString("surnameWo"));
-				ret.setPhoneWo(resultSet.getString("phoneWo"));
+				ret.setNameWo(resultSet.getString("nameEm"));
+				ret.setSurnameWo(resultSet.getString("surnameEm"));
+				ret.setPhoneWo(resultSet.getString("phoneEm"));
 
 				User user = new User();
 				user.setIdUser(resultSet.getInt("idUser"));
@@ -160,7 +160,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 			statement = connection.createStatement();
 
-			String sql = "INSERT INTO Worker (dni, nameWo, surnameWo, phoneWo) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
+			String sql = "INSERT INTO Worker (dni, nameEm, surnameEm, phoneEm) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
 					+ ", '" + t.getSurnameWo() + "', '" + t.getPhoneWo() + "');";
 
 			statement.executeUpdate(sql);

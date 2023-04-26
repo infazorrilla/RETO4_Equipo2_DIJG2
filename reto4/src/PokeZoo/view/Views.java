@@ -21,9 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import PokeZoo.bbdd.manager.ManagerDependent;
 import PokeZoo.bbdd.manager.ManagerEmployee;
 import PokeZoo.bbdd.manager.ManagerUser;
+import PokeZoo.bbdd.pojo.Dependent;
 import PokeZoo.bbdd.pojo.Employee;
+import PokeZoo.bbdd.pojo.User;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -55,6 +58,8 @@ public class Views {
 	// Managers
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
+	private ManagerDependent managerDependent = null;
+
 	private JTable tableEmployee;
 
 	/**
@@ -189,16 +194,67 @@ public class Views {
 		scrollPaneTableEmployee.setViewportView(tableEmployee);
 
 		tableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableEmployee.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado" }));
-		
+		tableEmployee.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado" }));
+
 		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
-		btnAddNewEmployee.setBounds(10, 336, 141, 23);
+		btnAddNewEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JTextField dni = new JPasswordField();
+				JTextField name = new JTextField();
+				JTextField surName = new JTextField();
+				JTextField phone = new JTextField();
+				JTextField username = new JTextField();
+				JTextField password = new JPasswordField();
+
+				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
+						"Username: *", username, "Password: *", password };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					// User(idUser, isAdmin, username, passwd, isBlocked)
+					User userToInsert = new User(0, false, username.getText(), password.getText(), false);					
+
+					if(!employeeHasEmptyValues()) {
+						try {
+						// TODO Una vez arreglado lo employee descomentar estas lineas de abajo.
+						managerUser.insert(userToInsert);
+						
+						userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(), userToInsert.getPasswd());
+						
+						Employee employeToInsert = new Employee();
+						employeToInsert.setDni(dni.getText());
+						employeToInsert.setNameWo(name.getText());
+						employeToInsert.setSurnameWo(surName.getText());
+						employeToInsert.setPhoneWo(phone.getText());
+						employeToInsert.setUser(userToInsert);
+						
+						managerEmployee.insert(employeToInsert);
+					} catch (Exception e1) {
+						
+					}
+					
+					// Nothinf
+					}
+				} else {
+					// Login Canceled
+				}
+			}		
+		});
+		btnAddNewEmployee.setBounds(10, 336, 150, 23);
 		panelAdminEmployee.add(btnAddNewEmployee);
-		
+
 		JButton btnModifyEmployee = new JButton("Modificar Empleado");
-		btnModifyEmployee.setBounds(201, 336, 141, 23);
+		btnModifyEmployee.setBounds(180, 336, 141, 23);
 		panelAdminEmployee.add(btnModifyEmployee);
+
+		JButton btnDeleteEmployee = new JButton("Borrar Empleado");
+		btnDeleteEmployee.setBounds(399, 336, 141, 23);
+		panelAdminEmployee.add(btnDeleteEmployee);
+
+		JButton btnBlockEmployee = new JButton("Bloquear Empleado");
+		btnBlockEmployee.setBounds(563, 336, 141, 23);
+		panelAdminEmployee.add(btnBlockEmployee);
 
 		lblInfoTabla = new JLabel("");
 		lblInfoTabla.setBounds(42, 53, 135, 14);
@@ -607,6 +663,11 @@ public class Views {
 	}
 
 	// otros metodos
+	private boolean employeeHasEmptyValues() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
@@ -615,9 +676,15 @@ public class Views {
 			managerEmployee = new ManagerEmployee();
 		}
 
+		if (null == managerDependent) {
+			managerDependent = new ManagerDependent();
+		}
+
 		ArrayList<Employee> allEmployees = null;
+		ArrayList<Dependent> allDependant = null;
 		try {
 			allEmployees = managerEmployee.selectAll();
+			allDependant = managerDependent.selectAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -628,6 +695,16 @@ public class Views {
 			String surName = employee.getSurnameWo();
 			String phone = employee.getPhoneWo();
 			Boolean isBlocked = employee.getUser().getIsBlocked();
+
+			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
+		}
+
+		for (Dependent dependant : allDependant) {
+			String dni = dependant.getDni();
+			String name = dependant.getNameWo();
+			String surName = dependant.getSurnameWo();
+			String phone = dependant.getPhoneWo();
+			Boolean isBlocked = dependant.getUser().getIsBlocked();
 
 			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
 		}

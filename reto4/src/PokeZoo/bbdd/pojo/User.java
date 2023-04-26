@@ -14,6 +14,20 @@ public class User implements Serializable{
 	private String passwd = "";
 	private Boolean isBlocked = false;
 	
+	//
+	public User(int idUser, boolean isAdmin, String username, String passwd, Boolean isBlocked) {
+		super();
+		this.idUser = idUser;
+		this.isAdmin = isAdmin;
+		this.username = username;
+		this.passwd = passwd;
+		this.isBlocked = isBlocked;
+	}
+	
+	public User() {
+		super();
+	}
+	
 	// Getters and Setters
 	public int getIdUser() {
 		return idUser;

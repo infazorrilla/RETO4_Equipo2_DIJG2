@@ -129,6 +129,60 @@ public class ManagerUser implements ManagerInterface<User>{
 		return ret;
 	}
 	
+	public User selectUserByUsernameAndPasswd(String username, String passwd) {
+		User ret = null;
+
+		String sql = "SELECT * FROM User WHERE username = '" + username + "' AND passwd = '" + passwd + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				if (null == ret) {
+					ret = new User();
+				}
+				// añadir datos de Shop aqui
+				ret.setIdUser(resultSet.getInt("idUser"));
+				ret.setAdmin(resultSet.getBoolean("isAdmin"));
+				ret.setUsername(resultSet.getString("username"));
+				ret.setPasswd(resultSet.getString("passwd"));
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		return ret;
+	}
+	
 	@Override
 	public void insert(User t) throws SQLException, Exception {
 		Connection connection = null;
@@ -272,4 +326,5 @@ public class ManagerUser implements ManagerInterface<User>{
 		}		
 		return ret;		
 	}
+
 }

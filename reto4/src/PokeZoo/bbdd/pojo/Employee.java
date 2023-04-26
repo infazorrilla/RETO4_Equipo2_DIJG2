@@ -8,11 +8,15 @@ public class Employee extends Worker{
 
 	private int idEmployee = 0;
 
+	// Constructors
+	/*public Employee(String dni, String nameWo, String surnameWo, String phoneWo, User user) {
+		super(dni, nameWo, surnameWo, phoneWo, user);
+	}*/
+
 	// Getters and Setters
 	public int getIdEmployee() {
 		return idEmployee;
 	}
-
 	public void setIdEmployee(int idEmployee) {
 		this.idEmployee = idEmployee;
 	}

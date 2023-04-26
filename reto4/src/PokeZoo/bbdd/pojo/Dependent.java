@@ -2,7 +2,7 @@ package PokeZoo.bbdd.pojo;
 
 import java.util.Objects;
 
-public class Dependant extends Worker{
+public class Dependent extends Worker{
 
 	private static final long serialVersionUID = 8891819425817276748L;
 
@@ -48,7 +48,7 @@ public class Dependant extends Worker{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dependant other = (Dependant) obj;
+		Dependent other = (Dependent) obj;
 		return idDependant == other.idDependant && Objects.equals(shop, other.shop);
 	}
 
