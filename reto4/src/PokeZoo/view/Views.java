@@ -59,6 +59,7 @@ public class Views {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		// PANEL WELCOME
 		panelWelcome = new JPanel();
 		panelWelcome.addMouseListener(new MouseAdapter() {
 			@Override
@@ -76,6 +77,7 @@ public class Views {
 		lblWelcome.setBounds(280, 149, 170, 105);
 		panelWelcome.add(lblWelcome);
 
+		// PANEL MAIN
 		panelMain = new JPanel();
 		panelMain.setBounds(0, 0, 734, 461);
 		panelMain.setVisible(false);
@@ -149,6 +151,7 @@ public class Views {
 		lblAd.setBounds(250, 440, 257, 14);
 		panelMain.add(lblAd);
 
+		// PANEL MAIN MAP
 		panelMap = new JPanel();
 		panelMap.setVisible(false);
 		panelMap.setBounds(10, 111, 714, 328);
@@ -188,6 +191,7 @@ public class Views {
 		btnMapSearch.setBounds(577, 28, 89, 23);
 		panelMap.add(btnMapSearch);
 
+		// PANEL MAIN POKEDEX
 		panelPokedex = new JPanel();
 		panelPokedex.setVisible(false);
 		panelPokedex.setBounds(10, 111, 714, 328);
@@ -251,6 +255,7 @@ public class Views {
 		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
+		// PANEL MAIN TIENDA
 		panelShop = new JPanel();
 		panelShop.setVisible(false);
 		panelShop.setBounds(10, 111, 714, 328);
@@ -269,6 +274,7 @@ public class Views {
 		lblNewLabel.setBounds(10, 11, 93, 55);
 		panelProducts.add(lblNewLabel);
 
+		// PANEL MAIN TICKETS
 		panelTickets = new JPanel();
 		panelTickets.setVisible(false);
 		panelTickets.setBounds(10, 111, 714, 328);
@@ -279,6 +285,7 @@ public class Views {
 		lblNewLabel_1.setBounds(126, 113, 231, 76);
 		panelTickets.add(lblNewLabel_1);
 
+		// PANEL LOGIN
 		panelLogin = new JPanel();
 		panelLogin.setVisible(false);
 		panelLogin.setBounds(0, 0, 734, 461);
@@ -328,6 +335,7 @@ public class Views {
 		btnQuit.setBounds(392, 294, 89, 23);
 		panelLogin.add(btnQuit);
 
+		// PANEL ADMIN
 		panelAdmin = new JPanel();
 		panelAdmin.setVisible(false);
 		panelAdmin.setBounds(0, 0, 734, 461);
@@ -359,6 +367,7 @@ public class Views {
 		btnZooArea.setBounds(369, 0, 365, 46);
 		panelAdmin.add(btnZooArea);
 
+		// PANEL ADMIN WELCOME
 		JPanel panelAdminWelocome = new JPanel();
 		panelAdminWelocome.setBounds(10, 57, 714, 393);
 		panelAdmin.add(panelAdminWelocome);
