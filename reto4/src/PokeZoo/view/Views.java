@@ -11,17 +11,23 @@ import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
+import PokeZoo.bbdd.manager.ManagerEmployee;
 import PokeZoo.bbdd.manager.ManagerUser;
+import PokeZoo.bbdd.pojo.Employee;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
 
 public class Views {
 
@@ -38,9 +44,17 @@ public class Views {
 	private JPanel panelLogin = null;
 
 	private JPanel panelAdmin = null;
+	
+	private JPanel panelAdminWelcome = null;
+	private JPanel panelAdminEmployee = null;
 
+	// Labels
+	private JLabel lblInfoTabla = null;
+	
 	// Managers
 	private ManagerUser managerUser = null;
+	private ManagerEmployee managerEmployee = null;
+	private JTable tableEmployee;
 
 	/**
 	 * Create the application.
@@ -48,6 +62,8 @@ public class Views {
 	public Views() {
 		initialize();
 		this.frame.setVisible(true);
+		// TODO borrar luego
+		changeToAdminZone();
 	}
 
 	/**
@@ -67,7 +83,7 @@ public class Views {
 				changeToClientZone();
 			}
 		});
-		panelWelcome.setBounds(0, 0, 734, 461);
+		panelWelcome.setBounds(0, 0, 42, 20);
 		panelWelcome.setVisible(true);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
@@ -79,7 +95,7 @@ public class Views {
 
 		// PANEL MAIN
 		panelMain = new JPanel();
-		panelMain.setBounds(0, 0, 734, 461);
+		panelMain.setBounds(0, 0, 55, 33);
 		panelMain.setVisible(false);
 		frame.getContentPane().add(panelMain);
 		panelMain.setLayout(null);
@@ -197,9 +213,10 @@ public class Views {
 		panelPokedex.setBounds(10, 111, 714, 328);
 		panelMain.add(panelPokedex);
 		panelPokedex.setLayout(null);
-		
+
 		JLabel lblSelectedPokemonImage = new JLabel();
-		lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png")).getImage().getScaledInstance(140, 110, Image.SCALE_DEFAULT)));
+		lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png"))
+				.getImage().getScaledInstance(140, 110, Image.SCALE_DEFAULT)));
 		lblSelectedPokemonImage.setForeground(new Color(0, 0, 0));
 		lblSelectedPokemonImage.setBackground(new Color(255, 255, 255));
 		lblSelectedPokemonImage.setBounds(531, -50, 173, 222);
@@ -213,12 +230,12 @@ public class Views {
 		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonName.setBounds(131, 15, 139, 30);
 		panelPokedex.add(textPokemonName);
-		
+
 		JLabel lblInfoAlias = new JLabel("Alias :");
 		lblInfoAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblInfoAlias.setBounds(20, 50, 85, 30);
 		panelPokedex.add(lblInfoAlias);
-		
+
 		JTextField textPokemonAlias = new JTextField("Chorizo");
 		textPokemonAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonAlias.setBounds(131, 50, 139, 30);
@@ -229,12 +246,11 @@ public class Views {
 		lblInfoTypes.setBounds(20, 90, 85, 30);
 		panelPokedex.add(lblInfoTypes);
 
-		
 		JTextField textPokemonTypeP = new JTextField("Fuego");
 		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonTypeP.setBounds(131, 90, 139, 30);
 		panelPokedex.add(textPokemonTypeP);
-		
+
 		JTextField textPokemonTypeS = new JTextField("Volador");
 		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonTypeS.setBounds(281, 90, 122, 30);
@@ -244,15 +260,16 @@ public class Views {
 		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDescription.setBounds(20, 120, 200, 44);
 		panelPokedex.add(lblDescription);
-		
+
 		JTextField textPokemonDescription = new JTextField();
 		textPokemonDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		textPokemonDescription.setBounds(20, 160, 423, 100);
 		panelPokedex.add(textPokemonDescription);
-		
+
 		JLabel lblPokedexImage = new JLabel();
 		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage()
+				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
 		// PANEL MAIN TIENDA
@@ -288,7 +305,7 @@ public class Views {
 		// PANEL LOGIN
 		panelLogin = new JPanel();
 		panelLogin.setVisible(false);
-		panelLogin.setBounds(0, 0, 734, 461);
+		panelLogin.setBounds(0, 0, 65, 48);
 		frame.getContentPane().add(panelLogin);
 		panelLogin.setLayout(null);
 
@@ -368,25 +385,32 @@ public class Views {
 		panelAdmin.add(btnZooArea);
 
 		// PANEL ADMIN WELCOME
-		JPanel panelAdminWelocome = new JPanel();
-		panelAdminWelocome.setBounds(10, 57, 714, 393);
-		panelAdmin.add(panelAdminWelocome);
-		panelAdminWelocome.setLayout(null);
+		panelAdminWelcome = new JPanel();
+		panelAdminWelcome.setBounds(10, 57, 22, 24);
+		panelAdmin.add(panelAdminWelcome);
+		panelAdminWelcome.setLayout(null);
 
 		JLabel lblImageWorkers = new JLabel("(worker image)");
 		lblImageWorkers.setBounds(10, 11, 265, 371);
-		panelAdminWelocome.add(lblImageWorkers);
+		panelAdminWelcome.add(lblImageWorkers);
 
 		JLabel lbllogo2 = new JLabel("Logo");
 		lbllogo2.setIcon(new ImageIcon(Views.class.getResource("/varios/Logo.png")));
 		lbllogo2.setBounds(285, 154, 116, 73);
-		panelAdminWelocome.add(lbllogo2);
+		panelAdminWelcome.add(lbllogo2);
 
 		JLabel lblImageZoo = new JLabel("(zoo image)");
 		lblImageZoo.setBounds(411, 11, 293, 371);
-		panelAdminWelocome.add(lblImageZoo);
+		panelAdminWelcome.add(lblImageZoo);
 
 		JButton btnEmployee = new JButton("Oficinistas");
+		btnEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchAdminPanels(1);
+				lblInfoTabla.setText("Tabla Oficinistas");
+				loadTableEmployeeData(tableEmployee);
+			}
+		});
 		btnEmployee.setBackground(Color.WHITE);
 		btnEmployee.setBounds(0, 0, 117, 46);
 		panelAdmin.add(btnEmployee);
@@ -415,16 +439,56 @@ public class Views {
 		btnFood.setBackground(Color.WHITE);
 		btnFood.setBounds(617, 0, 117, 46);
 		panelAdmin.add(btnFood);
+
+		panelAdminEmployee = new JPanel();
+		panelAdminEmployee.setBounds(10, 68, 714, 370);
+		panelAdmin.add(panelAdminEmployee);
+		panelAdminEmployee.setLayout(null);
+
+		JScrollPane scrollPaneTableEmployee = new JScrollPane();
+		scrollPaneTableEmployee.setBounds(10, 11, 694, 321);
+		panelAdminEmployee.add(scrollPaneTableEmployee);
+
+		tableEmployee = new JTable();		
+		scrollPaneTableEmployee.setViewportView(tableEmployee);
+		
+		tableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableEmployee.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Telf." }));
+		
+		lblInfoTabla = new JLabel("");
+		lblInfoTabla.setBounds(42, 53, 135, 14);
+		panelAdmin.add(lblInfoTabla);
+		
+		JButton btnLogOut = new JButton("Cerrar Sesion");
+		btnLogOut.setBorderPainted(false);
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeToClientZone();
+			}
+		});
+		btnLogOut.setBounds(0, 437, 117, 24);
+		panelAdmin.add(btnLogOut);
 	}
 
 // --------------------------------------------------------------------------------------
 //PANELS METHODS		
+	private void switchAdminPanels(int i) {
+		switch(i) {
+		case 1:
+			panelAdminWelcome.setVisible(false);
+			panelAdminEmployee.setVisible(true);
+		}
+		
+	}
+	
 	private void changeToClientZone() {
 		panelWelcome.setVisible(false);
 		panelMain.setVisible(true);
 		panelMap.setVisible(true);
 		panelLogin.setVisible(false);
 		panelAdmin.setVisible(false);
+		panelAdminWelcome.setVisible(false);
+		panelAdminEmployee.setVisible(false);
 	}
 
 	private void changeToWorkerZone() {
@@ -475,6 +539,32 @@ public class Views {
 	}
 
 	// otros metodos
+	private void loadTableEmployeeData(JTable table) {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		
+		if(null == managerEmployee) {
+			managerEmployee = new ManagerEmployee();
+		}
+		
+		ArrayList<Employee> allEmployees = null;
+		try {
+			allEmployees = managerEmployee.selectAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		for (Employee employee : allEmployees) {
+			/*String dni = i.get
+			employee.setDni(resultSet.getString("dni"));
+			employee.setNameWo(resultSet.getString("nameWo"));
+			employee.setSurnameWo(resultSet.getString("surnameWo"));
+			employee.setPhoneWo(resultSet.getString("phoneWo"));
+
+			model.addRow(new String[] { titulo, horario, Integer.toString(salaPr), precio });*/
+		}
+	}
+	
 	private void checkLogin(JTextField textFieldUserName, JPasswordField passwordFieldPasswd) {
 		String userName = textFieldUserName.getText();
 		String passwd = new String(passwordFieldPasswd.getPassword());
