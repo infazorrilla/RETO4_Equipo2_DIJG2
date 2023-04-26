@@ -45,13 +45,13 @@ public class Views {
 	private JPanel panelLogin = null;
 
 	private JPanel panelAdmin = null;
-	
+
 	private JPanel panelAdminWelcome = null;
 	private JPanel panelAdminEmployee = null;
 
 	// Labels
 	private JLabel lblInfoTabla = null;
-	
+
 	// Managers
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
@@ -64,7 +64,7 @@ public class Views {
 		initialize();
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
-		// TODO borrar luego
+		// TODO BORRAR MAS TARDE SOLO PARA DEBUG
 		//changeToAdminZone();
 	}
 
@@ -85,8 +85,130 @@ public class Views {
 				changeToClientZone();
 			}
 		});
-		panelWelcome.setBounds(0, 0, 42, 20);
+		panelWelcome.setBounds(0, 0, 734, 461);
 		panelWelcome.setVisible(true);
+
+		// PANEL ADMIN
+		panelAdmin = new JPanel();
+		panelAdmin.setVisible(false);
+		panelAdmin.setBounds(0, 0, 734, 461);
+		frame.getContentPane().add(panelAdmin);
+		panelAdmin.setLayout(null);
+
+		JButton btnZooArea = new JButton("Zoo");
+
+		JButton btnWorkerArea = new JButton("Trabajadores");
+		btnWorkerArea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO ocultar btnWorkerArea y mostrar los 3 botones hijos
+				btnWorkerArea.setVisible(false);
+				btnZooArea.setVisible(true);
+			}
+		});
+		btnWorkerArea.setBackground(new Color(255, 255, 255));
+		btnWorkerArea.setBounds(0, 0, 370, 46);
+		panelAdmin.add(btnWorkerArea);
+
+		btnZooArea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO ocultar btnZooArea y mostrar los otros 3 bottones que estan abajo
+				btnWorkerArea.setVisible(true);
+				btnZooArea.setVisible(false);
+			}
+		});
+		btnZooArea.setBackground(new Color(255, 255, 255));
+		btnZooArea.setBounds(369, 0, 365, 46);
+		panelAdmin.add(btnZooArea);
+
+		// PANEL ADMIN WELCOME
+		panelAdminWelcome = new JPanel();
+		panelAdminWelcome.setBounds(10, 57, 24, 14);
+		panelAdmin.add(panelAdminWelcome);
+		panelAdminWelcome.setLayout(null);
+
+		JLabel lblImageWorkers = new JLabel("(worker image)");
+		lblImageWorkers.setBounds(10, 11, 265, 371);
+		panelAdminWelcome.add(lblImageWorkers);
+
+		JLabel lbllogo2 = new JLabel("Logo");
+		lbllogo2.setIcon(new ImageIcon(Views.class.getResource("/varios/Logo.png")));
+		lbllogo2.setBounds(285, 154, 116, 73);
+		panelAdminWelcome.add(lbllogo2);
+
+		JLabel lblImageZoo = new JLabel("(zoo image)");
+		lblImageZoo.setBounds(411, 11, 293, 371);
+		panelAdminWelcome.add(lblImageZoo);
+
+		JButton btnEmployee = new JButton("Oficinistas");
+		btnEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchAdminPanels(1);
+				lblInfoTabla.setText("Tabla Oficinistas");
+				loadTableEmployeeData(tableEmployee);
+			}
+		});
+		btnEmployee.setBackground(Color.WHITE);
+		btnEmployee.setBounds(0, 0, 117, 46);
+		panelAdmin.add(btnEmployee);
+
+		JButton btnCleaner = new JButton("Limpiadores");
+		btnCleaner.setBackground(Color.WHITE);
+		btnCleaner.setBounds(118, 0, 135, 46);
+		panelAdmin.add(btnCleaner);
+
+		JButton btnCaretakers = new JButton("Cuidadores");
+		btnCaretakers.setBackground(Color.WHITE);
+		btnCaretakers.setBounds(253, 0, 117, 46);
+		panelAdmin.add(btnCaretakers);
+
+		JButton btnPokemon = new JButton("Pokemons");
+		btnPokemon.setBackground(Color.WHITE);
+		btnPokemon.setBounds(369, 0, 117, 46);
+		panelAdmin.add(btnPokemon);
+
+		JButton btnEnclosure = new JButton("Recintos");
+		btnEnclosure.setBackground(Color.WHITE);
+		btnEnclosure.setBounds(486, 0, 131, 46);
+		panelAdmin.add(btnEnclosure);
+
+		JButton btnFood = new JButton("Alimento");
+		btnFood.setBackground(Color.WHITE);
+		btnFood.setBounds(617, 0, 117, 46);
+		panelAdmin.add(btnFood);
+
+		panelAdminEmployee = new JPanel();
+		panelAdminEmployee.setBounds(10, 68, 714, 370);
+		panelAdmin.add(panelAdminEmployee);
+		panelAdminEmployee.setLayout(null);
+
+		JScrollPane scrollPaneTableEmployee = new JScrollPane();
+		scrollPaneTableEmployee.setBounds(10, 11, 694, 321);
+		panelAdminEmployee.add(scrollPaneTableEmployee);
+
+		tableEmployee = new JTable();
+		scrollPaneTableEmployee.setViewportView(tableEmployee);
+
+		tableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableEmployee.setModel(
+				new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado" }));
+		
+		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
+		btnAddNewEmployee.setBounds(10, 336, 141, 23);
+		panelAdminEmployee.add(btnAddNewEmployee);
+
+		lblInfoTabla = new JLabel("");
+		lblInfoTabla.setBounds(42, 53, 135, 14);
+		panelAdmin.add(lblInfoTabla);
+
+		JButton btnLogOut = new JButton("Cerrar Sesion");
+		btnLogOut.setBorderPainted(false);
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeToClientZone();
+			}
+		});
+		btnLogOut.setBounds(0, 437, 117, 24);
+		panelAdmin.add(btnLogOut);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
 
@@ -97,7 +219,7 @@ public class Views {
 
 		// PANEL MAIN
 		panelMain = new JPanel();
-		panelMain.setBounds(0, 0, 55, 33);
+		panelMain.setBounds(0, 0, 734, 461);
 		panelMain.setVisible(false);
 		frame.getContentPane().add(panelMain);
 		panelMain.setLayout(null);
@@ -275,45 +397,58 @@ public class Views {
 		JButton btnSearch = new JButton();
 		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnSearch.setBounds(250, 268, 40, 40);
-		btnSearch.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokeLupa.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		btnSearch.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokeLupa.png")).getImage()
+				.getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
 		btnSearch.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		if(textSearch.getText().equalsIgnoreCase("Charizard")||textSearch.getText().equalsIgnoreCase("6")){
-		textPokemonName.setText("Charizard");
-		textPokemonAlias.setText("Chorizo");
-		textPokemonTypeP.setText("Fuego");
-		textPokemonTypeS.setText("Volador");
-		textPokemonDescription.setText("Escupe un fuego tan caliente que funde las rocas. \nCausa incendios forestales sin querer.");
-		lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png")).getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
-		}else if(textSearch.getText().equalsIgnoreCase("Venusaur")||textSearch.getText().equalsIgnoreCase("3")){
-		textPokemonName.setText("Venusaur");
-		textPokemonAlias.setText("Venardo");
-		textPokemonTypeP.setText("Planta");
-		textPokemonTypeS.setText("Veneno");
-		textPokemonDescription.setText("La planta florece cuando absorbe energía solar, \nlo cual le obliga a buscar siempre la luz del sol.");
-		//lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Venusaur.png")).getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
-		}else if(textSearch.getText().equalsIgnoreCase("Blastoise")||textSearch.getText().equalsIgnoreCase("9")){
-		textPokemonName.setText("Blastoise");
-		textPokemonAlias.setText("Blas");
-		textPokemonTypeP.setText("Agua");
-		textPokemonTypeS.setText("");
-		textPokemonDescription.setText("Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. \nEn momentos de apuro, se esconde en el caparazón.");
-		//lblSelectedPokemonImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Blastoise.png")).getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
-		}else {
-		textPokemonName.setText("");
-		textPokemonAlias.setText("");
-		textPokemonTypeP.setText("");
-		textPokemonTypeS.setText("");
-		textPokemonDescription.setText("");
-		lblSelectedPokemonImage.setIcon(null);
-		}
-		}
+			public void actionPerformed(ActionEvent e) {
+				if (textSearch.getText().equalsIgnoreCase("Charizard") || textSearch.getText().equalsIgnoreCase("6")) {
+					textPokemonName.setText("Charizard");
+					textPokemonAlias.setText("Chorizo");
+					textPokemonTypeP.setText("Fuego");
+					textPokemonTypeS.setText("Volador");
+					textPokemonDescription.setText(
+							"Escupe un fuego tan caliente que funde las rocas. \nCausa incendios forestales sin querer.");
+					lblSelectedPokemonImage
+							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png"))
+									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+				} else if (textSearch.getText().equalsIgnoreCase("Venusaur")
+						|| textSearch.getText().equalsIgnoreCase("3")) {
+					textPokemonName.setText("Venusaur");
+					textPokemonAlias.setText("Venardo");
+					textPokemonTypeP.setText("Planta");
+					textPokemonTypeS.setText("Veneno");
+					textPokemonDescription.setText(
+							"La planta florece cuando absorbe energía solar, \nlo cual le obliga a buscar siempre la luz del sol.");
+					lblSelectedPokemonImage
+							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Venusaur.png"))
+									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+				} else if (textSearch.getText().equalsIgnoreCase("Blastoise")
+						|| textSearch.getText().equalsIgnoreCase("9")) {
+					textPokemonName.setText("Blastoise");
+					textPokemonAlias.setText("Blas");
+					textPokemonTypeP.setText("Agua");
+					textPokemonTypeS.setText("");
+					textPokemonDescription.setText(
+							"Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. \nEn momentos de apuro, se esconde en el caparazón.");
+					lblSelectedPokemonImage
+							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Blastoise.png"))
+									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+				} else {
+					textPokemonName.setText("");
+					textPokemonAlias.setText("");
+					textPokemonTypeP.setText("");
+					textPokemonTypeS.setText("");
+					textPokemonDescription.setText("");
+					lblSelectedPokemonImage.setIcon(null);
+				}
+			}
 		});
 		panelPokedex.add(btnSearch);
 
 		JLabel lblPokedexImage = new JLabel();
 		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage()
+				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
 		// PANEL MAIN TIENDA
@@ -349,7 +484,7 @@ public class Views {
 		// PANEL LOGIN
 		panelLogin = new JPanel();
 		panelLogin.setVisible(false);
-		panelLogin.setBounds(0, 0, 65, 48);
+		panelLogin.setBounds(0, 0, 734, 461);
 		frame.getContentPane().add(panelLogin);
 		panelLogin.setLayout(null);
 
@@ -381,6 +516,8 @@ public class Views {
 		btnAccess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkLogin(textFieldUserName, passwordFieldPasswd);
+				passwordFieldPasswd.setText(null);
+				textFieldUserName.setText(null);
 			}
 		});
 		btnAccess.setBounds(254, 294, 89, 23);
@@ -395,136 +532,19 @@ public class Views {
 		});
 		btnQuit.setBounds(392, 294, 89, 23);
 		panelLogin.add(btnQuit);
-
-		// PANEL ADMIN
-		panelAdmin = new JPanel();
-		panelAdmin.setVisible(false);
-		panelAdmin.setBounds(0, 0, 734, 461);
-		frame.getContentPane().add(panelAdmin);
-		panelAdmin.setLayout(null);
-
-		JButton btnZooArea = new JButton("Zoo");
-
-		JButton btnWorkerArea = new JButton("Trabajadores");
-		btnWorkerArea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO ocultar btnWorkerArea y mostrar los 3 botones hijos
-				btnWorkerArea.setVisible(false);
-				btnZooArea.setVisible(true);
-			}
-		});
-		btnWorkerArea.setBackground(new Color(255, 255, 255));
-		btnWorkerArea.setBounds(0, 0, 370, 46);
-		panelAdmin.add(btnWorkerArea);
-
-		btnZooArea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO ocultar btnZooArea y mostrar los otros 3 bottones que estan abajo
-				btnWorkerArea.setVisible(true);
-				btnZooArea.setVisible(false);
-			}
-		});
-		btnZooArea.setBackground(new Color(255, 255, 255));
-		btnZooArea.setBounds(369, 0, 365, 46);
-		panelAdmin.add(btnZooArea);
-
-		// PANEL ADMIN WELCOME
-		panelAdminWelcome = new JPanel();
-		panelAdminWelcome.setBounds(10, 57, 22, 24);
-		panelAdmin.add(panelAdminWelcome);
-		panelAdminWelcome.setLayout(null);
-
-		JLabel lblImageWorkers = new JLabel("(worker image)");
-		lblImageWorkers.setBounds(10, 11, 265, 371);
-		panelAdminWelcome.add(lblImageWorkers);
-
-		JLabel lbllogo2 = new JLabel("Logo");
-		lbllogo2.setIcon(new ImageIcon(Views.class.getResource("/varios/Logo.png")));
-		lbllogo2.setBounds(285, 154, 116, 73);
-		panelAdminWelcome.add(lbllogo2);
-
-		JLabel lblImageZoo = new JLabel("(zoo image)");
-		lblImageZoo.setBounds(411, 11, 293, 371);
-		panelAdminWelcome.add(lblImageZoo);
-
-		JButton btnEmployee = new JButton("Oficinistas");
-		btnEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchAdminPanels(1);
-				lblInfoTabla.setText("Tabla Oficinistas");
-				loadTableEmployeeData(tableEmployee);
-			}
-		});
-		btnEmployee.setBackground(Color.WHITE);
-		btnEmployee.setBounds(0, 0, 117, 46);
-		panelAdmin.add(btnEmployee);
-
-		JButton btnCleaner = new JButton("Limpiadores");
-		btnCleaner.setBackground(Color.WHITE);
-		btnCleaner.setBounds(118, 0, 135, 46);
-		panelAdmin.add(btnCleaner);
-
-		JButton btnCaretakers = new JButton("Cuidadores");
-		btnCaretakers.setBackground(Color.WHITE);
-		btnCaretakers.setBounds(253, 0, 117, 46);
-		panelAdmin.add(btnCaretakers);
-
-		JButton btnPokemon = new JButton("Pokemons");
-		btnPokemon.setBackground(Color.WHITE);
-		btnPokemon.setBounds(369, 0, 117, 46);
-		panelAdmin.add(btnPokemon);
-
-		JButton btnEnclosure = new JButton("Recintos");
-		btnEnclosure.setBackground(Color.WHITE);
-		btnEnclosure.setBounds(486, 0, 131, 46);
-		panelAdmin.add(btnEnclosure);
-
-		JButton btnFood = new JButton("Alimento");
-		btnFood.setBackground(Color.WHITE);
-		btnFood.setBounds(617, 0, 117, 46);
-		panelAdmin.add(btnFood);
-
-		panelAdminEmployee = new JPanel();
-		panelAdminEmployee.setBounds(10, 68, 714, 370);
-		panelAdmin.add(panelAdminEmployee);
-		panelAdminEmployee.setLayout(null);
-
-		JScrollPane scrollPaneTableEmployee = new JScrollPane();
-		scrollPaneTableEmployee.setBounds(10, 11, 694, 321);
-		panelAdminEmployee.add(scrollPaneTableEmployee);
-
-		tableEmployee = new JTable();		
-		scrollPaneTableEmployee.setViewportView(tableEmployee);
-		
-		tableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableEmployee.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Telf." }));
-		
-		lblInfoTabla = new JLabel("");
-		lblInfoTabla.setBounds(42, 53, 135, 14);
-		panelAdmin.add(lblInfoTabla);
-		
-		JButton btnLogOut = new JButton("Cerrar Sesion");
-		btnLogOut.setBorderPainted(false);
-		btnLogOut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changeToClientZone();
-			}
-		});
-		btnLogOut.setBounds(0, 437, 117, 24);
-		panelAdmin.add(btnLogOut);
 	}
 
 // --------------------------------------------------------------------------------------
 //PANELS METHODS		
 	private void switchAdminPanels(int i) {
-		switch(i) {
+		switch (i) {
 		case 1:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(true);
 		}
-		
+
 	}
-	
+
 	private void changeToClientZone() {
 		panelWelcome.setVisible(false);
 		panelMain.setVisible(true);
@@ -586,28 +606,29 @@ public class Views {
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-		
-		if(null == managerEmployee) {
+
+		if (null == managerEmployee) {
 			managerEmployee = new ManagerEmployee();
 		}
-		
+
 		ArrayList<Employee> allEmployees = null;
 		try {
 			allEmployees = managerEmployee.selectAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		for (Employee employee : allEmployees) {
 			String dni = employee.getDni();
 			String name = employee.getNameWo();
 			String surName = employee.getSurnameWo();
 			String phone = employee.getPhoneWo();
-				
-			model.addRow(new String[] { dni, name, surName, phone });
+			Boolean isBlocked = employee.getUser().getIsBlocked();
+
+			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
 		}
 	}
-	
+
 	private void checkLogin(JTextField textFieldUserName, JPasswordField passwordFieldPasswd) {
 		String userName = textFieldUserName.getText();
 		String passwd = new String(passwordFieldPasswd.getPassword());

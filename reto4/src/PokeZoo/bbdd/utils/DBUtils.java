@@ -5,8 +5,8 @@ package PokeZoo.bbdd.utils;
  */
 public class DBUtils {
 
-	public static final String URL = "jdbc:mysql://localhost:3306/PokeZoo";
+	public static final String URL = "jdbc:mysql://localhost:33060/PokeZoo";
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String USER = "root";
-	public static final String PASS = "";
+	public static final String USER = "Admin";
+	public static final String PASS = "1234";
 }
