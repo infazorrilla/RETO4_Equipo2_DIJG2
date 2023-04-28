@@ -67,7 +67,11 @@ public class Views {
 	 */
 	public Views() {
 		initialize();
-		this.frame.setVisible(true);
+		this.frame.setTitle("Poke-Zoo");
+		ImageIcon img = new ImageIcon(Views.class.getResource("/varios/Logo.png"));
+		this.frame.setIconImage(img.getImage());
+		// TODO CAMBIAR ICONO DE ARRIBA A LA DERECHA E ICONO ED APP
+		this.frame.setVisible(true);		
 		this.frame.setResizable(false);
 		// TODO BORRAR MAS TARDE SOLO PARA DEBUG
 		changeToAdminZone();
@@ -195,7 +199,7 @@ public class Views {
 
 		tableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableEmployee.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado" }));
+				new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado", "usuario" }));
 		tableEmployee.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
@@ -207,7 +211,7 @@ public class Views {
 				JTextField phone = new JTextField();
 				JTextField username = new JTextField();
 				JPasswordField password = new JPasswordField();
-
+				
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
@@ -247,6 +251,7 @@ public class Views {
 							managerEmployee.insert(employeToInsert);
 							JOptionPane.showMessageDialog(null, "Empleado registrado correctamente", "Yay!",
 									JOptionPane.INFORMATION_MESSAGE);
+							loadTableEmployeeData(tableEmployee);
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
@@ -262,7 +267,7 @@ public class Views {
 			public void actionPerformed(ActionEvent e) {
 				Employee selectedEmployee = getSelectedEmployee();
 
-				JTextField dni = new JTextField();
+				JLabel dni = new JLabel();
 				dni.setText(selectedEmployee.getDni());
 				JTextField name = new JTextField();
 				name.setText(selectedEmployee.getNameWo());
@@ -274,7 +279,7 @@ public class Views {
 				username.setText(selectedEmployee.getUser().getUsername());
 				JPasswordField password = new JPasswordField();
 
-				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
+				Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
 				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
@@ -284,47 +289,24 @@ public class Views {
 							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
 							JOptionPane.OK_CANCEL_OPTION);
 					if (confimation == JOptionPane.OK_OPTION) {
-						selectedEmployee = managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni());
+						selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
+						selectedEmployee.setNameWo(name.getText());
+						selectedEmployee.setSurnameWo(surName.getText());
+						selectedEmployee.setPhoneWo(phone.getText());
+						selectedEmployee.getUser().setUsername(username.getText());
+						selectedEmployee.getUser().setPasswd(new String(password.getPassword()));						
 						try {
 							managerEmployee.update(selectedEmployee);
+							
+							if(null == managerUser) {
+								managerUser = new ManagerUser();
+							}
+							managerUser.update(selectedEmployee.getUser());
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 						
-						// TODO ACTUALIZAR TABLA AL INSERTAR, ACTUALIZAR ......
-						// UPDATE NO FUNCIONA :,C
-						
-						
-						/*if (!selectedEmployee.getUser().getUsername().equals(username.getText())
-								|| !selectedEmployee.getUser().getPasswd().equals(new String(password.getPassword()))) {
-							selectedEmployee.getUser().setUsername(username.getText());
-							selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
-							if (null == managerUser) {
-								managerUser = new ManagerUser();
-							}
-							try {
-								managerUser.update(selectedEmployee.getUser());
-							} catch (Exception e1) {
-								e1.printStackTrace();
-							}
-						}else if(!selectedEmployee.getDni().equals(dni.getText())
-								|| !selectedEmployee.getNameWo().equals(name.getText()) 
-								|| !selectedEmployee.getSurnameWo().equals(surName.getText()) 
-								|| !selectedEmployee.getPhoneWo().equals(phone.getText())) {
-							selectedEmployee.setDni(dni.getText());
-							selectedEmployee.setNameWo(name.getText());
-							selectedEmployee.setSurnameWo(surName.getText());
-							selectedEmployee.setPhoneWo(phone.getText());
-							
-							if (null == managerEmployee) {
-								managerEmployee = new ManagerEmployee();
-							}
-							try {
-								managerEmployee.update(selectedEmployee);
-							} catch (Exception e1) {
-								e1.printStackTrace();
-							}
-						}*/
+						loadTableEmployeeData(tableEmployee);											
 					}
 				}
 			}
@@ -394,11 +376,6 @@ public class Views {
 				.getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(668, 11, 56, 39);
 		panelMain.add(lblLogo);
-
-		JLabel lblTitle = new JLabel("Poke-Zoo");
-		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblTitle.setBounds(316, 0, 163, 58);
-		panelMain.add(lblTitle);
 
 		JButton btnMap = new JButton("Mapa");
 		btnMap.addActionListener(new ActionListener() {
@@ -789,8 +766,9 @@ public class Views {
 			String surName = employee.getSurnameWo();
 			String phone = employee.getPhoneWo();
 			Boolean isBlocked = employee.getUser().getIsBlocked();
+			String username = employee.getUser().getUsername();
 
-			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
+			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString(), username});
 		}
 
 		for (Dependent dependant : allDependant) {

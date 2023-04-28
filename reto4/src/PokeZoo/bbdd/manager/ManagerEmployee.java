@@ -267,10 +267,10 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		}
 	}
 
-	public Employee getEmployeeIdByDni(String dni) {
-		Employee ret = null;
+	public int getEmployeeIdByDni(String dni) {
+		int ret = 0;
 
-		String sql = "SELECT idEmployee, dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
+		String sql = "SELECT idEmployee, dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd, isBlock \r\n"
 				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
 
 		Connection connection = null;
@@ -286,23 +286,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 			resultSet = statement.executeQuery(sql);
 
 			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new Employee();
-				}
-				// añadir datos de Shop aqui
-				ret.setIdEmployee(resultSet.getInt("idEmployee"));
-				ret.setDni(resultSet.getString("dni"));
-				ret.setNameWo(resultSet.getString("nameEm"));
-				ret.setSurnameWo(resultSet.getString("surnameEm"));
-				ret.setPhoneWo(resultSet.getString("phoneEm"));
-
-				User user = new User();
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
-
-				ret.setUser(user);
+				ret = resultSet.getInt("idEmployee");
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());

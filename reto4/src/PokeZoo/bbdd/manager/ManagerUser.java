@@ -234,12 +234,12 @@ public class ManagerUser implements ManagerInterface<User>{
 			Class.forName(DBUtils.DRIVER);
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "UPDATE User SET username = ?, passwd = ?, isBlock  = ? WHERE idUser = ?";
+			String sql = "UPDATE User SET username = ?, passwd = ? WHERE idUser = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, t.getUsername());
 			preparedStatement.setString(2, t.getPasswd());
-			preparedStatement.setBoolean(3, t.getIsBlocked());
-			preparedStatement.setInt(4, t.getIdUser());
+			//preparedStatement.setBoolean(3, t.getIsBlocked());
+			preparedStatement.setInt(3, t.getIdUser());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
