@@ -318,9 +318,13 @@ public class Views {
 		btnDeleteEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Employee selectedEmployee = getSelectedEmployee();
-
-				// TODO Borrar el employee sekeccionado
-			}
+				int confimation = JOptionPane.showConfirmDialog(null,
+						"¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (confimation == JOptionPane.OK_OPTION) {
+					deleteSelectedEmployee(selectedEmployee);
+				}		
+			}			
 		});
 		btnDeleteEmployee.setBounds(399, 336, 141, 23);
 		panelAdminEmployee.add(btnDeleteEmployee);
@@ -328,10 +332,18 @@ public class Views {
 		JButton btnBlockEmployee = new JButton("Bloquear Empleado");
 		btnBlockEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// TODO SI SE SELECCIONA EL USUARIO QUE ES DEPENDENDIENTE NO FUNCIONA NADA :S
 				Employee selectedEmployee = getSelectedEmployee();
 
-				// TODO Bloquear al employee seleccioando
-			}
+				int confimation = JOptionPane.showConfirmDialog(null,
+						"¿Estas seguro de que deseas BLOQUEAR el empleado?", "Confirmacion",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (confimation == JOptionPane.OK_OPTION) {
+					blockSelectedEmployee(selectedEmployee);
+				}
+
+				loadTableEmployeeData(tableEmployee);
+			}			
 		});
 		btnBlockEmployee.setBounds(563, 336, 141, 23);
 		panelAdminEmployee.add(btnBlockEmployee);
@@ -738,7 +750,29 @@ public class Views {
 		}
 	}
 
-	// otros metodos
+	// otros metodos ----------------------------------------------------------------------------
+	private void deleteSelectedEmployee(Employee selectedEmployee) {
+		if(null == managerEmployee) {
+			managerEmployee = new ManagerEmployee();
+		}				
+		selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
+		
+		try {
+			managerEmployee.delete(selectedEmployee);
+			JOptionPane.showMessageDialog(null, "Empleado Borrado correctamente", "Correcto!", JOptionPane.PLAIN_MESSAGE);
+			loadTableEmployeeData(tableEmployee);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void blockSelectedEmployee(Employee selectedEmployee) {
+		if(null == managerUser){
+			managerUser = new ManagerUser();
+		}
+		managerUser.blockUserByIdUser(selectedEmployee.getUser().getIdUser());
+	}
+	
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
@@ -760,26 +794,31 @@ public class Views {
 			e.printStackTrace();
 		}
 
-		for (Employee employee : allEmployees) {
-			String dni = employee.getDni();
-			String name = employee.getNameWo();
-			String surName = employee.getSurnameWo();
-			String phone = employee.getPhoneWo();
-			Boolean isBlocked = employee.getUser().getIsBlocked();
-			String username = employee.getUser().getUsername();
+		if(null != allEmployees) {
+			for (Employee employee : allEmployees) {
+				String dni = employee.getDni();
+				String name = employee.getNameWo();
+				String surName = employee.getSurnameWo();
+				String phone = employee.getPhoneWo();
+				Boolean isBlocked = employee.getUser().getIsBlocked();
+				String username = employee.getUser().getUsername();
 
-			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString(), username});
+				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString(), username });
+			}
 		}
+		
+		if(null != allDependant) {
+			for (Dependent dependant : allDependant) {
+				String dni = dependant.getDni();
+				String name = dependant.getNameWo();
+				String surName = dependant.getSurnameWo();
+				String phone = dependant.getPhoneWo();
+				Boolean isBlocked = dependant.getUser().getIsBlocked();
 
-		for (Dependent dependant : allDependant) {
-			String dni = dependant.getDni();
-			String name = dependant.getNameWo();
-			String surName = dependant.getSurnameWo();
-			String phone = dependant.getPhoneWo();
-			Boolean isBlocked = dependant.getUser().getIsBlocked();
-
-			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
+				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
+			}
 		}
+		
 	}
 
 	private Employee getSelectedEmployee() {

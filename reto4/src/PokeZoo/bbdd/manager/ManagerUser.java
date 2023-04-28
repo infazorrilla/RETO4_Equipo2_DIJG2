@@ -13,7 +13,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerUser implements ManagerInterface<User>{
+public class ManagerUser implements ManagerInterface<User> {
 
 	@Override
 	public ArrayList<User> selectAll() throws SQLException, AccountNotFoundException, Exception {
@@ -45,7 +45,7 @@ public class ManagerUser implements ManagerInterface<User>{
 				user.setAdmin(resultSet.getBoolean("isAdmin"));
 				user.setUsername(resultSet.getString("username"));
 				user.setPasswd(resultSet.getString("passwd"));
-				
+
 				ret.add(user);
 			}
 		} catch (SQLException sqle) {
@@ -128,7 +128,7 @@ public class ManagerUser implements ManagerInterface<User>{
 		}
 		return ret;
 	}
-	
+
 	public User selectUserByUsernameAndPasswd(String username, String passwd) {
 		User ret = null;
 
@@ -182,28 +182,28 @@ public class ManagerUser implements ManagerInterface<User>{
 		}
 		return ret;
 	}
-	
+
 	@Override
 	public void insert(User t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-		
+
 		String sql = "";
-		
+
 		try {
 			Class.forName(DBUtils.DRIVER);
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
 			statement = connection.createStatement();
-			if(t.getIdUser() == 0) {
-				sql = "INSERT INTO User (username, passwd) "
-						+ "VALUES ('" + t.getUsername() + "', '" + t.getPasswd() + "');";
-			}else {
-				sql = "INSERT INTO User (idUser, isAdmin, username, passwd) "
-						+ "VALUES ('" + t.getIdUser() + "', '" + t.isAdmin() + "', '" + t.getUsername() + ", '" + t.getPasswd() + "');";
+			if (t.getIdUser() == 0) {
+				sql = "INSERT INTO User (username, passwd) " + "VALUES ('" + t.getUsername() + "', '" + t.getPasswd()
+						+ "');";
+			} else {
+				sql = "INSERT INTO User (idUser, isAdmin, username, passwd) " + "VALUES ('" + t.getIdUser() + "', '"
+						+ t.isAdmin() + "', '" + t.getUsername() + ", '" + t.getPasswd() + "');";
 			}
-			
+
 			statement.executeUpdate(sql);
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -238,7 +238,7 @@ public class ManagerUser implements ManagerInterface<User>{
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, t.getUsername());
 			preparedStatement.setString(2, t.getPasswd());
-			//preparedStatement.setBoolean(3, t.getIsBlocked());
+			// preparedStatement.setBoolean(3, t.getIsBlocked());
 			preparedStatement.setInt(3, t.getIdUser());
 
 			preparedStatement.executeUpdate();
@@ -259,8 +259,42 @@ public class ManagerUser implements ManagerInterface<User>{
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
-		}	
+			}
+			;
+		}
+	}
+
+	public void blockUserByIdUser(int idUser) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			String sql = "UPDATE User SET isBlock = 1 WHERE idUser = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, idUser);		
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
 	}
 
 	@Override
@@ -295,19 +329,21 @@ public class ManagerUser implements ManagerInterface<User>{
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
+			;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param userName String to be check in database
-	 * @param passwd String to be check in database
-	 * @return 0 if user Not Found, 1 if user Found and is not admin, 2 if user exists and is admin, 3 if user exists and is Blocked
+	 * @param passwd   String to be check in database
+	 * @return 0 if user Not Found, 1 if user Found and is not admin, 2 if user
+	 *         exists and is admin, 3 if user exists and is Blocked
 	 */
 	public int checkUserExists(String userName, String passwd) {
 		int ret = 0;
-		
+
 		String sql = "SELECT * FROM User WHERE username = '" + userName + "' AND passwd = '" + passwd + "'";
 
 		Connection connection = null;
@@ -323,11 +359,11 @@ public class ManagerUser implements ManagerInterface<User>{
 			resultSet = statement.executeQuery(sql);
 
 			if (resultSet.next()) {
-				if(resultSet.getInt("isBlock") == 1) {
+				if (resultSet.getInt("isBlock") == 1) {
 					ret = 3;
-				}else if(resultSet.getInt("isAdmin") == 1) {
+				} else if (resultSet.getInt("isAdmin") == 1) {
 					ret = 2;
-				}else {
+				} else {
 					ret = 1;
 				}
 			}
@@ -355,8 +391,7 @@ public class ManagerUser implements ManagerInterface<User>{
 			} catch (Exception e) {
 				// Nothing
 			}
-		}		
-		return ret;		
+		}
+		return ret;
 	}
-
 }

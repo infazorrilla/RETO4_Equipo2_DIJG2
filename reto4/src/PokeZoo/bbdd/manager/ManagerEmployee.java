@@ -20,7 +20,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 	public ArrayList<Employee> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Employee> ret = null;
 
-		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
+		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd, isBlock\r\n"
 				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser;";
 
 		Connection connection = null;
@@ -53,6 +53,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 				user.setAdmin(resultSet.getBoolean("isAdmin"));
 				user.setUsername(resultSet.getString("username"));
 				user.setPasswd(resultSet.getString("passwd"));
+				user.setIsBlocked(resultSet.getBoolean("isBlock"));
 
 				employee.setUser(user);
 
