@@ -758,7 +758,7 @@ public class Views {
 		selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
 		
 		try {
-			managerEmployee.delete(selectedEmployee);
+			managerUser.delete(selectedEmployee.getUser());
 			JOptionPane.showMessageDialog(null, "Empleado Borrado correctamente", "Correcto!", JOptionPane.PLAIN_MESSAGE);
 			loadTableEmployeeData(tableEmployee);
 		} catch (Exception e) {
