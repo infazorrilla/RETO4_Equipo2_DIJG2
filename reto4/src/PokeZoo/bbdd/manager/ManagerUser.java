@@ -227,8 +227,40 @@ public class ManagerUser implements ManagerInterface<User>{
 
 	@Override
 	public void update(User t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			String sql = "UPDATE User SET username = ?, passwd = ?, isBlock  = ? WHERE idUser = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, t.getUsername());
+			preparedStatement.setString(2, t.getPasswd());
+			preparedStatement.setBoolean(3, t.getIsBlocked());
+			preparedStatement.setInt(4, t.getIdUser());
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			};
+		}	
 	}
 
 	@Override

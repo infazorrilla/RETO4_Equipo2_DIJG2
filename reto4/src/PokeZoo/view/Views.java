@@ -105,7 +105,7 @@ public class Views {
 		JButton btnWorkerArea = new JButton("Trabajadores");
 		btnWorkerArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO ocultar btnWorkerArea y mostrar los 3 botones hijos
+				// TODO Una vez cerrados los paneles volver a poner ambos botones visibles
 				btnWorkerArea.setVisible(false);
 				btnZooArea.setVisible(true);
 			}
@@ -211,15 +211,19 @@ public class Views {
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista", JOptionPane.OK_CANCEL_OPTION);
+				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista",
+						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
 					} else if (username.getText().isEmpty() || password.getPassword().length == 0) {
-						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Usuario!", "Oye!", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Usuario!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
 					} else {
 						// User(idUser, isAdmin, username, passwd, isBlocked)
-						User userToInsert = new User(0, false, username.getText(), new String(password.getPassword()), false);
+						User userToInsert = new User(0, false, username.getText(), new String(password.getPassword()),
+								false);
 
 						Employee employeToInsert = new Employee();
 						employeToInsert.setDni(dni.getText());
@@ -228,19 +232,21 @@ public class Views {
 						employeToInsert.setPhoneWo(phone.getText());
 
 						try {
-							if(null == managerUser) {
+							if (null == managerUser) {
 								managerUser = new ManagerUser();
 							}
-							
-							if(null == managerEmployee) {
+
+							if (null == managerEmployee) {
 								managerEmployee = new ManagerEmployee();
 							}
 							// TODO Comprobar que el usuario no existe ya
 							managerUser.insert(userToInsert);
-							userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),userToInsert.getPasswd());
+							userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
+									userToInsert.getPasswd());
 							employeToInsert.setUser(userToInsert);
 							managerEmployee.insert(employeToInsert);
-							JOptionPane.showMessageDialog(null, "Empleado registrado correctamente", "Yay!", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Empleado registrado correctamente", "Yay!",
+									JOptionPane.INFORMATION_MESSAGE);
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
@@ -252,14 +258,99 @@ public class Views {
 		panelAdminEmployee.add(btnAddNewEmployee);
 
 		JButton btnModifyEmployee = new JButton("Modificar Empleado");
+		btnModifyEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Employee selectedEmployee = getSelectedEmployee();
+
+				JTextField dni = new JTextField();
+				dni.setText(selectedEmployee.getDni());
+				JTextField name = new JTextField();
+				name.setText(selectedEmployee.getNameWo());
+				JTextField surName = new JTextField();
+				surName.setText(selectedEmployee.getSurnameWo());
+				JTextField phone = new JTextField();
+				phone.setText(selectedEmployee.getPhoneWo());
+				JTextField username = new JTextField();
+				username.setText(selectedEmployee.getUser().getUsername());
+				JPasswordField password = new JPasswordField();
+
+				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
+						"Username: *", username, "Password: *", password };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					int confimation = JOptionPane.showConfirmDialog(null,
+							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (confimation == JOptionPane.OK_OPTION) {
+						selectedEmployee = managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni());
+						try {
+							managerEmployee.update(selectedEmployee);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						
+						// TODO ACTUALIZAR TABLA AL INSERTAR, ACTUALIZAR ......
+						// UPDATE NO FUNCIONA :,C
+						
+						
+						/*if (!selectedEmployee.getUser().getUsername().equals(username.getText())
+								|| !selectedEmployee.getUser().getPasswd().equals(new String(password.getPassword()))) {
+							selectedEmployee.getUser().setUsername(username.getText());
+							selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
+							if (null == managerUser) {
+								managerUser = new ManagerUser();
+							}
+							try {
+								managerUser.update(selectedEmployee.getUser());
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}else if(!selectedEmployee.getDni().equals(dni.getText())
+								|| !selectedEmployee.getNameWo().equals(name.getText()) 
+								|| !selectedEmployee.getSurnameWo().equals(surName.getText()) 
+								|| !selectedEmployee.getPhoneWo().equals(phone.getText())) {
+							selectedEmployee.setDni(dni.getText());
+							selectedEmployee.setNameWo(name.getText());
+							selectedEmployee.setSurnameWo(surName.getText());
+							selectedEmployee.setPhoneWo(phone.getText());
+							
+							if (null == managerEmployee) {
+								managerEmployee = new ManagerEmployee();
+							}
+							try {
+								managerEmployee.update(selectedEmployee);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}*/
+					}
+				}
+			}
+		});
 		btnModifyEmployee.setBounds(180, 336, 141, 23);
 		panelAdminEmployee.add(btnModifyEmployee);
 
 		JButton btnDeleteEmployee = new JButton("Borrar Empleado");
+		btnDeleteEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Employee selectedEmployee = getSelectedEmployee();
+
+				// TODO Borrar el employee sekeccionado
+			}
+		});
 		btnDeleteEmployee.setBounds(399, 336, 141, 23);
 		panelAdminEmployee.add(btnDeleteEmployee);
 
 		JButton btnBlockEmployee = new JButton("Bloquear Empleado");
+		btnBlockEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Employee selectedEmployee = getSelectedEmployee();
+
+				// TODO Bloquear al employee seleccioando
+			}
+		});
 		btnBlockEmployee.setBounds(563, 336, 141, 23);
 		panelAdminEmployee.add(btnBlockEmployee);
 
@@ -711,6 +802,22 @@ public class Views {
 
 			model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
 		}
+	}
+
+	private Employee getSelectedEmployee() {
+		Employee ret = null;
+		if (tableEmployee.getSelectionModel().isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			ret = new Employee();
+		}
+		int row = tableEmployee.getSelectedRow();
+
+		String dni = (String) tableEmployee.getValueAt(row, 0);
+		ret = managerEmployee.selectEmployeeByDni(dni);
+
+		return ret;
 	}
 
 	private void checkLogin(JTextField textFieldUserName, JPasswordField passwordFieldPasswd) {

@@ -89,7 +89,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		Employee ret = null;
 
 		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
-				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + ";";
+				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -160,12 +160,13 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 			statement = connection.createStatement();
 
-			if(t.getPhoneWo().equals("")) {
-				sql = "INSERT INTO Employee (dni, nameEm, surnameEm, idUser) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
-					+ "', '" + t.getSurnameWo() + "', '" + t.getUser().getIdUser() + "');";
-			}else {
-				sql = "INSERT INTO Employee (dni, nameEm, surnameEm, phoneEm, idUser) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
-				+ "', '" + t.getSurnameWo() + "', '" + t.getPhoneWo() + "', '" + t.getUser().getIdUser() + "');";
+			if (t.getPhoneWo().equals("")) {
+				sql = "INSERT INTO Employee (dni, nameEm, surnameEm, idUser) " + "VALUES ('" + t.getDni() + "', '"
+						+ t.getNameWo() + "', '" + t.getSurnameWo() + "', '" + t.getUser().getIdUser() + "');";
+			} else {
+				sql = "INSERT INTO Employee (dni, nameEm, surnameEm, phoneEm, idUser) " + "VALUES ('" + t.getDni()
+						+ "', '" + t.getNameWo() + "', '" + t.getSurnameWo() + "', '" + t.getPhoneWo() + "', '"
+						+ t.getUser().getIdUser() + "');";
 			}
 
 			statement.executeUpdate(sql);
@@ -191,8 +192,42 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 	@Override
 	public void update(Employee t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
+		try {
+			Class.forName(DBUtils.DRIVER);
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			String sql = "UPDATE Employee SET dni = ?, nameEm = ?, surnameEm = ?, phoneEm = ? WHERE idEmployee = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, t.getDni());
+			preparedStatement.setString(2, t.getNameWo());
+			preparedStatement.setString(3, t.getSurnameWo());
+			preparedStatement.setString(4, t.getPhoneWo());
+			preparedStatement.setInt(5, t.getIdEmployee());
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			;
+		}
 	}
 
 	@Override
@@ -227,7 +262,72 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
+			;
 		}
+	}
+
+	public Employee getEmployeeIdByDni(String dni) {
+		Employee ret = null;
+
+		String sql = "SELECT idEmployee, dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
+				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret) {
+					ret = new Employee();
+				}
+				// añadir datos de Shop aqui
+				ret.setIdEmployee(resultSet.getInt("idEmployee"));
+				ret.setDni(resultSet.getString("dni"));
+				ret.setNameWo(resultSet.getString("nameEm"));
+				ret.setSurnameWo(resultSet.getString("surnameEm"));
+				ret.setPhoneWo(resultSet.getString("phoneEm"));
+
+				User user = new User();
+				user.setIdUser(resultSet.getInt("idUser"));
+				user.setAdmin(resultSet.getBoolean("isAdmin"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPasswd(resultSet.getString("passwd"));
+
+				ret.setUser(user);
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		return ret;
 	}
 }

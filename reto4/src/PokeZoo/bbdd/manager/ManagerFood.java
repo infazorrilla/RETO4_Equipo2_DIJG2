@@ -78,7 +78,7 @@ public class ManagerFood implements ManagerInterface<Food>{
 	public Food selectFoodById(int id) throws SQLException, AccountNotFoundException, Exception {
 		Food ret = null;
 		
-		String sql = "SELECT * FROM Food WHERE idFood = '" + id + "'";
+		String sql = "SELECT * FROM Food WHERE idFood = " + id;
 
 		Connection connection = null;
 		Statement statement = null;
