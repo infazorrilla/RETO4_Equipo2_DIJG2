@@ -68,7 +68,7 @@ public class Views {
 	public Views() {
 		initialize();
 		this.frame.setTitle("Poke-Zoo");
-		ImageIcon img = new ImageIcon(Views.class.getResource("/varios/Logo.png"));
+		ImageIcon img = new ImageIcon(Views.class.getResource("/varios/LogoRecortado.png"));
 		this.frame.setIconImage(img.getImage());
 		// TODO CAMBIAR ICONO DE ARRIBA A LA DERECHA E ICONO ED APP
 		this.frame.setVisible(true);		
