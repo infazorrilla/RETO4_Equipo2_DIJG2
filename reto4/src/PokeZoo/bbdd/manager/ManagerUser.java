@@ -197,8 +197,8 @@ public class ManagerUser implements ManagerInterface<User>{
 
 			statement = connection.createStatement();
 			if(t.getIdUser() == 0) {
-				sql = "INSERT INTO User (isAdmin, username, passwd) "
-						+ "VALUES ('" + t.isAdmin() + "', '" + t.getUsername() + ", '" + t.getPasswd() + "');";
+				sql = "INSERT INTO User (username, passwd) "
+						+ "VALUES ('" + t.getUsername() + "', '" + t.getPasswd() + "');";
 			}else {
 				sql = "INSERT INTO User (idUser, isAdmin, username, passwd) "
 						+ "VALUES ('" + t.getIdUser() + "', '" + t.isAdmin() + "', '" + t.getUsername() + ", '" + t.getPasswd() + "');";

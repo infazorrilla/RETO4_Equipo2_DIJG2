@@ -89,7 +89,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		Employee ret = null;
 
 		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
-				+ "FROM Worker AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + ";";
+				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + ";";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -152,7 +152,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 	public void insert(Employee t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-
+		String sql = "";
 		try {
 			Class.forName(DBUtils.DRIVER);
 
@@ -160,8 +160,13 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 			statement = connection.createStatement();
 
-			String sql = "INSERT INTO Worker (dni, nameEm, surnameEm, phoneEm) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
-					+ ", '" + t.getSurnameWo() + "', '" + t.getPhoneWo() + "');";
+			if(t.getPhoneWo().equals("")) {
+				sql = "INSERT INTO Employee (dni, nameEm, surnameEm, idUser) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
+					+ "', '" + t.getSurnameWo() + "', '" + t.getUser().getIdUser() + "');";
+			}else {
+				sql = "INSERT INTO Employee (dni, nameEm, surnameEm, phoneEm, idUser) " + "VALUES ('" + t.getDni() + "', '" + t.getNameWo()
+				+ "', '" + t.getSurnameWo() + "', '" + t.getPhoneWo() + "', '" + t.getUser().getIdUser() + "');";
+			}
 
 			statement.executeUpdate(sql);
 		} catch (SQLException sqle) {
@@ -200,7 +205,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "DELETE FROM Worker WHERE dni = ?";
+			String sql = "DELETE FROM Employee WHERE dni = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, t.getDni());
 

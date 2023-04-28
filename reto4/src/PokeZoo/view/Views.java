@@ -196,50 +196,57 @@ public class Views {
 		tableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableEmployee.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado" }));
+		tableEmployee.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
 		btnAddNewEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JTextField dni = new JPasswordField();
+				JTextField dni = new JTextField();
 				JTextField name = new JTextField();
 				JTextField surName = new JTextField();
 				JTextField phone = new JTextField();
 				JTextField username = new JTextField();
-				JTextField password = new JPasswordField();
+				JPasswordField password = new JPasswordField();
 
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista", JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
-					// User(idUser, isAdmin, username, passwd, isBlocked)
-					User userToInsert = new User(0, false, username.getText(), password.getText(), false);					
+					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!", JOptionPane.ERROR_MESSAGE);
+					} else if (username.getText().isEmpty() || password.getPassword().length == 0) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Usuario!", "Oye!", JOptionPane.ERROR_MESSAGE);
+					} else {
+						// User(idUser, isAdmin, username, passwd, isBlocked)
+						User userToInsert = new User(0, false, username.getText(), new String(password.getPassword()), false);
 
-					if(!employeeHasEmptyValues()) {
-						try {
-						// TODO Una vez arreglado lo employee descomentar estas lineas de abajo.
-						managerUser.insert(userToInsert);
-						
-						userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(), userToInsert.getPasswd());
-						
 						Employee employeToInsert = new Employee();
 						employeToInsert.setDni(dni.getText());
 						employeToInsert.setNameWo(name.getText());
 						employeToInsert.setSurnameWo(surName.getText());
 						employeToInsert.setPhoneWo(phone.getText());
-						employeToInsert.setUser(userToInsert);
-						
-						managerEmployee.insert(employeToInsert);
-					} catch (Exception e1) {
-						
+
+						try {
+							if(null == managerUser) {
+								managerUser = new ManagerUser();
+							}
+							
+							if(null == managerEmployee) {
+								managerEmployee = new ManagerEmployee();
+							}
+							// TODO Comprobar que el usuario no existe ya
+							managerUser.insert(userToInsert);
+							userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),userToInsert.getPasswd());
+							employeToInsert.setUser(userToInsert);
+							managerEmployee.insert(employeToInsert);
+							JOptionPane.showMessageDialog(null, "Empleado registrado correctamente", "Yay!", JOptionPane.INFORMATION_MESSAGE);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
-					
-					// Nothinf
-					}
-				} else {
-					// Login Canceled
 				}
-			}		
+			}
 		});
 		btnAddNewEmployee.setBounds(10, 336, 150, 23);
 		panelAdminEmployee.add(btnAddNewEmployee);
@@ -263,6 +270,7 @@ public class Views {
 		JButton btnLogOut = new JButton("Cerrar Sesion");
 		btnLogOut.setBorderPainted(false);
 		btnLogOut.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				changeToClientZone();
 			}
@@ -663,11 +671,6 @@ public class Views {
 	}
 
 	// otros metodos
-	private boolean employeeHasEmptyValues() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
