@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
@@ -27,6 +28,7 @@ import PokeZoo.bbdd.manager.ManagerUser;
 import PokeZoo.bbdd.pojo.Dependent;
 import PokeZoo.bbdd.pojo.Employee;
 import PokeZoo.bbdd.pojo.User;
+import rsscalelabel.RSScaleLabel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -68,13 +70,11 @@ public class Views {
 	public Views() {
 		initialize();
 		this.frame.setTitle("Poke-Zoo");
-		ImageIcon img = new ImageIcon(Views.class.getResource("/varios/LogoRecortado.png"));
+		ImageIcon img = new ImageIcon(Views.class.getResource("/misc/LogoRecortado.png"));
 		this.frame.setIconImage(img.getImage());
-		// TODO CAMBIAR ICONO DE ARRIBA A LA DERECHA E ICONO ED APP
-		this.frame.setVisible(true);		
+		this.frame.setVisible(true);
 		this.frame.setResizable(false);
-		// TODO BORRAR MAS TARDE SOLO PARA DEBUG
-		changeToAdminZone();
+
 	}
 
 	/**
@@ -100,6 +100,483 @@ public class Views {
 		// PANEL ADMIN
 		panelAdmin = new JPanel();
 		panelAdmin.setVisible(false);
+
+		// PANEL MAIN
+		panelMain = new JPanel();
+		panelMain.setBounds(0, 0, 734, 461);
+		panelMain.setVisible(false);
+		frame.getContentPane().add(panelMain);
+		panelMain.setLayout(null);
+
+		JLabel lblLogo = new JLabel("");
+		lblLogo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				changeToWorkerZone();
+			}
+		});
+		lblLogo.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Logo.png")).getImage()
+				.getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+		lblLogo.setBounds(668, 11, 56, 39);
+		panelMain.add(lblLogo);
+
+		JButton btnMap = new JButton("Mapa");
+		btnMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchMainPanels("MAP");
+			}
+		});
+		btnMap.setBackground(new Color(255, 255, 255));
+		btnMap.setBounds(10, 61, 186, 39);
+		panelMain.add(btnMap);
+
+		JButton btnPokedex = new JButton("Pokedex");
+		btnPokedex.setBackground(new Color(255, 255, 255));
+		btnPokedex.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchMainPanels("POKEDEX");
+			}
+		});
+		btnPokedex.setBounds(194, 61, 186, 39);
+		panelMain.add(btnPokedex);
+
+		JButton btnShop = new JButton("Tienda");
+		btnShop.setBackground(new Color(255, 255, 255));
+		btnShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchMainPanels("SHOP");
+			}
+		});
+		btnShop.setBounds(379, 61, 174, 39);
+		panelMain.add(btnShop);
+
+		JButton btnTickets = new JButton("Entradas");
+		btnTickets.setBackground(new Color(255, 255, 255));
+		btnTickets.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchMainPanels("TICKETS");
+			}
+		});
+		btnTickets.setBounds(550, 61, 174, 39);
+		panelMain.add(btnTickets);
+
+		JLabel lblAd = new JLabel("¡¡ Compre sus entradas por 9,99€ aqui !!");
+		lblAd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				switchMainPanels("TICKETS");
+			}
+		});
+		lblAd.setBounds(250, 440, 257, 14);
+		panelMain.add(lblAd);
+
+		// PANEL MAIN MAP
+		panelMap = new JPanel();
+		panelMap.setVisible(false);
+		panelMap.setBounds(10, 111, 714, 328);
+		panelMain.add(panelMap);
+		panelMap.setLayout(null);
+
+		panelMap.setBounds(10, 111, 714, 328);
+		panelMain.add(panelMap);
+
+		panelMap.setLayout(null);
+
+		TextField textFieldAllPokemons = new TextField();
+		textFieldAllPokemons.setBounds(174, 20, 142, 23);
+		panelMap.add(textFieldAllPokemons);
+
+		JButton btnMapSearch = new JButton("Buscar");
+		btnMapSearch.setBounds(318, 20, 92, 23);
+		panelMap.add(btnMapSearch);
+
+		JPanel panelMapa = new JPanel();
+		panelMapa.setBounds(0, 0, 714, 328);
+		panelMap.add(panelMapa);
+		panelMapa.setLayout(new GridLayout(6, 7, 0, 0));
+
+		JLabel lblMapa1_0 = new JLabel();
+		lblMapa1_0.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_0, "img/map/mapa1-0.png");
+		panelMapa.add(lblMapa1_0);
+
+		JLabel lblMapa1_1 = new JLabel();
+		lblMapa1_1.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_1, "img/map/mapa1-1.png");
+		panelMapa.add(lblMapa1_1);
+
+		JLabel lblMapa1_2 = new JLabel();
+		lblMapa1_2.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_2, "img/map/mapa1-2.png");
+		panelMapa.add(lblMapa1_2);
+
+		JLabel lblMapa1_3 = new JLabel();
+		lblMapa1_3.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_3, "img/map/mapa1-3.png");
+		panelMapa.add(lblMapa1_3);
+
+		JLabel lblMapa1_4 = new JLabel();
+		lblMapa1_4.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_4, "img/map/mapa1-4.png");
+		panelMapa.add(lblMapa1_4);
+
+		JLabel lblMapa1_5 = new JLabel();
+		lblMapa1_5.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_5, "img/map/mapa1-5.png");
+		panelMapa.add(lblMapa1_5);
+
+		JLabel lblMapa1_6 = new JLabel();
+		lblMapa1_6.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa1_6, "img/map/mapa1-6.png");
+		panelMapa.add(lblMapa1_6);
+
+		JLabel lblMapa2_0 = new JLabel();
+		lblMapa2_0.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_0, "img/map/mapa2-0.png");
+		panelMapa.add(lblMapa2_0);
+
+		JLabel lblMapa2_1 = new JLabel();
+		lblMapa2_1.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_1, "img/map/mapa2-1.png");
+		panelMapa.add(lblMapa2_1);
+
+		JLabel lblMapa2_2 = new JLabel();
+		lblMapa2_2.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_2, "img/map/mapa2-2.png");
+		panelMapa.add(lblMapa2_2);
+
+		JLabel lblMapa2_3 = new JLabel();
+		lblMapa2_3.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_3, "img/map/mapa2-3.png");
+		panelMapa.add(lblMapa2_3);
+
+		JLabel lblMapa2_4 = new JLabel();
+		lblMapa2_4.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_4, "img/map/mapa2-4.png");
+		panelMapa.add(lblMapa2_4);
+
+		JLabel lblMapa2_5 = new JLabel();
+		lblMapa2_5.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_5, "img/map/mapa2-5.png");
+		panelMapa.add(lblMapa2_5);
+
+		JLabel lblMapa2_6 = new JLabel();
+		lblMapa2_6.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa2_6, "img/map/mapa2-6.png");
+		panelMapa.add(lblMapa2_6);
+
+		JLabel lblMapa3_0 = new JLabel();
+		lblMapa3_0.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_0, "img/map/mapa3-0.png");
+		panelMapa.add(lblMapa3_0);
+
+		JLabel lblMapa3_1 = new JLabel();
+		lblMapa3_1.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_1, "img/map/mapa3-1.png");
+		panelMapa.add(lblMapa3_1);
+
+		JLabel lblMapa3_2 = new JLabel();
+		lblMapa3_2.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_2, "img/map/mapa3-2.png");
+		panelMapa.add(lblMapa3_2);
+
+		JLabel lblMapa3_3 = new JLabel();
+		lblMapa3_3.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_3, "img/map/mapa3-3.png");
+		panelMapa.add(lblMapa3_3);
+
+		JLabel lblMapa3_4 = new JLabel();
+		lblMapa3_4.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_4, "img/map/mapa3-4.png");
+		panelMapa.add(lblMapa3_4);
+
+		JLabel lblMapa3_5 = new JLabel();
+		lblMapa3_5.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_5, "img/map/mapa3-5.png");
+		panelMapa.add(lblMapa3_5);
+
+		JLabel lblMapa3_6 = new JLabel();
+		lblMapa3_6.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa3_6, "img/map/mapa3-6.png");
+		panelMapa.add(lblMapa3_6);
+
+		JLabel lblMapa4_0 = new JLabel();
+		lblMapa4_0.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_0, "img/map/mapa4-0.png");
+		panelMapa.add(lblMapa4_0);
+
+		JLabel lblMapa4_1 = new JLabel();
+		lblMapa4_1.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_1, "img/map/mapa4-1.png");
+		panelMapa.add(lblMapa4_1);
+
+		JLabel lblMapa4_2 = new JLabel();
+		lblMapa4_2.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_2, "img/map/mapa4-2.png");
+		panelMapa.add(lblMapa4_2);
+
+		JLabel lblMapa4_3 = new JLabel();
+		lblMapa4_3.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_3, "img/map/mapa4-3.png");
+		panelMapa.add(lblMapa4_3);
+
+		JLabel lblMapa4_4 = new JLabel();
+		lblMapa4_4.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_4, "img/map/mapa4-4.png");
+		panelMapa.add(lblMapa4_4);
+
+		JLabel lblMapa4_5 = new JLabel();
+		lblMapa4_5.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5.png");
+		panelMapa.add(lblMapa4_5);
+
+		JLabel lblMapa4_6 = new JLabel();
+		lblMapa4_6.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa4_6, "img/map/mapa4-6.png");
+		panelMapa.add(lblMapa4_6);
+
+		JLabel lblMapa5_0 = new JLabel();
+		lblMapa5_0.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_0, "img/map/mapa5-0.png");
+		panelMapa.add(lblMapa5_0);
+
+		JLabel lblMapa5_1 = new JLabel();
+		lblMapa5_1.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_1, "img/map/mapa5-1.png");
+		panelMapa.add(lblMapa5_1);
+
+		JLabel lblMapa5_2 = new JLabel();
+		lblMapa5_2.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_2, "img/map/mapa5-2.png");
+		panelMapa.add(lblMapa5_2);
+
+		JLabel lblMapa5_3 = new JLabel();
+		lblMapa5_3.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_3, "img/map/mapa5-3.png");
+		panelMapa.add(lblMapa5_3);
+
+		JLabel lblMapa5_4 = new JLabel();
+		lblMapa5_4.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_4, "img/map/mapa5-4.png");
+		panelMapa.add(lblMapa5_4);
+
+		JLabel lblMapa5_5 = new JLabel();
+		lblMapa5_5.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_5, "img/map/mapa5-5.png");
+		panelMapa.add(lblMapa5_5);
+
+		JLabel lblMapa5_6 = new JLabel();
+		lblMapa5_6.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa5_6, "img/map/mapa5-6.png");
+		panelMapa.add(lblMapa5_6);
+
+		JLabel lblMapa6_0 = new JLabel();
+		lblMapa6_0.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_0, "img/map/mapa6-0.png");
+		panelMapa.add(lblMapa6_0);
+
+		JLabel lblMapa6_1 = new JLabel();
+		lblMapa6_1.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_1, "img/map/mapa6-1.png");
+		panelMapa.add(lblMapa6_1);
+
+		JLabel lblMapa6_2 = new JLabel();
+		lblMapa6_2.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_2, "img/map/mapa6-2.png");
+		panelMapa.add(lblMapa6_2);
+
+		JLabel lblMapa6_3 = new JLabel();
+		lblMapa6_3.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_3, "img/map/mapa6-3.png");
+		panelMapa.add(lblMapa6_3);
+
+		JLabel lblMapa6_4 = new JLabel();
+		lblMapa6_4.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_4, "img/map/mapa6-4.png");
+		panelMapa.add(lblMapa6_4);
+
+		JLabel lblMapa6_5 = new JLabel();
+		lblMapa6_5.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_5, "img/map/mapa6-5.png");
+		panelMapa.add(lblMapa6_5);
+
+		JLabel lblMapa6_6 = new JLabel();
+		lblMapa6_6.setBounds(0, 0, 105, 55);
+		RSScaleLabel.setScaleLabel(lblMapa6_6, "img/map/mapa6-6.png");
+		panelMapa.add(lblMapa6_6);
+
+		btnMapSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblMapa4_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-5.png")));
+				lblMapa4_5.setBounds(0, 0, 105, 55);
+				RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5.png");
+				lblMapa2_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-2.png")));
+				lblMapa2_2.setBounds(0, 0, 105, 55);
+				RSScaleLabel.setScaleLabel(lblMapa2_2, "img/map/mapa2-2.png");
+				if (textFieldAllPokemons.getText().equalsIgnoreCase("charmander")) {
+					lblMapa4_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-5-Alter.png")));
+					lblMapa4_5.setBounds(0, 0, 105, 55);
+					RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5-Alter.png");
+				} else if (textFieldAllPokemons.getText().equalsIgnoreCase("charizard")) {
+					lblMapa4_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-5-Alter.png")));
+					lblMapa4_5.setBounds(0, 0, 105, 55);
+					RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5-Alter.png");
+					lblMapa2_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-2-Alter.png")));
+					lblMapa2_2.setBounds(0, 0, 105, 55);
+					RSScaleLabel.setScaleLabel(lblMapa2_2, "img/map/mapa2-2-Alter.png");
+				}
+			}
+		});
+
+		// PANEL MAIN POKEDEX
+		panelPokedex = new JPanel();
+		panelPokedex.setVisible(false);
+		panelPokedex.setBounds(10, 111, 714, 328);
+		panelMain.add(panelPokedex);
+		panelPokedex.setLayout(null);
+
+		JLabel lblSelectedPokemonImage = new JLabel();
+		lblSelectedPokemonImage.setForeground(new Color(0, 0, 0));
+		lblSelectedPokemonImage.setBackground(new Color(255, 255, 255));
+		lblSelectedPokemonImage.setBounds(531, -50, 173, 222);
+		panelPokedex.add(lblSelectedPokemonImage);
+
+		JLabel lblInfoName = new JLabel("Nombre :");
+		lblInfoName.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblInfoName.setBounds(20, 11, 85, 30);
+		panelPokedex.add(lblInfoName);
+
+		JTextField textPokemonName = new JTextField();
+		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textPokemonName.setBounds(131, 15, 139, 30);
+		panelPokedex.add(textPokemonName);
+
+		JLabel lblInfoAlias = new JLabel("Alias :");
+		lblInfoAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblInfoAlias.setBounds(20, 50, 85, 30);
+		panelPokedex.add(lblInfoAlias);
+
+		JTextField textPokemonAlias = new JTextField();
+		textPokemonAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textPokemonAlias.setBounds(131, 50, 139, 30);
+		panelPokedex.add(textPokemonAlias);
+
+		JLabel lblInfoTypes = new JLabel("Tipo/s :");
+		lblInfoTypes.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblInfoTypes.setBounds(20, 90, 85, 30);
+		panelPokedex.add(lblInfoTypes);
+
+		JTextField textPokemonTypeP = new JTextField();
+		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textPokemonTypeP.setBounds(131, 90, 139, 30);
+		panelPokedex.add(textPokemonTypeP);
+
+		JTextField textPokemonTypeS = new JTextField();
+		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textPokemonTypeS.setBounds(281, 90, 122, 30);
+		panelPokedex.add(textPokemonTypeS);
+
+		JLabel lblDescription = new JLabel("Descripcion :");
+		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDescription.setBounds(20, 120, 200, 44);
+		panelPokedex.add(lblDescription);
+
+		JTextArea textPokemonDescription = new JTextArea();
+		textPokemonDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		textPokemonDescription.setBounds(20, 160, 423, 100);
+		panelPokedex.add(textPokemonDescription);
+
+		JTextField textSearch = new JTextField();
+		textSearch.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		textSearch.setBounds(100, 268, 150, 40);
+		panelPokedex.add(textSearch);
+
+		JButton btnSearch = new JButton();
+		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnSearch.setBounds(250, 268, 40, 40);
+		btnSearch.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/PokeLupa.png")).getImage()
+				.getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textSearch.getText().equalsIgnoreCase("Charizard") || textSearch.getText().equalsIgnoreCase("6")) {
+					textPokemonName.setText("Charizard");
+					textPokemonAlias.setText("Chorizo");
+					textPokemonTypeP.setText("Fuego");
+					textPokemonTypeS.setText("Volador");
+					textPokemonDescription.setText(
+							"Escupe un fuego tan caliente que funde las rocas. \nCausa incendios forestales sin querer.");
+					lblSelectedPokemonImage
+							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Charizard.png"))
+									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+				} else if (textSearch.getText().equalsIgnoreCase("Venusaur")
+						|| textSearch.getText().equalsIgnoreCase("3")) {
+					textPokemonName.setText("Venusaur");
+					textPokemonAlias.setText("Venardo");
+					textPokemonTypeP.setText("Planta");
+					textPokemonTypeS.setText("Veneno");
+					textPokemonDescription.setText(
+							"La planta florece cuando absorbe energía solar, \nlo cual le obliga a buscar siempre la luz del sol.");
+					lblSelectedPokemonImage
+							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Venusaur.png"))
+									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+				} else if (textSearch.getText().equalsIgnoreCase("Blastoise")
+						|| textSearch.getText().equalsIgnoreCase("9")) {
+					textPokemonName.setText("Blastoise");
+					textPokemonAlias.setText("Blas");
+					textPokemonTypeP.setText("Agua");
+					textPokemonTypeS.setText("");
+					textPokemonDescription.setText(
+							"Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. \nEn momentos de apuro, se esconde en el caparazón.");
+					lblSelectedPokemonImage
+							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Blastoise.png"))
+									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
+				} else {
+					textPokemonName.setText("");
+					textPokemonAlias.setText("");
+					textPokemonTypeP.setText("");
+					textPokemonTypeS.setText("");
+					textPokemonDescription.setText("");
+					lblSelectedPokemonImage.setIcon(null);
+				}
+			}
+		});
+		panelPokedex.add(btnSearch);
+
+		JLabel lblPokedexImage = new JLabel();
+		lblPokedexImage.setBounds(0, 0, 714, 314);
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Pokedex.png")).getImage()
+				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		panelPokedex.add(lblPokedexImage);
+
+		// PANEL MAIN TIENDA
+		panelShop = new JPanel();
+		panelShop.setVisible(false);
+		panelShop.setBounds(10, 111, 714, 328);
+		panelMain.add(panelShop);
+		panelShop.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 694, 303);
+		panelShop.add(scrollPane);
+
+		JPanel panelProducts = new JPanel();
+		scrollPane.setViewportView(panelProducts);
+		panelProducts.setLayout(null);
+
+		JLabel lblNewLabel = new JLabel("(imagen 1 ejemplo)");
+		lblNewLabel.setBounds(10, 11, 93, 55);
+		panelProducts.add(lblNewLabel);
+
+		// PANEL MAIN TICKETS
+		panelTickets = new JPanel();
+		panelTickets.setVisible(false);
+		panelTickets.setBounds(10, 111, 714, 328);
+		panelMain.add(panelTickets);
+		panelTickets.setLayout(null);
+
+		JLabel lblNewLabel_1 = new JLabel("Working working");
+		lblNewLabel_1.setBounds(126, 113, 231, 76);
+		panelTickets.add(lblNewLabel_1);
 		panelAdmin.setBounds(0, 0, 734, 461);
 		frame.getContentPane().add(panelAdmin);
 		panelAdmin.setLayout(null);
@@ -140,7 +617,7 @@ public class Views {
 		panelAdminWelcome.add(lblImageWorkers);
 
 		JLabel lbllogo2 = new JLabel("Logo");
-		lbllogo2.setIcon(new ImageIcon(Views.class.getResource("/varios/Logo.png")));
+		lbllogo2.setIcon(new ImageIcon(Views.class.getResource("/misc/Logo.png")));
 		lbllogo2.setBounds(285, 154, 116, 73);
 		panelAdminWelcome.add(lbllogo2);
 
@@ -211,7 +688,7 @@ public class Views {
 				JTextField phone = new JTextField();
 				JTextField username = new JTextField();
 				JPasswordField password = new JPasswordField();
-				
+
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
@@ -294,19 +771,19 @@ public class Views {
 						selectedEmployee.setSurnameWo(surName.getText());
 						selectedEmployee.setPhoneWo(phone.getText());
 						selectedEmployee.getUser().setUsername(username.getText());
-						selectedEmployee.getUser().setPasswd(new String(password.getPassword()));						
+						selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
 						try {
 							managerEmployee.update(selectedEmployee);
-							
-							if(null == managerUser) {
+
+							if (null == managerUser) {
 								managerUser = new ManagerUser();
 							}
 							managerUser.update(selectedEmployee.getUser());
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
-						
-						loadTableEmployeeData(tableEmployee);											
+
+						loadTableEmployeeData(tableEmployee);
 					}
 				}
 			}
@@ -318,13 +795,12 @@ public class Views {
 		btnDeleteEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Employee selectedEmployee = getSelectedEmployee();
-				int confimation = JOptionPane.showConfirmDialog(null,
-						"¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
-						JOptionPane.OK_CANCEL_OPTION);
+				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el empleado?",
+						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
 				if (confimation == JOptionPane.OK_OPTION) {
 					deleteSelectedEmployee(selectedEmployee);
-				}		
-			}			
+				}
+			}
 		});
 		btnDeleteEmployee.setBounds(399, 336, 141, 23);
 		panelAdminEmployee.add(btnDeleteEmployee);
@@ -343,7 +819,7 @@ public class Views {
 				}
 
 				loadTableEmployeeData(tableEmployee);
-			}			
+			}
 		});
 		btnBlockEmployee.setBounds(563, 336, 141, 23);
 		panelAdminEmployee.add(btnBlockEmployee);
@@ -370,264 +846,12 @@ public class Views {
 		lblWelcome.setBounds(280, 149, 170, 105);
 		panelWelcome.add(lblWelcome);
 
-		// PANEL MAIN
-		panelMain = new JPanel();
-		panelMain.setBounds(0, 0, 734, 461);
-		panelMain.setVisible(false);
-		frame.getContentPane().add(panelMain);
-		panelMain.setLayout(null);
-
-		JLabel lblLogo = new JLabel("");
-		lblLogo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				changeToWorkerZone();
-			}
-		});
-		lblLogo.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Logo.png")).getImage()
-				.getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
-		lblLogo.setBounds(668, 11, 56, 39);
-		panelMain.add(lblLogo);
-
-		JButton btnMap = new JButton("Mapa");
-		btnMap.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchMainPanels("MAP");
-			}
-		});
-		btnMap.setBackground(new Color(255, 255, 255));
-		btnMap.setBounds(10, 61, 186, 39);
-		panelMain.add(btnMap);
-
-		JButton btnPokedex = new JButton("Pokedex");
-		btnPokedex.setBackground(new Color(255, 255, 255));
-		btnPokedex.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchMainPanels("POKEDEX");
-			}
-		});
-		btnPokedex.setBounds(194, 61, 186, 39);
-		panelMain.add(btnPokedex);
-
-		JButton btnShop = new JButton("Tienda");
-		btnShop.setBackground(new Color(255, 255, 255));
-		btnShop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchMainPanels("SHOP");
-			}
-		});
-		btnShop.setBounds(379, 61, 174, 39);
-		panelMain.add(btnShop);
-
-		JButton btnTickets = new JButton("Entradas");
-		btnTickets.setBackground(new Color(255, 255, 255));
-		btnTickets.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchMainPanels("TICKETS");
-			}
-		});
-		btnTickets.setBounds(550, 61, 174, 39);
-		panelMain.add(btnTickets);
-
-		JLabel lblAd = new JLabel("¡¡ Compre sus entradas por 9,99€ aqui !!");
-		lblAd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				switchMainPanels("TICKETS");
-			}
-		});
-		lblAd.setBounds(250, 440, 257, 14);
-		panelMain.add(lblAd);
-
-		// PANEL MAIN MAP
-		panelMap = new JPanel();
-		panelMap.setVisible(false);
-		panelMap.setBounds(10, 111, 714, 328);
-		panelMain.add(panelMap);
-		panelMap.setLayout(null);
-
-		JLabel lblMapa = new JLabel();
-		lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap.png")).getImage()
-				.getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
-		lblMapa.setBounds(30, 86, 636, 217);
-		panelMap.add(lblMapa);
-
-		JLabel lblPokemonQuestion = new JLabel("¿Que Pokemon estas Buscando? :");
-		lblPokemonQuestion.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPokemonQuestion.setBounds(23, 26, 278, 22);
-		panelMap.add(lblPokemonQuestion);
-
-		TextField textFieldAllPokemons = new TextField();
-		textFieldAllPokemons.setBounds(327, 29, 222, 22);
-		panelMap.add(textFieldAllPokemons);
-
-		JButton btnMapSearch = new JButton("Buscar");
-		btnMapSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (textFieldAllPokemons.getText().equalsIgnoreCase("charmander")) {
-					lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap2.png"))
-							.getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
-				} else if (textFieldAllPokemons.getText().equalsIgnoreCase("charizard")) {
-					lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap3.png"))
-							.getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
-				} else {
-					lblMapa.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokemonMap.png"))
-							.getImage().getScaledInstance(636, 217, Image.SCALE_SMOOTH)));
-				}
-			}
-		});
-		btnMapSearch.setBounds(577, 28, 89, 23);
-		panelMap.add(btnMapSearch);
-
-		// PANEL MAIN POKEDEX
-		panelPokedex = new JPanel();
-		panelPokedex.setVisible(false);
-		panelPokedex.setBounds(10, 111, 714, 328);
-		panelMain.add(panelPokedex);
-		panelPokedex.setLayout(null);
-
-		JLabel lblSelectedPokemonImage = new JLabel();
-		lblSelectedPokemonImage.setForeground(new Color(0, 0, 0));
-		lblSelectedPokemonImage.setBackground(new Color(255, 255, 255));
-		lblSelectedPokemonImage.setBounds(531, -50, 173, 222);
-		panelPokedex.add(lblSelectedPokemonImage);
-
-		JLabel lblInfoName = new JLabel("Nombre :");
-		lblInfoName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblInfoName.setBounds(20, 11, 85, 30);
-		panelPokedex.add(lblInfoName);
-
-		JTextField textPokemonName = new JTextField();
-		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonName.setBounds(131, 15, 139, 30);
-		panelPokedex.add(textPokemonName);
-
-		JLabel lblInfoAlias = new JLabel("Alias :");
-		lblInfoAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblInfoAlias.setBounds(20, 50, 85, 30);
-		panelPokedex.add(lblInfoAlias);
-
-		JTextField textPokemonAlias = new JTextField();
-		textPokemonAlias.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonAlias.setBounds(131, 50, 139, 30);
-		panelPokedex.add(textPokemonAlias);
-
-		JLabel lblInfoTypes = new JLabel("Tipo/s :");
-		lblInfoTypes.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblInfoTypes.setBounds(20, 90, 85, 30);
-		panelPokedex.add(lblInfoTypes);
-
-		JTextField textPokemonTypeP = new JTextField();
-		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonTypeP.setBounds(131, 90, 139, 30);
-		panelPokedex.add(textPokemonTypeP);
-
-		JTextField textPokemonTypeS = new JTextField();
-		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonTypeS.setBounds(281, 90, 122, 30);
-		panelPokedex.add(textPokemonTypeS);
-
-		JLabel lblDescription = new JLabel("Descripcion :");
-		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDescription.setBounds(20, 120, 200, 44);
-		panelPokedex.add(lblDescription);
-
-		JTextArea textPokemonDescription = new JTextArea();
-		textPokemonDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		textPokemonDescription.setBounds(20, 160, 423, 100);
-		panelPokedex.add(textPokemonDescription);
-
-		JTextField textSearch = new JTextField();
-		textSearch.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		textSearch.setBounds(100, 268, 150, 40);
-		panelPokedex.add(textSearch);
-
-		JButton btnSearch = new JButton();
-		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnSearch.setBounds(250, 268, 40, 40);
-		btnSearch.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/PokeLupa.png")).getImage()
-				.getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (textSearch.getText().equalsIgnoreCase("Charizard") || textSearch.getText().equalsIgnoreCase("6")) {
-					textPokemonName.setText("Charizard");
-					textPokemonAlias.setText("Chorizo");
-					textPokemonTypeP.setText("Fuego");
-					textPokemonTypeS.setText("Volador");
-					textPokemonDescription.setText(
-							"Escupe un fuego tan caliente que funde las rocas. \nCausa incendios forestales sin querer.");
-					lblSelectedPokemonImage
-							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Charizard.png"))
-									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
-				} else if (textSearch.getText().equalsIgnoreCase("Venusaur")
-						|| textSearch.getText().equalsIgnoreCase("3")) {
-					textPokemonName.setText("Venusaur");
-					textPokemonAlias.setText("Venardo");
-					textPokemonTypeP.setText("Planta");
-					textPokemonTypeS.setText("Veneno");
-					textPokemonDescription.setText(
-							"La planta florece cuando absorbe energía solar, \nlo cual le obliga a buscar siempre la luz del sol.");
-					lblSelectedPokemonImage
-							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Venusaur.png"))
-									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
-				} else if (textSearch.getText().equalsIgnoreCase("Blastoise")
-						|| textSearch.getText().equalsIgnoreCase("9")) {
-					textPokemonName.setText("Blastoise");
-					textPokemonAlias.setText("Blas");
-					textPokemonTypeP.setText("Agua");
-					textPokemonTypeS.setText("");
-					textPokemonDescription.setText(
-							"Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. \nEn momentos de apuro, se esconde en el caparazón.");
-					lblSelectedPokemonImage
-							.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Blastoise.png"))
-									.getImage().getScaledInstance(140, 110, Image.SCALE_SMOOTH)));
-				} else {
-					textPokemonName.setText("");
-					textPokemonAlias.setText("");
-					textPokemonTypeP.setText("");
-					textPokemonTypeS.setText("");
-					textPokemonDescription.setText("");
-					lblSelectedPokemonImage.setIcon(null);
-				}
-			}
-		});
-		panelPokedex.add(btnSearch);
-
-		JLabel lblPokedexImage = new JLabel();
-		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/varios/Pokedex.png")).getImage()
-				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
-		panelPokedex.add(lblPokedexImage);
-
-		// PANEL MAIN TIENDA
-		panelShop = new JPanel();
-		panelShop.setVisible(false);
-		panelShop.setBounds(10, 111, 714, 328);
-		panelMain.add(panelShop);
-		panelShop.setLayout(null);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 694, 303);
-		panelShop.add(scrollPane);
-
-		JPanel panelProducts = new JPanel();
-		scrollPane.setViewportView(panelProducts);
-		panelProducts.setLayout(null);
-
-		JLabel lblNewLabel = new JLabel("(imagen 1 ejemplo)");
-		lblNewLabel.setBounds(10, 11, 93, 55);
-		panelProducts.add(lblNewLabel);
-
-		// PANEL MAIN TICKETS
-		panelTickets = new JPanel();
-		panelTickets.setVisible(false);
-		panelTickets.setBounds(10, 111, 714, 328);
-		panelMain.add(panelTickets);
-		panelTickets.setLayout(null);
-
-		JLabel lblNewLabel_1 = new JLabel("Working working");
-		lblNewLabel_1.setBounds(126, 113, 231, 76);
-		panelTickets.add(lblNewLabel_1);
+		/*
+		 * JButton btnMap = new JButton("Mapa"); btnMap.addActionListener(new
+		 * ActionListener() { public void actionPerformed(ActionEvent e) {
+		 * switchMainPanels("MAP"); } }); btnMap.setBackground(new Color(255, 255,
+		 * 255)); btnMap.setBounds(10, 11, 186, 39); panelMain.add(btnMap);
+		 */
 
 		// PANEL LOGIN
 		panelLogin = new JPanel();
@@ -750,29 +974,31 @@ public class Views {
 		}
 	}
 
-	// otros metodos ----------------------------------------------------------------------------
+	// otros metodos
+	// ----------------------------------------------------------------------------
 	private void deleteSelectedEmployee(Employee selectedEmployee) {
-		if(null == managerEmployee) {
+		if (null == managerEmployee) {
 			managerEmployee = new ManagerEmployee();
-		}				
+		}
 		selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
-		
+
 		try {
 			managerUser.delete(selectedEmployee.getUser());
-			JOptionPane.showMessageDialog(null, "Empleado Borrado correctamente", "Correcto!", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Empleado Borrado correctamente", "Correcto!",
+					JOptionPane.PLAIN_MESSAGE);
 			loadTableEmployeeData(tableEmployee);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void blockSelectedEmployee(Employee selectedEmployee) {
-		if(null == managerUser){
+		if (null == managerUser) {
 			managerUser = new ManagerUser();
 		}
 		managerUser.blockUserByIdUser(selectedEmployee.getUser().getIdUser());
 	}
-	
+
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
@@ -794,7 +1020,7 @@ public class Views {
 			e.printStackTrace();
 		}
 
-		if(null != allEmployees) {
+		if (null != allEmployees) {
 			for (Employee employee : allEmployees) {
 				String dni = employee.getDni();
 				String name = employee.getNameWo();
@@ -806,8 +1032,8 @@ public class Views {
 				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString(), username });
 			}
 		}
-		
-		if(null != allDependant) {
+
+		if (null != allDependant) {
 			for (Dependent dependant : allDependant) {
 				String dni = dependant.getDni();
 				String name = dependant.getNameWo();
@@ -818,7 +1044,7 @@ public class Views {
 				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
 			}
 		}
-		
+
 	}
 
 	private Employee getSelectedEmployee() {
@@ -844,7 +1070,6 @@ public class Views {
 		if (null == managerUser) {
 			managerUser = new ManagerUser();
 		}
-
 		int result = managerUser.checkUserExists(userName, passwd);
 		loginOptions(result);
 	}
@@ -857,7 +1082,7 @@ public class Views {
 			break;
 		case 1:
 			JOptionPane.showMessageDialog(null, "Iniciando sesion...", "Correcto!", JOptionPane.PLAIN_MESSAGE);
-			changeToAdminZone();
+			// TODO Zona empleado changeToAdminZone();
 			break;
 		case 2:
 			JOptionPane.showMessageDialog(null, "Iniciando sesion como admin...", "Correcto!",
