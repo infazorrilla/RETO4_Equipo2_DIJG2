@@ -33,6 +33,7 @@ import PokeZoo.bbdd.manager.ManagerUser;
 import PokeZoo.bbdd.pojo.Cleaner;
 import PokeZoo.bbdd.pojo.Dependent;
 import PokeZoo.bbdd.pojo.Employee;
+import PokeZoo.bbdd.pojo.Enclosure;
 import PokeZoo.bbdd.pojo.Pokemon;
 import PokeZoo.bbdd.pojo.User;
 import rsscalelabel.RSScaleLabel;
@@ -874,21 +875,68 @@ public class Views {
 				JTextField phone = new JTextField();
 				JTextField username = new JTextField();
 				JPasswordField password = new JPasswordField();
+				JTextField enclosure = new JTextField();
 
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
-						"Username: *", username, "Password: *", password };
+						"Username: *", username, "Password: *", password, "Recinto*: ", enclosure };
 
 				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
-					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!",
+					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty() || enclosure.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Limpiador!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else if (username.getText().isEmpty() || password.getPassword().length == 0) {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Usuario!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						// TODO
+						// User(idUser, isAdmin, username, passwd, isBlocked)
+						User userToInsert = new User(0, false, username.getText(), new String(password.getPassword()),
+								false);
+
+						Cleaner CleanerToInsert = new Cleaner();
+						CleanerToInsert.setDni(dni.getText());
+						CleanerToInsert.setNameWo(name.getText());
+						CleanerToInsert.setSurnameWo(surName.getText());
+						CleanerToInsert.setPhoneWo(phone.getText());
+						
+						Enclosure enclosureToInsert = new Enclosure();
+						enclosureToInsert.setTypeEn(enclosure.getText());
+						
+						CleanerToInsert.setEnclosure(enclosureToInsert);
+						
+						try {
+							if (null == managerUser) {
+								managerUser = new ManagerUser();
+							}
+							if (null == managerEmployee) {
+								managerEmployee = new ManagerEmployee();
+							}
+							if (null == managerCleaner) {
+								managerCleaner = new ManagerCleaner();
+							}
+							if (null == managerEnclosure) {
+								managerEnclosure = new ManagerEnclosure();
+							}
+							// TODO Comprobar que el usuario no existe ya
+							managerUser.insert(userToInsert);
+							userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
+									userToInsert.getPasswd());
+							CleanerToInsert.setUser(userToInsert);
+							
+							managerEmployee.insert(CleanerToInsert);
+							
+							CleanerToInsert.setIdEmployee(managerEmployee.getEmployeeIdByDni(CleanerToInsert.getDni()));
+							CleanerToInsert.setEnclosure((managerEnclosure.selectEnclosureByTypeEn(CleanerToInsert.getEnclosure().getTypeEn())));
+							
+							managerCleaner.insert(CleanerToInsert);
+							
+							JOptionPane.showMessageDialog(null, "Limpiador registrado correctamente", "Yay!",
+									JOptionPane.INFORMATION_MESSAGE);
+							loadTableCleanerData(tableCleaner);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}						
 					}
 				}
 			}

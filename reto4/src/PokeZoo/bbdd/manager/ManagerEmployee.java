@@ -21,7 +21,12 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		ArrayList<Employee> ret = null;
 
 		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd, isBlock\r\n"
-				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser;";
+				+ "FROM Employee AS e\r\n"
+				+ "JOIN User AS u ON e.idUser = u.idUser\r\n"
+				+ "LEFT JOIN Cleaner AS cl ON cl.idEmployee = e.idEmployee\r\n"
+				+ "LEFT JOIN Caretaker AS ca ON ca.idEmployee = e.idEmployee\r\n"
+				+ "WHERE cl.idEmployee IS NULL\r\n"
+				+ "AND ca.idEmployee IS NULL";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -271,7 +276,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 	public int getEmployeeIdByDni(String dni) {
 		int ret = 0;
 
-		String sql = "SELECT idEmployee, dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd, isBlock \r\n"
+		String sql = "SELECT idEmployee \r\n"
 				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
 
 		Connection connection = null;
