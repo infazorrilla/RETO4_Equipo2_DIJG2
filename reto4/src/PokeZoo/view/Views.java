@@ -22,9 +22,15 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import PokeZoo.bbdd.manager.ManagerCaretaker;
+import PokeZoo.bbdd.manager.ManagerCleaner;
 import PokeZoo.bbdd.manager.ManagerDependent;
 import PokeZoo.bbdd.manager.ManagerEmployee;
+import PokeZoo.bbdd.manager.ManagerEnclosure;
+import PokeZoo.bbdd.manager.ManagerFood;
+import PokeZoo.bbdd.manager.ManagerPokemon;
 import PokeZoo.bbdd.manager.ManagerUser;
+import PokeZoo.bbdd.pojo.Cleaner;
 import PokeZoo.bbdd.pojo.Dependent;
 import PokeZoo.bbdd.pojo.Employee;
 import PokeZoo.bbdd.pojo.User;
@@ -53,6 +59,11 @@ public class Views {
 
 	private JPanel panelAdminWelcome = null;
 	private JPanel panelAdminEmployee = null;
+	private JPanel panelAdminCleaner = null;
+	private JPanel panelAdminCaretaker = null;
+	private JPanel panelAdminPokemon = null;
+	private JPanel panelAdminEnclosure = null;
+	private JPanel panelAdminFood = null;
 
 	// Labels
 	private JLabel lblInfoTabla = null;
@@ -61,8 +72,19 @@ public class Views {
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
 	private ManagerDependent managerDependent = null;
-
-	private JTable tableEmployee;
+	private ManagerCleaner managerCleaner = null;
+	private ManagerCaretaker managerCaretaker = null;
+	private ManagerPokemon managerPokemon = null;
+	private ManagerEnclosure managerEnclosure = null;
+	private ManagerFood managerFood = null;
+	
+	// JTables admin 
+	private JTable tableEmployee = null;
+	private JTable tableCleaner = null;
+	private JTable tableCaretaker = null;
+	private JTable tablePokemon = null;
+	private JTable tableEnclosure = null;
+	private JTable tableFood = null;
 
 	/**
 	 * Create the application.
@@ -638,6 +660,13 @@ public class Views {
 		panelAdmin.add(btnEmployee);
 
 		JButton btnCleaner = new JButton("Limpiadores");
+		btnCleaner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchAdminPanels(2);
+				lblInfoTabla.setText("Tabla Limpiadores");
+				loadTableCleanerData(tableCleaner);
+			}			
+		});
 		btnCleaner.setBackground(Color.WHITE);
 		btnCleaner.setBounds(118, 0, 135, 46);
 		panelAdmin.add(btnCleaner);
@@ -662,10 +691,12 @@ public class Views {
 		btnFood.setBounds(617, 0, 117, 46);
 		panelAdmin.add(btnFood);
 
+		// PANEL EMPLOYEE
 		panelAdminEmployee = new JPanel();
 		panelAdminEmployee.setBounds(10, 68, 714, 370);
 		panelAdmin.add(panelAdminEmployee);
 		panelAdminEmployee.setLayout(null);
+		panelAdminEmployee.setVisible(false);
 
 		JScrollPane scrollPaneTableEmployee = new JScrollPane();
 		scrollPaneTableEmployee.setBounds(10, 11, 694, 321);
@@ -824,6 +855,144 @@ public class Views {
 		btnBlockEmployee.setBounds(563, 336, 141, 23);
 		panelAdminEmployee.add(btnBlockEmployee);
 
+		// PANEL CLEANER
+		// TODO 
+		panelAdminCleaner = new JPanel();
+		panelAdminCleaner.setBounds(10, 68, 714, 370);
+		panelAdmin.add(panelAdminCleaner);
+		panelAdminCleaner.setLayout(null);
+		panelAdminCleaner.setVisible(false);
+
+		JScrollPane scrollPaneTableCleaner = new JScrollPane();
+		scrollPaneTableCleaner.setBounds(10, 11, 694, 321);
+		panelAdminCleaner.add(scrollPaneTableCleaner);
+
+		tableCleaner = new JTable();
+		scrollPaneTableCleaner.setViewportView(tableCleaner);
+
+		tableCleaner.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableCleaner.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado", "usuario", "Recinto" }));
+		tableCleaner.setDefaultEditor(Object.class, null);
+
+		JButton btnAddNewCleaner = new JButton("Añadir Limpiador");
+		btnAddNewCleaner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JTextField dni = new JTextField();
+				JTextField name = new JTextField();
+				JTextField surName = new JTextField();
+				JTextField phone = new JTextField();
+				JTextField username = new JTextField();
+				JPasswordField password = new JPasswordField();
+
+				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
+						"Username: *", username, "Password: *", password };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
+					} else if (username.getText().isEmpty() || password.getPassword().length == 0) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Usuario!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						// TODO
+					}
+				}
+			}
+		});
+		btnAddNewCleaner.setBounds(10, 336, 150, 23);
+		panelAdminCleaner.add(btnAddNewCleaner);
+
+		JButton btnModifyCleaner = new JButton("Modificar Limpiador");
+		btnModifyCleaner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+				/*
+				Cleaner selectedEmployee = getSelectedCleaner();
+
+				JLabel dni = new JLabel();
+				dni.setText(selectedEmployee.getDni());
+				JTextField name = new JTextField();
+				name.setText(selectedEmployee.getNameWo());
+				JTextField surName = new JTextField();
+				surName.setText(selectedEmployee.getSurnameWo());
+				JTextField phone = new JTextField();
+				phone.setText(selectedEmployee.getPhoneWo());
+				JTextField username = new JTextField();
+				username.setText(selectedEmployee.getUser().getUsername());
+				JPasswordField password = new JPasswordField();
+
+				Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
+						"Username: *", username, "Password: *", password };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					int confimation = JOptionPane.showConfirmDialog(null,
+							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (confimation == JOptionPane.OK_OPTION) {
+						selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
+						selectedEmployee.setNameWo(name.getText());
+						selectedEmployee.setSurnameWo(surName.getText());
+						selectedEmployee.setPhoneWo(phone.getText());
+						selectedEmployee.getUser().setUsername(username.getText());
+						selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
+						try {
+							managerEmployee.update(selectedEmployee);
+
+							if (null == managerUser) {
+								managerUser = new ManagerUser();
+							}
+							managerUser.update(selectedEmployee.getUser());
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+
+						loadTableEmployeeData(tableEmployee);
+					}
+				}*/
+			}
+		});
+		btnModifyCleaner.setBounds(180, 336, 141, 23);
+		panelAdminCleaner.add(btnModifyCleaner);
+
+		JButton btnDeleteCleaner = new JButton("Borrar Limpiador");
+		btnDeleteCleaner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Cleaner selectedCleaner = getSelectedCleaner();
+				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el limpiador?",
+						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+				if (confimation == JOptionPane.OK_OPTION) {
+					//deleteSelectedCleaner(selectedCleaner);
+				}
+			}			
+		});
+		btnDeleteCleaner.setBounds(399, 336, 141, 23);
+		panelAdminCleaner.add(btnDeleteCleaner);
+
+		JButton btnBlockCleaner = new JButton("Bloquear Limpiador");
+		btnBlockCleaner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Cleaner selectedCleaner = getSelectedCleaner();
+
+				int confimation = JOptionPane.showConfirmDialog(null,
+						"¿Estas seguro de que deseas BLOQUEAR el limpiador?", "Confirmacion",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (confimation == JOptionPane.OK_OPTION) {
+					blockSelectedCleaner(selectedCleaner);
+				}
+
+				loadTableEmployeeData(tableCleaner);
+			}			
+		});
+		btnBlockCleaner.setBounds(563, 336, 141, 23);
+		panelAdminCleaner.add(btnBlockCleaner);
+
+		// FIN PANELES ADMIN
 		lblInfoTabla = new JLabel("");
 		lblInfoTabla.setBounds(42, 53, 135, 14);
 		panelAdmin.add(lblInfoTabla);
@@ -913,6 +1082,59 @@ public class Views {
 		case 1:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(true);
+			panelAdminCleaner.setVisible(false);
+			/*panelAdminCaretaker.setVisible(false);
+			panelAdminPokemon.setVisible(false);
+			panelAdminEnclosure.setVisible(false);
+			panelAdminFood.setVisible(false);*/
+			break;
+		case 2:
+			panelAdminWelcome.setVisible(false);
+			panelAdminEmployee.setVisible(false);
+			panelAdminCleaner.setVisible(true);
+			/*panelAdminCaretaker.setVisible(false);
+			panelAdminPokemon.setVisible(false);
+			panelAdminEnclosure.setVisible(false);
+			panelAdminFood.setVisible(false);*/
+			break;
+		case 3:
+			panelAdminWelcome.setVisible(false);
+			panelAdminEmployee.setVisible(false);
+			panelAdminCleaner.setVisible(false);
+			/*panelAdminCaretaker.setVisible(true);
+			panelAdminPokemon.setVisible(false);
+			panelAdminEnclosure.setVisible(false);
+			panelAdminFood.setVisible(false);*/
+			break;
+		case 4:
+			panelAdminWelcome.setVisible(false);
+			panelAdminEmployee.setVisible(false);
+			panelAdminCleaner.setVisible(false);
+			/*panelAdminCaretaker.setVisible(false);
+			panelAdminPokemon.setVisible(true);
+			panelAdminEnclosure.setVisible(false);
+			panelAdminFood.setVisible(false);*/
+			break;
+		case 5:
+			panelAdminWelcome.setVisible(false);
+			panelAdminEmployee.setVisible(false);
+			panelAdminCleaner.setVisible(false);
+			/*panelAdminCaretaker.setVisible(false);
+			panelAdminPokemon.setVisible(false);
+			panelAdminEnclosure.setVisible(true);
+			panelAdminFood.setVisible(false);*/
+			break;
+		case 6:
+			panelAdminWelcome.setVisible(false);
+			panelAdminEmployee.setVisible(false);
+			panelAdminCleaner.setVisible(false);
+			/*panelAdminCaretaker.setVisible(false);
+			panelAdminPokemon.setVisible(false);
+			panelAdminEnclosure.setVisible(false);
+			panelAdminFood.setVisible(true);*/
+			break;
+		default:
+			System.out.println("Error");
 		}
 
 	}
@@ -998,6 +1220,11 @@ public class Views {
 		}
 		managerUser.blockUserByIdUser(selectedEmployee.getUser().getIdUser());
 	}
+	
+	private void blockSelectedCleaner(Cleaner selectedCleaner) {
+		// TODO 
+		
+	}
 
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -1044,7 +1271,36 @@ public class Views {
 				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
 			}
 		}
+	}
+	
+	private void loadTableCleanerData(JTable tableCleaner) {
+		DefaultTableModel model = (DefaultTableModel) tableCleaner.getModel();
+		model.setRowCount(0);
 
+		if (null == managerCleaner) {
+			managerCleaner = new ManagerCleaner();
+		}
+
+		ArrayList<Cleaner> allCleaners = null;
+		try {
+			allCleaners = managerCleaner.selectAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (null != allCleaners) {
+			for (Cleaner cleaner : allCleaners) {
+				String dni = cleaner.getDni();
+				String name = cleaner.getNameWo();
+				String surName = cleaner.getSurnameWo();
+				String phone = cleaner.getPhoneWo();
+				Boolean isBlocked = cleaner.getUser().getIsBlocked();
+				String username = cleaner.getUser().getUsername();
+				String enclosure = cleaner.getEnclosure().getTypeEn();
+
+				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString(), username, enclosure });
+			}
+		}
 	}
 
 	private Employee getSelectedEmployee() {
@@ -1059,6 +1315,22 @@ public class Views {
 
 		String dni = (String) tableEmployee.getValueAt(row, 0);
 		ret = managerEmployee.selectEmployeeByDni(dni);
+
+		return ret;
+	}
+	
+	private Cleaner getSelectedCleaner() {
+		Cleaner ret = null;
+		if (tableCleaner.getSelectionModel().isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			ret = new Cleaner();
+		}
+		int row = tableCleaner.getSelectedRow();
+
+		String dni = (String) tableCleaner.getValueAt(row, 0);
+		ret = managerCleaner.selectCleanerByDni(dni);
 
 		return ret;
 	}
