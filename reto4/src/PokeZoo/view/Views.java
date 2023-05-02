@@ -1004,9 +1004,9 @@ public class Views {
 						"¿Estas seguro de que deseas borrar el limpiador?", "Confirmacion",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (confimation == JOptionPane.OK_OPTION) {
-					// deleteSelectedCleaner(selectedCleaner);
+					deleteSelectedEmployee(selectedCleaner);
 				}
-			}
+			}			
 		});
 		btnDeleteCleaner.setBounds(399, 336, 141, 23);
 		panelAdminCleaner.add(btnDeleteCleaner);
