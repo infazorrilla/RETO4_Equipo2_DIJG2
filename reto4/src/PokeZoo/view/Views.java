@@ -1020,10 +1020,10 @@ public class Views {
 						"¿Estas seguro de que deseas BLOQUEAR el limpiador?", "Confirmacion",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (confimation == JOptionPane.OK_OPTION) {
-					blockSelectedCleaner(selectedCleaner);
+					blockSelectedEmployee(selectedCleaner);
 				}
 
-				loadTableEmployeeData(tableCleaner);
+				loadTableCleanerData(tableCleaner);
 			}
 		});
 		btnBlockCleaner.setBounds(563, 336, 141, 23);
@@ -1380,11 +1380,6 @@ public class Views {
 			managerUser = new ManagerUser();
 		}
 		managerUser.blockUserByIdUser(selectedEmployee.getUser().getIdUser());
-	}
-
-	private void blockSelectedCleaner(Cleaner selectedCleaner) {
-		// TODO
-
 	}
 
 	private void loadTableEmployeeData(JTable table) {
