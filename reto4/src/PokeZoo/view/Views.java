@@ -79,8 +79,8 @@ public class Views {
 	private ManagerPokemon managerPokemon = null;
 	private ManagerEnclosure managerEnclosure = null;
 	private ManagerFood managerFood = null;
-	
-	// JTables admin 
+
+	// JTables admin
 	private JTable tableEmployee = null;
 	private JTable tableCleaner = null;
 	private JTable tableCaretaker = null;
@@ -530,15 +530,14 @@ public class Views {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pokemon pokemonSeleccionado = new Pokemon();
-				if(null == managerPokemon) {
+				if (null == managerPokemon) {
 					managerPokemon = new ManagerPokemon();
-				}		
-				if (textSearch.getText().matches("[0-9]+")) {				
+				}
+				if (textSearch.getText().matches("[0-9]+")) {
 					pokemonSeleccionado = managerPokemon.getPokemonByNumPokedex(Integer.parseInt(textSearch.getText()));
 				} else if (managerPokemon.getPokemonByName(textSearch.getText()) != null) {
 					pokemonSeleccionado = managerPokemon.getPokemonByName(textSearch.getText());
-				}
-				else {
+				} else {
 					pokemonSeleccionado.setNamePo("");
 					pokemonSeleccionado.setEggGroup("");
 					pokemonSeleccionado.setTypeP("");
@@ -656,7 +655,7 @@ public class Views {
 				switchAdminPanels(2);
 				lblInfoTabla.setText("Tabla Limpiadores");
 				loadTableCleanerData(tableCleaner);
-			}			
+			}
 		});
 		btnCleaner.setBackground(Color.WHITE);
 		btnCleaner.setBounds(118, 0, 135, 46);
@@ -668,6 +667,13 @@ public class Views {
 		panelAdmin.add(btnCaretakers);
 
 		JButton btnPokemon = new JButton("Pokemons");
+		btnPokemon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchAdminPanels(4);
+				lblInfoTabla.setText("Tabla Pokemons");
+				loadTablePokemonData(tablePokemon);
+			}
+		});
 		btnPokemon.setBackground(Color.WHITE);
 		btnPokemon.setBounds(369, 0, 117, 46);
 		panelAdmin.add(btnPokemon);
@@ -714,7 +720,8 @@ public class Views {
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista",
+				int option = JOptionPane.showConfirmDialog(null, message,
+						"Registrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
@@ -847,7 +854,7 @@ public class Views {
 		panelAdminEmployee.add(btnBlockEmployee);
 
 		// PANEL CLEANER
-		// TODO 
+		// TODO
 		panelAdminCleaner = new JPanel();
 		panelAdminCleaner.setBounds(10, 68, 714, 370);
 		panelAdmin.add(panelAdminCleaner);
@@ -949,50 +956,40 @@ public class Views {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
 				/*
-				Cleaner selectedEmployee = getSelectedCleaner();
-
-				JLabel dni = new JLabel();
-				dni.setText(selectedEmployee.getDni());
-				JTextField name = new JTextField();
-				name.setText(selectedEmployee.getNameWo());
-				JTextField surName = new JTextField();
-				surName.setText(selectedEmployee.getSurnameWo());
-				JTextField phone = new JTextField();
-				phone.setText(selectedEmployee.getPhoneWo());
-				JTextField username = new JTextField();
-				username.setText(selectedEmployee.getUser().getUsername());
-				JPasswordField password = new JPasswordField();
-
-				Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
-						"Username: *", username, "Password: *", password };
-
-				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (option == JOptionPane.OK_OPTION) {
-					int confimation = JOptionPane.showConfirmDialog(null,
-							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-							JOptionPane.OK_CANCEL_OPTION);
-					if (confimation == JOptionPane.OK_OPTION) {
-						selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
-						selectedEmployee.setNameWo(name.getText());
-						selectedEmployee.setSurnameWo(surName.getText());
-						selectedEmployee.setPhoneWo(phone.getText());
-						selectedEmployee.getUser().setUsername(username.getText());
-						selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
-						try {
-							managerEmployee.update(selectedEmployee);
-
-							if (null == managerUser) {
-								managerUser = new ManagerUser();
-							}
-							managerUser.update(selectedEmployee.getUser());
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-
-						loadTableEmployeeData(tableEmployee);
-					}
-				}*/
+				 * Cleaner selectedEmployee = getSelectedCleaner();
+				 * 
+				 * JLabel dni = new JLabel(); dni.setText(selectedEmployee.getDni()); JTextField
+				 * name = new JTextField(); name.setText(selectedEmployee.getNameWo());
+				 * JTextField surName = new JTextField();
+				 * surName.setText(selectedEmployee.getSurnameWo()); JTextField phone = new
+				 * JTextField(); phone.setText(selectedEmployee.getPhoneWo()); JTextField
+				 * username = new JTextField();
+				 * username.setText(selectedEmployee.getUser().getUsername()); JPasswordField
+				 * password = new JPasswordField();
+				 * 
+				 * Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName,
+				 * "Telefono:", phone, "Username: *", username, "Password: *", password };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(
+				 * selectedEmployee.getDni())); selectedEmployee.setNameWo(name.getText());
+				 * selectedEmployee.setSurnameWo(surName.getText());
+				 * selectedEmployee.setPhoneWo(phone.getText());
+				 * selectedEmployee.getUser().setUsername(username.getText());
+				 * selectedEmployee.getUser().setPasswd(new String(password.getPassword())); try
+				 * { managerEmployee.update(selectedEmployee);
+				 * 
+				 * if (null == managerUser) { managerUser = new ManagerUser(); }
+				 * managerUser.update(selectedEmployee.getUser()); } catch (Exception e1) {
+				 * e1.printStackTrace(); }
+				 * 
+				 * loadTableEmployeeData(tableEmployee); } }
+				 */
 			}
 		});
 		btnModifyCleaner.setBounds(180, 336, 141, 23);
@@ -1002,12 +999,13 @@ public class Views {
 		btnDeleteCleaner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cleaner selectedCleaner = getSelectedCleaner();
-				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el limpiador?",
-						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+				int confimation = JOptionPane.showConfirmDialog(null,
+						"¿Estas seguro de que deseas borrar el limpiador?", "Confirmacion",
+						JOptionPane.OK_CANCEL_OPTION);
 				if (confimation == JOptionPane.OK_OPTION) {
-					//deleteSelectedCleaner(selectedCleaner);
+					// deleteSelectedCleaner(selectedCleaner);
 				}
-			}			
+			}
 		});
 		btnDeleteCleaner.setBounds(399, 336, 141, 23);
 		panelAdminCleaner.add(btnDeleteCleaner);
@@ -1025,10 +1023,129 @@ public class Views {
 				}
 
 				loadTableEmployeeData(tableCleaner);
-			}			
+			}
 		});
 		btnBlockCleaner.setBounds(563, 336, 141, 23);
 		panelAdminCleaner.add(btnBlockCleaner);
+
+		// PANEL POKEMON
+		panelAdminPokemon = new JPanel();
+		panelAdminPokemon.setBounds(10, 68, 714, 370);
+		panelAdmin.add(panelAdminPokemon);
+		panelAdminPokemon.setLayout(null);
+		panelAdminPokemon.setVisible(false);
+
+		JScrollPane scrollPaneTablePokemon = new JScrollPane();
+		scrollPaneTablePokemon.setBounds(10, 11, 694, 321);
+		panelAdminPokemon.add(scrollPaneTablePokemon);
+
+		tablePokemon = new JTable();
+		scrollPaneTablePokemon.setViewportView(tablePokemon);
+
+		tablePokemon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablePokemon.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Id", "Nombre", "Grupo huevo", "Tipo P", "Tipo S" }));
+		tablePokemon.setDefaultEditor(Object.class, null);
+
+		JButton btnAddNewPokemon = new JButton("Añadir Pokemon");
+		btnAddNewPokemon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JTextField id = new JTextField();
+				JTextField namePo = new JTextField();
+				JTextField eggGroup = new JTextField();
+				JTextField typeP = new JTextField();
+				JTextField typeS = new JTextField();
+
+				Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:", typeP,
+						"typeS: ", typeS };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Pokemon",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					if (id.getText().isEmpty() || namePo.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Pokemon!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+
+						Pokemon pokemonToInsert = new Pokemon();
+						pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
+						pokemonToInsert.setNamePo(namePo.getText());
+						pokemonToInsert.setEggGroup(eggGroup.getText());
+						pokemonToInsert.setTypeP(typeP.getText());
+						pokemonToInsert.setTypeS(typeS.getText());
+
+						try {
+							if (null == managerPokemon) {
+								managerPokemon = new ManagerPokemon();
+							}
+							// TODO Comprobar que el usuario no existe ya
+							managerPokemon.insert(pokemonToInsert);
+							JOptionPane.showMessageDialog(null, "Pokemon registrado correctamente", "Yay!",
+									JOptionPane.INFORMATION_MESSAGE);
+							loadTablePokemonData(tablePokemon);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		btnAddNewPokemon.setBounds(10, 336, 150, 23);
+		panelAdminPokemon.add(btnAddNewPokemon);
+
+		JButton btnModifyPokemon = new JButton("Modificar Pokemon");
+		btnModifyPokemon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * Pokemon selectedPokemon = getSelectedPokemon();
+				 * 
+				 * JLabel id = new JLabel(); id.setText(selectedPokemon.getIdPokemon());
+				 * JTextField namePo = new JTextField();
+				 * namePo.setText(selectedPokemon.getNamePo()); JTextField eggGroup = new
+				 * JTextField(); eggGroup.setText(selectedPokemon.getEggGroup()); JTextField
+				 * typeP = new JTextField(); typeP.setText(selectedPokemon.getTypeP());
+				 * JTextField typeS = new JTextField();
+				 * typeS.setText(selectedPokemon.getTypeS());
+				 * 
+				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
+				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * selectedPokemon.setIdPokemon(managerPokemon.getPokemonIdByName(
+				 * selectedPokemon.getIdPokemon()));
+				 * selectedPokemon.setNamePo(namePo.getText());
+				 * selectedPokemon.setEggGroup(eggGroup.getText());
+				 * selectedPokemon.setTypeP(typeP.getText());
+				 * selectedPokemon.setTypeS(typeS.getText()); try {
+				 * managerPokemon.update(selectedPokemon); } catch (Exception e1) {
+				 * e1.printStackTrace(); }
+				 * 
+				 * loadTablePokemonData(tablePokemon); } }
+				 */
+			}
+		});
+		btnModifyPokemon.setBounds(180, 336, 141, 23);
+		panelAdminPokemon.add(btnModifyPokemon);
+
+		JButton btnDeletePokemon = new JButton("Borrar Pokemon");
+		btnDeletePokemon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * Pokemon selectedPokemon = getSelectedPokemon(); int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * deleteSelectedPokemon(selectedPokemon); }
+				 */
+			}
+		});
+		btnDeletePokemon.setBounds(399, 336, 141, 23);
+		panelAdminPokemon.add(btnDeletePokemon);
 
 		// FIN PANELES ADMIN
 		lblInfoTabla = new JLabel("");
@@ -1121,55 +1238,60 @@ public class Views {
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(true);
 			panelAdminCleaner.setVisible(false);
-			/*panelAdminCaretaker.setVisible(false);
+			// panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
-			panelAdminEnclosure.setVisible(false);
-			panelAdminFood.setVisible(false);*/
+			/*
+			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
+			 */
 			break;
 		case 2:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(true);
-			/*panelAdminCaretaker.setVisible(false);
+			// panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
-			panelAdminEnclosure.setVisible(false);
-			panelAdminFood.setVisible(false);*/
+			/*
+			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
+			 */
 			break;
 		case 3:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			/*panelAdminCaretaker.setVisible(true);
+			// panelAdminCaretaker.setVisible(true);
 			panelAdminPokemon.setVisible(false);
-			panelAdminEnclosure.setVisible(false);
-			panelAdminFood.setVisible(false);*/
+			/*
+			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
+			 */
 			break;
 		case 4:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			/*panelAdminCaretaker.setVisible(false);
+			// panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(true);
-			panelAdminEnclosure.setVisible(false);
-			panelAdminFood.setVisible(false);*/
+			/*
+			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
+			 */
 			break;
 		case 5:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			/*panelAdminCaretaker.setVisible(false);
+			// panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
-			panelAdminEnclosure.setVisible(true);
-			panelAdminFood.setVisible(false);*/
+			/*
+			 * panelAdminEnclosure.setVisible(true); panelAdminFood.setVisible(false);
+			 */
 			break;
 		case 6:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			/*panelAdminCaretaker.setVisible(false);
-			panelAdminPokemon.setVisible(false);
-			panelAdminEnclosure.setVisible(false);
-			panelAdminFood.setVisible(true);*/
+			/*
+			 * panelAdminCaretaker.setVisible(false); panelAdminPokemon.setVisible(false);
+			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(true);
+			 */
 			break;
 		default:
 			System.out.println("Error");
@@ -1258,10 +1380,10 @@ public class Views {
 		}
 		managerUser.blockUserByIdUser(selectedEmployee.getUser().getIdUser());
 	}
-	
+
 	private void blockSelectedCleaner(Cleaner selectedCleaner) {
-		// TODO 
-		
+		// TODO
+
 	}
 
 	private void loadTableEmployeeData(JTable table) {
@@ -1310,7 +1432,7 @@ public class Views {
 			}
 		}
 	}
-	
+
 	private void loadTableCleanerData(JTable tableCleaner) {
 		DefaultTableModel model = (DefaultTableModel) tableCleaner.getModel();
 		model.setRowCount(0);
@@ -1341,6 +1463,34 @@ public class Views {
 		}
 	}
 
+	private void loadTablePokemonData(JTable tablePokemon) {
+		DefaultTableModel model = (DefaultTableModel) tablePokemon.getModel();
+		model.setRowCount(0);
+
+		if (null == managerPokemon) {
+			managerPokemon = new ManagerPokemon();
+		}
+
+		ArrayList<Pokemon> allPokemons = null;
+		try {
+			allPokemons = managerPokemon.selectAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (null != allPokemons) {
+			for (Pokemon poke : allPokemons) {
+				String idPokemon = Integer.toString(poke.getIdPokemon());
+				String namePo = poke.getNamePo();
+				String eggGroup = poke.getEggGroup();
+				String typeP = poke.getTypeP();
+				String typeS = poke.getTypeS();
+
+				model.addRow(new String[] { idPokemon, namePo, eggGroup, typeP, typeS });
+			}
+		}
+	}
+
 	private Employee getSelectedEmployee() {
 		Employee ret = null;
 		if (tableEmployee.getSelectionModel().isSelectionEmpty()) {
@@ -1356,7 +1506,7 @@ public class Views {
 
 		return ret;
 	}
-	
+
 	private Cleaner getSelectedCleaner() {
 		Cleaner ret = null;
 		if (tableCleaner.getSelectionModel().isSelectionEmpty()) {
