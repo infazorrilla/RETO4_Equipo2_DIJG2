@@ -720,8 +720,7 @@ public class Views {
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
 
-				int option = JOptionPane.showConfirmDialog(null, message,
-						"Registrar nuevo Oficinista",
+				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
@@ -890,7 +889,8 @@ public class Views {
 				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
-					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty() || enclosure.getText().isEmpty()) {
+					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()
+							|| enclosure.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Limpiador!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else if (username.getText().isEmpty() || password.getPassword().length == 0) {
@@ -906,12 +906,12 @@ public class Views {
 						CleanerToInsert.setNameWo(name.getText());
 						CleanerToInsert.setSurnameWo(surName.getText());
 						CleanerToInsert.setPhoneWo(phone.getText());
-						
+
 						Enclosure enclosureToInsert = new Enclosure();
 						enclosureToInsert.setTypeEn(enclosure.getText());
-						
+
 						CleanerToInsert.setEnclosure(enclosureToInsert);
-						
+
 						try {
 							if (null == managerUser) {
 								managerUser = new ManagerUser();
@@ -930,20 +930,21 @@ public class Views {
 							userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
 									userToInsert.getPasswd());
 							CleanerToInsert.setUser(userToInsert);
-							
+
 							managerEmployee.insert(CleanerToInsert);
-							
+
 							CleanerToInsert.setIdEmployee(managerEmployee.getEmployeeIdByDni(CleanerToInsert.getDni()));
-							CleanerToInsert.setEnclosure((managerEnclosure.selectEnclosureByTypeEn(CleanerToInsert.getEnclosure().getTypeEn())));
-							
+							CleanerToInsert.setEnclosure((managerEnclosure
+									.selectEnclosureByTypeEn(CleanerToInsert.getEnclosure().getTypeEn())));
+
 							managerCleaner.insert(CleanerToInsert);
-							
+
 							JOptionPane.showMessageDialog(null, "Limpiador registrado correctamente", "Yay!",
 									JOptionPane.INFORMATION_MESSAGE);
 							loadTableCleanerData(tableCleaner);
 						} catch (Exception e1) {
 							e1.printStackTrace();
-						}						
+						}
 					}
 				}
 			}
