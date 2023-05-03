@@ -135,7 +135,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		}
 		return ret;
 	}
-	
+
 	public Pokemon getPokemonByNumPokedex(int numPokedex) {
 		Pokemon ret = null;
 		String sql = "select * from Pokemon WHERE numPokedex = " + numPokedex;
@@ -194,10 +194,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		}
 		return ret;
 	}
-	
+
 	public Pokemon getPokemonByName(String namePo) {
 		Pokemon ret = null;
-		String sql = "select * from Pokemon WHERE namePo = '" + namePo +"'";
+		String sql = "select * from Pokemon WHERE namePo = '" + namePo + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -258,25 +258,27 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 	public void insert(Pokemon t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-		
+
 		String sql = "";
-		
+
 		try {
 			Class.forName(DBUtils.DRIVER);
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
 			statement = connection.createStatement();
-			if(t.getIdPokemon() == 0) {
+			if (t.getIdPokemon() == 0) {
 				sql = "INSERT INTO Pokemon (codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
 						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
-			}else {
+						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex()
+						+ "', NULL);";
+			} else {
 				sql = "INSERT INTO Pokemon (idPokemon, codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
+						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo()
+						+ "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '"
+						+ t.getNumPokedex() + "', NULL);";
 			}
-			
+
 			statement.executeUpdate(sql);
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -329,14 +331,12 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 		}
 	}
 
@@ -372,7 +372,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
+			;
 		}
 	}
 }

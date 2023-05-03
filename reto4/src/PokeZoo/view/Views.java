@@ -30,10 +30,12 @@ import PokeZoo.bbdd.manager.ManagerEnclosure;
 import PokeZoo.bbdd.manager.ManagerFood;
 import PokeZoo.bbdd.manager.ManagerPokemon;
 import PokeZoo.bbdd.manager.ManagerUser;
+import PokeZoo.bbdd.pojo.Caretaker;
 import PokeZoo.bbdd.pojo.Cleaner;
 import PokeZoo.bbdd.pojo.Dependent;
 import PokeZoo.bbdd.pojo.Employee;
 import PokeZoo.bbdd.pojo.Enclosure;
+import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.pojo.Pokemon;
 import PokeZoo.bbdd.pojo.User;
 import rsscalelabel.RSScaleLabel;
@@ -139,9 +141,8 @@ public class Views {
 				changeToWorkerZone();
 			}
 		});
-		lblLogo.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Logo.png")).getImage()
-				.getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(668, 11, 56, 39);
+		RSScaleLabel.setScaleLabel(lblLogo, "img/misc/LogoRecortado.png");
 		panelMain.add(lblLogo);
 
 		JButton btnMap = new JButton("Mapa");
@@ -537,7 +538,10 @@ public class Views {
 					pokemonSeleccionado = managerPokemon.getPokemonByNumPokedex(Integer.parseInt(textSearch.getText()));
 				} else if (managerPokemon.getPokemonByName(textSearch.getText()) != null) {
 					pokemonSeleccionado = managerPokemon.getPokemonByName(textSearch.getText());
-				} else {
+				}
+
+				if (pokemonSeleccionado == null) {
+					pokemonSeleccionado = new Pokemon();
 					pokemonSeleccionado.setNamePo("");
 					pokemonSeleccionado.setEggGroup("");
 					pokemonSeleccionado.setTypeP("");
@@ -662,6 +666,13 @@ public class Views {
 		panelAdmin.add(btnCleaner);
 
 		JButton btnCaretakers = new JButton("Cuidadores");
+		btnCaretakers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchAdminPanels(3);
+				lblInfoTabla.setText("Tabla Cuidadores");
+				loadTableCaretakerData(tableCaretaker);
+			}
+		});
 		btnCaretakers.setBackground(Color.WHITE);
 		btnCaretakers.setBounds(253, 0, 117, 46);
 		panelAdmin.add(btnCaretakers);
@@ -1006,7 +1017,7 @@ public class Views {
 				if (confimation == JOptionPane.OK_OPTION) {
 					deleteSelectedEmployee(selectedCleaner);
 				}
-			}			
+			}
 		});
 		btnDeleteCleaner.setBounds(399, 336, 141, 23);
 		panelAdminCleaner.add(btnDeleteCleaner);
@@ -1029,6 +1040,166 @@ public class Views {
 		btnBlockCleaner.setBounds(563, 336, 141, 23);
 		panelAdminCleaner.add(btnBlockCleaner);
 
+		// PANEL Caretaker
+		// TODO
+		panelAdminCaretaker = new JPanel();
+		panelAdminCaretaker.setBounds(10, 68, 714, 370);
+		panelAdmin.add(panelAdminCaretaker);
+		panelAdminCaretaker.setLayout(null);
+		panelAdminCaretaker.setVisible(false);
+
+		JScrollPane scrollPaneTableCaretaker = new JScrollPane();
+		scrollPaneTableCaretaker.setBounds(10, 11, 694, 321);
+		panelAdminCaretaker.add(scrollPaneTableCaretaker);
+
+		tableCaretaker = new JTable();
+		scrollPaneTableCaretaker.setViewportView(tableCaretaker);
+
+		tableCaretaker.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableCaretaker.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "DNI", "Nombre", "Apellido", "Telf.", "Bloqueado", "usuario", "Comidas" }));
+		tableCaretaker.setDefaultEditor(Object.class, null);
+
+		JButton btnAddNewCaretaker = new JButton("Añadir Cuidador");
+		btnAddNewCaretaker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * JTextField dni = new JTextField(); JTextField name = new JTextField();
+				 * JTextField surName = new JTextField(); JTextField phone = new JTextField();
+				 * JTextField username = new JTextField(); JPasswordField password = new
+				 * JPasswordField(); JTextField enclosure = new JTextField();
+				 * 
+				 * Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *",
+				 * surName, "Telefono:", phone, "Username: *", username, "Password: *",
+				 * password, "Recinto*: ", enclosure };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Resgistrar nuevo Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { if (dni.getText().isEmpty() ||
+				 * name.getText().isEmpty() || surName.getText().isEmpty() ||
+				 * enclosure.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
+				 * "Faltan datos obligatorios del Limpiador!", "Oye!",
+				 * JOptionPane.ERROR_MESSAGE); } else if (username.getText().isEmpty() ||
+				 * password.getPassword().length == 0) { JOptionPane.showMessageDialog(null,
+				 * "Faltan datos obligatorios del Usuario!", "Oye!", JOptionPane.ERROR_MESSAGE);
+				 * } else { // User(idUser, isAdmin, username, passwd, isBlocked) User
+				 * userToInsert = new User(0, false, username.getText(), new
+				 * String(password.getPassword()), false);
+				 * 
+				 * Cleaner CleanerToInsert = new Cleaner();
+				 * CleanerToInsert.setDni(dni.getText());
+				 * CleanerToInsert.setNameWo(name.getText());
+				 * CleanerToInsert.setSurnameWo(surName.getText());
+				 * CleanerToInsert.setPhoneWo(phone.getText());
+				 * 
+				 * Enclosure enclosureToInsert = new Enclosure();
+				 * enclosureToInsert.setTypeEn(enclosure.getText());
+				 * 
+				 * CleanerToInsert.setEnclosure(enclosureToInsert);
+				 * 
+				 * try { if (null == managerUser) { managerUser = new ManagerUser(); } if (null
+				 * == managerEmployee) { managerEmployee = new ManagerEmployee(); } if (null ==
+				 * managerCleaner) { managerCleaner = new ManagerCleaner(); } if (null ==
+				 * managerEnclosure) { managerEnclosure = new ManagerEnclosure(); } // TODO
+				 * Comprobar que el usuario no existe ya managerUser.insert(userToInsert);
+				 * userToInsert =
+				 * managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
+				 * userToInsert.getPasswd()); CleanerToInsert.setUser(userToInsert);
+				 * 
+				 * managerEmployee.insert(CleanerToInsert);
+				 * 
+				 * CleanerToInsert.setIdEmployee(managerEmployee.getEmployeeIdByDni(
+				 * CleanerToInsert.getDni())); CleanerToInsert.setEnclosure((managerEnclosure
+				 * .selectEnclosureByTypeEn(CleanerToInsert.getEnclosure().getTypeEn())));
+				 * 
+				 * managerCleaner.insert(CleanerToInsert);
+				 * 
+				 * JOptionPane.showMessageDialog(null, "Limpiador registrado correctamente",
+				 * "Yay!", JOptionPane.INFORMATION_MESSAGE); loadTableCleanerData(tableCleaner);
+				 * } catch (Exception e1) { e1.printStackTrace(); } } }
+				 */
+			}
+		});
+		btnAddNewCaretaker.setBounds(10, 336, 150, 23);
+		panelAdminCaretaker.add(btnAddNewCaretaker);
+
+		JButton btnModifyCaretaker = new JButton("Modificar Cuidador");
+		btnModifyCaretaker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+				/*
+				 * Cleaner selectedEmployee = getSelectedCleaner();
+				 * 
+				 * JLabel dni = new JLabel(); dni.setText(selectedEmployee.getDni()); JTextField
+				 * name = new JTextField(); name.setText(selectedEmployee.getNameWo());
+				 * JTextField surName = new JTextField();
+				 * surName.setText(selectedEmployee.getSurnameWo()); JTextField phone = new
+				 * JTextField(); phone.setText(selectedEmployee.getPhoneWo()); JTextField
+				 * username = new JTextField();
+				 * username.setText(selectedEmployee.getUser().getUsername()); JPasswordField
+				 * password = new JPasswordField();
+				 * 
+				 * Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName,
+				 * "Telefono:", phone, "Username: *", username, "Password: *", password };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(
+				 * selectedEmployee.getDni())); selectedEmployee.setNameWo(name.getText());
+				 * selectedEmployee.setSurnameWo(surName.getText());
+				 * selectedEmployee.setPhoneWo(phone.getText());
+				 * selectedEmployee.getUser().setUsername(username.getText());
+				 * selectedEmployee.getUser().setPasswd(new String(password.getPassword())); try
+				 * { managerEmployee.update(selectedEmployee);
+				 * 
+				 * if (null == managerUser) { managerUser = new ManagerUser(); }
+				 * managerUser.update(selectedEmployee.getUser()); } catch (Exception e1) {
+				 * e1.printStackTrace(); }
+				 * 
+				 * loadTableEmployeeData(tableEmployee); } }
+				 */
+			}
+		});
+		btnModifyCaretaker.setBounds(180, 336, 141, 23);
+		panelAdminCaretaker.add(btnModifyCaretaker);
+
+		JButton btnDeleteCaretaker = new JButton("Borrar Cuidador");
+		btnDeleteCaretaker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * Cleaner selectedCleaner = getSelectedCleaner(); int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas borrar el limpiador?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * deleteSelectedEmployee(selectedCleaner); }
+				 */
+			}
+		});
+		btnDeleteCaretaker.setBounds(399, 336, 141, 23);
+		panelAdminCaretaker.add(btnDeleteCaretaker);
+
+		JButton btnBlockCaretaker = new JButton("Bloquear Cuidador");
+		btnBlockCaretaker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * Cleaner selectedCleaner = getSelectedCleaner();
+				 * 
+				 * int confimation = JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas BLOQUEAR el limpiador?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * blockSelectedEmployee(selectedCleaner); }
+				 * 
+				 * loadTableCleanerData(tableCleaner);
+				 */
+			}
+		});
+		btnBlockCaretaker.setBounds(563, 336, 141, 23);
+		panelAdminCaretaker.add(btnBlockCaretaker);
+
 		// PANEL POKEMON
 		panelAdminPokemon = new JPanel();
 		panelAdminPokemon.setBounds(10, 68, 714, 370);
@@ -1045,7 +1216,7 @@ public class Views {
 
 		tablePokemon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePokemon.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Id", "Nombre", "Grupo huevo", "Tipo P", "Tipo S" }));
+				new String[] { "Pokedex", "Nombre", "Grupo huevo", "Tipo P", "Tipo S" }));
 		tablePokemon.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewPokemon = new JButton("Añadir Pokemon");
@@ -1239,60 +1410,56 @@ public class Views {
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(true);
 			panelAdminCleaner.setVisible(false);
-			// panelAdminCaretaker.setVisible(false);
+			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
-			/*
-			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
-			 */
+			// panelAdminEnclosure.setVisible(false);
+			// panelAdminFood.setVisible(false);
 			break;
 		case 2:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(true);
-			// panelAdminCaretaker.setVisible(false);
+			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
-			/*
-			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
-			 */
+			// panelAdminEnclosure.setVisible(false);
+			// panelAdminFood.setVisible(false);
 			break;
 		case 3:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			// panelAdminCaretaker.setVisible(true);
+			panelAdminCaretaker.setVisible(true);
 			panelAdminPokemon.setVisible(false);
-			/*
-			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
-			 */
+			// panelAdminEnclosure.setVisible(false);
+			// panelAdminFood.setVisible(false);
+
 			break;
 		case 4:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			// panelAdminCaretaker.setVisible(false);
+			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(true);
-			/*
-			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(false);
-			 */
+			// panelAdminEnclosure.setVisible(false);
+			// panelAdminFood.setVisible(false);
 			break;
 		case 5:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			// panelAdminCaretaker.setVisible(false);
+			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
-			/*
-			 * panelAdminEnclosure.setVisible(true); panelAdminFood.setVisible(false);
-			 */
+			// panelAdminEnclosure.setVisible(true);
+			// panelAdminFood.setVisible(false);
 			break;
 		case 6:
 			panelAdminWelcome.setVisible(false);
 			panelAdminEmployee.setVisible(false);
 			panelAdminCleaner.setVisible(false);
-			/*
-			 * panelAdminCaretaker.setVisible(false); panelAdminPokemon.setVisible(false);
-			 * panelAdminEnclosure.setVisible(false); panelAdminFood.setVisible(true);
-			 */
+			panelAdminCaretaker.setVisible(false);
+			panelAdminPokemon.setVisible(false);
+			// panelAdminEnclosure.setVisible(false);
+			// panelAdminFood.setVisible(true);
 			break;
 		default:
 			System.out.println("Error");
@@ -1459,6 +1626,37 @@ public class Views {
 		}
 	}
 
+	private void loadTableCaretakerData(JTable tableCaretaker) {
+		DefaultTableModel model = (DefaultTableModel) tableCaretaker.getModel();
+		model.setRowCount(0);
+
+		if (null == managerCaretaker) {
+			managerCaretaker = new ManagerCaretaker();
+		}
+
+		ArrayList<Caretaker> allCaretakers = null;
+		try {
+			allCaretakers = managerCaretaker.selectAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (null != allCaretakers) {
+			for (Caretaker caretaker : allCaretakers) {
+				String dni = caretaker.getDni();
+				String name = caretaker.getNameWo();
+				String surName = caretaker.getSurnameWo();
+				String phone = caretaker.getPhoneWo();
+				Boolean isBlocked = caretaker.getUser().getIsBlocked();
+				String username = caretaker.getUser().getUsername();
+				ArrayList<Food> allFood = caretaker.getFood();
+
+				model.addRow(
+						new String[] { dni, name, surName, phone, isBlocked.toString(), username, allFood.toString() });
+			}
+		}
+	}
+
 	private void loadTablePokemonData(JTable tablePokemon) {
 		DefaultTableModel model = (DefaultTableModel) tablePokemon.getModel();
 		model.setRowCount(0);
@@ -1537,7 +1735,8 @@ public class Views {
 					JOptionPane.ERROR_MESSAGE);
 			break;
 		case 1:
-			JOptionPane.showMessageDialog(null, "Iniciando sesion...", "Correcto!", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Paneles aun no implementados...", "Correcto!",
+					JOptionPane.PLAIN_MESSAGE);
 			// TODO Zona empleado changeToAdminZone();
 			break;
 		case 2:
