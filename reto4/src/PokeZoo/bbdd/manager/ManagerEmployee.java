@@ -96,7 +96,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
 				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
-
+		
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;

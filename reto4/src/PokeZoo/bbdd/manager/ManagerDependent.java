@@ -83,6 +83,69 @@ public class ManagerDependent implements ManagerInterface<Dependent>{
 		}
 		return ret;
 	}
+	
+	public Dependent selectDependentByDni(String dni) {
+		Dependent ret = null;
+
+		String sql = "SELECT dni, nameDe, surnameDe, phoneDe, e.idUser, isAdmin, username, passwd\r\n"
+				+ "FROM Dependent AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni +"';";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret) {
+					ret = new Dependent();
+				}
+				// añadir datos de Shop aqui
+				ret.setDni(resultSet.getString("dni"));
+				ret.setNameWo(resultSet.getString("nameDe"));
+				ret.setSurnameWo(resultSet.getString("surnameDe"));
+				ret.setPhoneWo(resultSet.getString("phoneDe"));
+
+				User user = new User();
+				user.setIdUser(resultSet.getInt("idUser"));
+				user.setAdmin(resultSet.getBoolean("isAdmin"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPasswd(resultSet.getString("passwd"));
+
+				ret.setUser(user);
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		return ret;
+	}
 
 	@Override
 	public void insert(Dependent t) throws SQLException, Exception {
@@ -101,5 +164,7 @@ public class ManagerDependent implements ManagerInterface<Dependent>{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

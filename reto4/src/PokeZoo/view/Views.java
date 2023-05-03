@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 
 import PokeZoo.bbdd.manager.ManagerCaretaker;
 import PokeZoo.bbdd.manager.ManagerCleaner;
-import PokeZoo.bbdd.manager.ManagerDependent;
 import PokeZoo.bbdd.manager.ManagerEmployee;
 import PokeZoo.bbdd.manager.ManagerEnclosure;
 import PokeZoo.bbdd.manager.ManagerFood;
@@ -32,7 +31,6 @@ import PokeZoo.bbdd.manager.ManagerPokemon;
 import PokeZoo.bbdd.manager.ManagerUser;
 import PokeZoo.bbdd.pojo.Caretaker;
 import PokeZoo.bbdd.pojo.Cleaner;
-import PokeZoo.bbdd.pojo.Dependent;
 import PokeZoo.bbdd.pojo.Employee;
 import PokeZoo.bbdd.pojo.Enclosure;
 import PokeZoo.bbdd.pojo.Food;
@@ -75,7 +73,7 @@ public class Views {
 	// Managers
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
-	private ManagerDependent managerDependent = null;
+	//private ManagerDependent managerDependent = null;
 	private ManagerCleaner managerCleaner = null;
 	private ManagerCaretaker managerCaretaker = null;
 	private ManagerPokemon managerPokemon = null;
@@ -154,6 +152,7 @@ public class Views {
 		panelMain.add(lblLogo);
 
 		JButton btnMap = new JButton("Mapa");
+		btnMap.setFocusPainted(false);
 		btnMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchMainPanels("MAP");
@@ -164,6 +163,7 @@ public class Views {
 		panelMain.add(btnMap);
 
 		JButton btnPokedex = new JButton("Pokedex");
+		btnPokedex.setFocusPainted(false);
 		btnPokedex.setBackground(new Color(255, 255, 255));
 		btnPokedex.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,6 +174,7 @@ public class Views {
 		panelMain.add(btnPokedex);
 
 		JButton btnShop = new JButton("Tienda");
+		btnShop.setFocusPainted(false);
 		btnShop.setBackground(new Color(255, 255, 255));
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -184,6 +185,7 @@ public class Views {
 		panelMain.add(btnShop);
 
 		JButton btnTickets = new JButton("Entradas");
+		btnTickets.setFocusPainted(false);
 		btnTickets.setBackground(new Color(255, 255, 255));
 		btnTickets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -492,7 +494,7 @@ public class Views {
 
 		JTextArea textPokemonEggGroup = new JTextArea();
 		textPokemonEggGroup.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonEggGroup.setBounds(131, 53, 139, 30);
+		textPokemonEggGroup.setBounds(131, 53, 160, 30);
 		textPokemonEggGroup.setEditable(false);
 		panelPokedex.add(textPokemonEggGroup);
 
@@ -650,6 +652,7 @@ public class Views {
 		panelAdminWelcome.add(lblImageZoo);
 
 		btnEmployee = new JButton("Oficinistas");
+		btnEmployee.setFocusPainted(false);
 		btnEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchAdminPanels(1);
@@ -664,6 +667,7 @@ public class Views {
 		panelAdmin.add(btnEmployee);
 
 		btnCleaner = new JButton("Limpiadores");
+		btnCleaner.setFocusPainted(false);
 		btnCleaner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchAdminPanels(2);
@@ -674,10 +678,11 @@ public class Views {
 			}
 		});
 		btnCleaner.setBackground(Color.WHITE);
-		btnCleaner.setBounds(118, 0, 135, 46);
+		btnCleaner.setBounds(117, 0, 135, 46);
 		panelAdmin.add(btnCleaner);
 
 		btnCaretakers = new JButton("Cuidadores");
+		btnCaretakers.setFocusPainted(false);
 		btnCaretakers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchAdminPanels(3);
@@ -688,10 +693,11 @@ public class Views {
 			}
 		});
 		btnCaretakers.setBackground(Color.WHITE);
-		btnCaretakers.setBounds(253, 0, 117, 46);
+		btnCaretakers.setBounds(252, 0, 117, 46);
 		panelAdmin.add(btnCaretakers);
 
 		btnPokemon = new JButton("Pokemons");
+		btnPokemon.setFocusPainted(false);
 		btnPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchAdminPanels(4);
@@ -706,6 +712,7 @@ public class Views {
 		panelAdmin.add(btnPokemon);
 
 		btnEnclosure = new JButton("Recintos");
+		btnEnclosure.setFocusPainted(false);
 		btnEnclosure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchAdminPanels(5);
@@ -720,6 +727,7 @@ public class Views {
 		panelAdmin.add(btnEnclosure);
 
 		btnFood = new JButton("Alimento");
+		btnFood.setFocusPainted(false);
 		btnFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchAdminPanels(6);
@@ -815,6 +823,7 @@ public class Views {
 		JButton btnModifyEmployee = new JButton("Modificar Empleado");
 		btnModifyEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// TODO AAAAAAAAAAAAAAAAAAAAAAAAAAA
 				Employee selectedEmployee = getSelectedEmployee();
 
 				JLabel dni = new JLabel();
@@ -1818,15 +1827,15 @@ public class Views {
 			managerEmployee = new ManagerEmployee();
 		}
 
-		if (null == managerDependent) {
+		/*if (null == managerDependent) {
 			managerDependent = new ManagerDependent();
-		}
+		}*/
 
 		ArrayList<Employee> allEmployees = null;
-		ArrayList<Dependent> allDependant = null;
+		//ArrayList<Dependent> allDependant = null;
 		try {
 			allEmployees = managerEmployee.selectAll();
-			allDependant = managerDependent.selectAll();
+			//allDependant = managerDependent.selectAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1844,7 +1853,7 @@ public class Views {
 			}
 		}
 
-		if (null != allDependant) {
+		/*if (null != allDependant) {
 			for (Dependent dependant : allDependant) {
 				String dni = dependant.getDni();
 				String name = dependant.getNameWo();
@@ -1854,7 +1863,7 @@ public class Views {
 
 				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
 			}
-		}
+		}*/
 	}
 
 	private void loadTableCleanerData(JTable tableCleaner) {
@@ -2010,7 +2019,6 @@ public class Views {
 
 		String dni = (String) tableEmployee.getValueAt(row, 0);
 		ret = managerEmployee.selectEmployeeByDni(dni);
-
 		return ret;
 	}
 
