@@ -16,7 +16,6 @@ public class Pokemon implements Serializable {
 	private int idPokemon = 0;
 
 	// Atrib
-	private Blob photoPo = null;
 	private String namePo = null;
 	private String eggGroup = null;
 	private String typeP = null;
@@ -37,14 +36,6 @@ public class Pokemon implements Serializable {
 
 	public void setIdPokemon(int idPokemon) {
 		this.idPokemon = idPokemon;
-	}
-
-	public Blob getPhotoPo() {
-		return photoPo;
-	}
-
-	public void setPhotoPo(Blob photoPo) {
-		this.photoPo = photoPo;
 	}
 
 	public String getNamePo() {
@@ -117,7 +108,7 @@ public class Pokemon implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(descriptionPo, eggGroup, enclosure, food, idPokemon, namePo, numPokedex, photoPo, typeP,
+		return Objects.hash(descriptionPo, eggGroup, enclosure, food, idPokemon, namePo, numPokedex, typeP,
 				typeS);
 	}
 
@@ -133,13 +124,13 @@ public class Pokemon implements Serializable {
 		return Objects.equals(descriptionPo, other.descriptionPo) && Objects.equals(eggGroup, other.eggGroup)
 				&& Objects.equals(enclosure, other.enclosure) && Objects.equals(food, other.food)
 				&& idPokemon == other.idPokemon && Objects.equals(namePo, other.namePo)
-				&& numPokedex == other.numPokedex && Objects.equals(photoPo, other.photoPo)
+				&& numPokedex == other.numPokedex 
 				&& Objects.equals(typeP, other.typeP) && Objects.equals(typeS, other.typeS);
 	}
 
 	@Override
 	public String toString() {
-		return "Pokemon [idPokemon=" + idPokemon + ", photoPo=" + photoPo + ", namePo=" + namePo + ", eggGroup="
+		return "Pokemon [idPokemon=" + idPokemon + ", namePo=" + namePo + ", eggGroup="
 				+ eggGroup + ", typeP=" + typeP + ", typeS=" + typeS + ", numPokedex=" + numPokedex + ", descriptionPo="
 				+ descriptionPo + ", food=" + food + ", enclosure=" + enclosure + "]";
 	}

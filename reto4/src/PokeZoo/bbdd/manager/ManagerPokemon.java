@@ -46,7 +46,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				poke.setTypeS(resultSet.getString("typeS"));
 				poke.setDescriptionPo(resultSet.getString("descriptionPo"));
 				poke.setNumPokedex(resultSet.getInt("numPokedex"));
-				poke.setPhotoPo(resultSet.getBlob("photoPo"));
 
 				ret.add(poke);
 			}
@@ -105,7 +104,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
 				ret.setNumPokedex(resultSet.getInt("numPokedex"));
-				ret.setPhotoPo(resultSet.getBlob("photoPo"));
 				ret.setFood(null);
 			}
 		} catch (SQLException sqle) {
@@ -164,7 +162,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
 				ret.setNumPokedex(resultSet.getInt("numPokedex"));
-				ret.setPhotoPo(resultSet.getBlob("photoPo"));
 				ret.setFood(null);
 			}
 		} catch (SQLException sqle) {
@@ -223,7 +220,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
 				ret.setNumPokedex(resultSet.getInt("numPokedex"));
-				ret.setPhotoPo(resultSet.getBlob("photoPo"));
 				ret.setFood(null);
 			}
 		} catch (SQLException sqle) {
