@@ -708,7 +708,7 @@ public class Views {
 		btnEnclosure = new JButton("Recintos");
 		btnEnclosure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switchAdminPanels(5);				
+				switchAdminPanels(5);
 				lblInfoTabla.setText("Tabla Recintos");
 				loadTableEnclosureData(tableEnclosure);
 				setAllButtonsBackgroundToWhite();
@@ -1368,51 +1368,41 @@ public class Views {
 		scrollPaneTableEnclosure.setViewportView(tableEnclosure);
 
 		tableEnclosure.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableEnclosure.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Numero", "Nombre" }));
+		tableEnclosure.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Numero", "Nombre" }));
 		tableEnclosure.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewEnclosure = new JButton("Añadir Recinto");
 		btnAddNewEnclosure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*JTextField id = new JTextField();
-				JTextField namePo = new JTextField();
-				JTextField eggGroup = new JTextField();
-				JTextField typeP = new JTextField();
-				JTextField typeS = new JTextField();
-
-				Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:", typeP,
-						"typeS: ", typeS };
-
-				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Pokemon",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (option == JOptionPane.OK_OPTION) {
-					if (id.getText().isEmpty() || namePo.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Pokemon!", "Oye!",
-								JOptionPane.ERROR_MESSAGE);
-					} else {
-
-						Pokemon pokemonToInsert = new Pokemon();
-						pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
-						pokemonToInsert.setNamePo(namePo.getText());
-						pokemonToInsert.setEggGroup(eggGroup.getText());
-						pokemonToInsert.setTypeP(typeP.getText());
-						pokemonToInsert.setTypeS(typeS.getText());
-
-						try {
-							if (null == managerPokemon) {
-								managerPokemon = new ManagerPokemon();
-							}
-							// TODO Comprobar que el usuario no existe ya
-							managerPokemon.insert(pokemonToInsert);
-							JOptionPane.showMessageDialog(null, "Pokemon registrado correctamente", "Yay!",
-									JOptionPane.INFORMATION_MESSAGE);
-							loadTablePokemonData(tablePokemon);
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-					}
-				}*/
+				/*
+				 * JTextField id = new JTextField(); JTextField namePo = new JTextField();
+				 * JTextField eggGroup = new JTextField(); JTextField typeP = new JTextField();
+				 * JTextField typeS = new JTextField();
+				 * 
+				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
+				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Resgistrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { if (id.getText().isEmpty() ||
+				 * namePo.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
+				 * "Faltan datos obligatorios del Pokemon!", "Oye!", JOptionPane.ERROR_MESSAGE);
+				 * } else {
+				 * 
+				 * Pokemon pokemonToInsert = new Pokemon();
+				 * pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
+				 * pokemonToInsert.setNamePo(namePo.getText());
+				 * pokemonToInsert.setEggGroup(eggGroup.getText());
+				 * pokemonToInsert.setTypeP(typeP.getText());
+				 * pokemonToInsert.setTypeS(typeS.getText());
+				 * 
+				 * try { if (null == managerPokemon) { managerPokemon = new ManagerPokemon(); }
+				 * // TODO Comprobar que el usuario no existe ya
+				 * managerPokemon.insert(pokemonToInsert); JOptionPane.showMessageDialog(null,
+				 * "Pokemon registrado correctamente", "Yay!", JOptionPane.INFORMATION_MESSAGE);
+				 * loadTablePokemonData(tablePokemon); } catch (Exception e1) {
+				 * e1.printStackTrace(); } } }
+				 */
 			}
 		});
 		btnAddNewEnclosure.setBounds(10, 336, 150, 23);
@@ -1471,6 +1461,115 @@ public class Views {
 		});
 		btnDeleteEnclosure.setBounds(399, 336, 141, 23);
 		panelAdminEnclosure.add(btnDeleteEnclosure);
+
+		// PANEL FOOD
+		panelAdminFood = new JPanel();
+		panelAdminFood.setBounds(10, 68, 714, 370);
+		panelAdmin.add(panelAdminFood);
+		panelAdminFood.setLayout(null);
+		panelAdminFood.setVisible(false);
+
+		JScrollPane scrollPaneTableFood = new JScrollPane();
+		scrollPaneTableFood.setBounds(10, 11, 694, 321);
+		panelAdminFood.add(scrollPaneTableFood);
+
+		tableFood = new JTable();
+		scrollPaneTableFood.setViewportView(tableFood);
+
+		tableFood.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableFood.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Descripcion", "Cantidad", "Consumo Diario" }));
+		tableFood.setDefaultEditor(Object.class, null);
+
+		JButton btnAddNewFood = new JButton("Nueva Comida");
+		btnAddNewFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * JTextField id = new JTextField(); JTextField namePo = new JTextField();
+				 * JTextField eggGroup = new JTextField(); JTextField typeP = new JTextField();
+				 * JTextField typeS = new JTextField();
+				 * 
+				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
+				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Resgistrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { if (id.getText().isEmpty() ||
+				 * namePo.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
+				 * "Faltan datos obligatorios del Pokemon!", "Oye!", JOptionPane.ERROR_MESSAGE);
+				 * } else {
+				 * 
+				 * Pokemon pokemonToInsert = new Pokemon();
+				 * pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
+				 * pokemonToInsert.setNamePo(namePo.getText());
+				 * pokemonToInsert.setEggGroup(eggGroup.getText());
+				 * pokemonToInsert.setTypeP(typeP.getText());
+				 * pokemonToInsert.setTypeS(typeS.getText());
+				 * 
+				 * try { if (null == managerPokemon) { managerPokemon = new ManagerPokemon(); }
+				 * // TODO Comprobar que el usuario no existe ya
+				 * managerPokemon.insert(pokemonToInsert); JOptionPane.showMessageDialog(null,
+				 * "Pokemon registrado correctamente", "Yay!", JOptionPane.INFORMATION_MESSAGE);
+				 * loadTablePokemonData(tablePokemon); } catch (Exception e1) {
+				 * e1.printStackTrace(); } } }
+				 */
+			}
+		});
+		btnAddNewFood.setBounds(10, 336, 150, 23);
+		panelAdminFood.add(btnAddNewFood);
+
+		JButton btnModifyFood = new JButton("Modificar Comida");
+		btnModifyFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * Pokemon selectedPokemon = getSelectedPokemon();
+				 * 
+				 * JLabel id = new JLabel(); id.setText(selectedPokemon.getIdPokemon());
+				 * JTextField namePo = new JTextField();
+				 * namePo.setText(selectedPokemon.getNamePo()); JTextField eggGroup = new
+				 * JTextField(); eggGroup.setText(selectedPokemon.getEggGroup()); JTextField
+				 * typeP = new JTextField(); typeP.setText(selectedPokemon.getTypeP());
+				 * JTextField typeS = new JTextField();
+				 * typeS.setText(selectedPokemon.getTypeS());
+				 * 
+				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
+				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
+				 * 
+				 * int option = JOptionPane.showConfirmDialog(null, message,
+				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * JOptionPane.OK_OPTION) { int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * selectedPokemon.setIdPokemon(managerPokemon.getPokemonIdByName(
+				 * selectedPokemon.getIdPokemon()));
+				 * selectedPokemon.setNamePo(namePo.getText());
+				 * selectedPokemon.setEggGroup(eggGroup.getText());
+				 * selectedPokemon.setTypeP(typeP.getText());
+				 * selectedPokemon.setTypeS(typeS.getText()); try {
+				 * managerPokemon.update(selectedPokemon); } catch (Exception e1) {
+				 * e1.printStackTrace(); }
+				 * 
+				 * loadTablePokemonData(tablePokemon); } }
+				 */
+			}
+		});
+		btnModifyFood.setBounds(180, 336, 141, 23);
+		panelAdminFood.add(btnModifyFood);
+
+		JButton btnDeleteFood = new JButton("Borrar Comida");
+		btnDeleteFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 * Pokemon selectedPokemon = getSelectedPokemon(); int confimation =
+				 * JOptionPane.showConfirmDialog(null,
+				 * "¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
+				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 * deleteSelectedPokemon(selectedPokemon); }
+				 */
+			}
+		});
+		btnDeleteFood.setBounds(399, 336, 141, 23);
+		panelAdminFood.add(btnDeleteFood);
 
 		// FIN PANELES ADMIN
 		lblInfoTabla = new JLabel("");
@@ -1575,7 +1674,7 @@ public class Views {
 			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
 			panelAdminEnclosure.setVisible(false);
-			// panelAdminFood.setVisible(false);
+			panelAdminFood.setVisible(false);
 			break;
 		case 2:
 			panelAdminWelcome.setVisible(false);
@@ -1584,7 +1683,7 @@ public class Views {
 			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
 			panelAdminEnclosure.setVisible(false);
-			// panelAdminFood.setVisible(false);
+			panelAdminFood.setVisible(false);
 			break;
 		case 3:
 			panelAdminWelcome.setVisible(false);
@@ -1593,7 +1692,7 @@ public class Views {
 			panelAdminCaretaker.setVisible(true);
 			panelAdminPokemon.setVisible(false);
 			panelAdminEnclosure.setVisible(false);
-			// panelAdminFood.setVisible(false);
+			panelAdminFood.setVisible(false);
 
 			break;
 		case 4:
@@ -1603,7 +1702,7 @@ public class Views {
 			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(true);
 			panelAdminEnclosure.setVisible(false);
-			// panelAdminFood.setVisible(false);
+			panelAdminFood.setVisible(false);
 			break;
 		case 5:
 			panelAdminWelcome.setVisible(false);
@@ -1612,7 +1711,7 @@ public class Views {
 			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
 			panelAdminEnclosure.setVisible(true);
-			// panelAdminFood.setVisible(false);
+			panelAdminFood.setVisible(false);
 			break;
 		case 6:
 			panelAdminWelcome.setVisible(false);
@@ -1621,7 +1720,7 @@ public class Views {
 			panelAdminCaretaker.setVisible(false);
 			panelAdminPokemon.setVisible(false);
 			panelAdminEnclosure.setVisible(false);
-			// panelAdminFood.setVisible(true);
+			panelAdminFood.setVisible(true);
 			break;
 		default:
 			System.out.println("Error");
