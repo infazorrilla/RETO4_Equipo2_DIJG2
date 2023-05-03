@@ -38,10 +38,11 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				}
 				Pokemon poke = new Pokemon();
 
-				// añadir datos del Pokemon aqui
+// añadir datos del Pokemon aqui
 				poke.setIdPokemon(resultSet.getInt("idPokemon"));
 				poke.setFood(null);
 				poke.setNamePo(resultSet.getString("namePo"));
+				poke.setEggGroup(resultSet.getString("eggGroup"));
 				poke.setTypeP(resultSet.getString("typeP"));
 				poke.setTypeS(resultSet.getString("typeS"));
 				poke.setDescriptionPo(resultSet.getString("descriptionPo"));
@@ -97,9 +98,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-				// añadir datos del Pokemon aqui
+// añadir datos del Pokemon aqui
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
+				ret.setEggGroup(resultSet.getString("eggGroup"));
 				ret.setTypeP(resultSet.getString("typeP"));
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
@@ -154,10 +156,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-				// añadir datos del Pokemon aqui
+// añadir datos del Pokemon aqui
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
-				ret.setEggGroup(resultSet.getString("alias"));
+				ret.setEggGroup(resultSet.getString("eggGroup"));
 				ret.setTypeP(resultSet.getString("typeP"));
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
@@ -212,10 +214,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-				// añadir datos del Pokemon aqui
+// añadir datos del Pokemon aqui
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
-				ret.setEggGroup(resultSet.getString("alias"));
+				ret.setEggGroup(resultSet.getString("eggGroup"));
 				ret.setTypeP(resultSet.getString("typeP"));
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
@@ -264,15 +266,15 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
 			statement = connection.createStatement();
 			if (t.getIdPokemon() == 0) {
-				sql = "INSERT INTO Pokemon (codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex()
-						+ "', NULL);";
-			} else {
-				sql = "INSERT INTO Pokemon (idPokemon, codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo()
+				sql = "INSERT INTO Pokemon (codFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex, photoPo) "
+						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getEggGroup()
 						+ "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '"
 						+ t.getNumPokedex() + "', NULL);";
+			} else {
+				sql = "INSERT INTO Pokemon (idPokemon, codFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex, photoPo) "
+						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo()
+						+ t.getEggGroup() + "', '" + "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '"
+						+ t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
 			}
 
 			statement.executeUpdate(sql);
@@ -285,13 +287,13 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-				// Nothing
+// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				// Nothing
+// Nothing
 			}
 		}
 	}
@@ -305,15 +307,16 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			Class.forName(DBUtils.DRIVER);
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "UPDATE Pokemon SET codFood = ?, namePo = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ? WHERE idPokemon = ?";
+			String sql = "UPDATE Pokemon SET codFood = ?, namePo = ?, eggGroup = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ? WHERE idPokemon = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, t.getFood().getIdFood());
 			preparedStatement.setString(2, t.getNamePo());
-			preparedStatement.setString(3, t.getTypeP());
-			preparedStatement.setString(4, t.getTypeS());
-			preparedStatement.setString(5, t.getDescriptionPo());
-			preparedStatement.setInt(6, t.getNumPokedex());
-			preparedStatement.setInt(7, t.getIdPokemon());
+			preparedStatement.setString(3, t.getEggGroup());
+			preparedStatement.setString(4, t.getTypeP());
+			preparedStatement.setString(5, t.getTypeS());
+			preparedStatement.setString(6, t.getDescriptionPo());
+			preparedStatement.setInt(7, t.getNumPokedex());
+			preparedStatement.setInt(8, t.getIdPokemon());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
@@ -325,14 +328,16 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (preparedStatement != null)
 					preparedStatement.close();
 			} catch (Exception e) {
-				// Nothing
+// Nothing
 			}
+			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				// Nothing
+// Nothing
 			}
+			;
 		}
 	}
 
@@ -360,14 +365,14 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (preparedStatement != null)
 					preparedStatement.close();
 			} catch (Exception e) {
-				// Nothing
+// Nothing
 			}
 			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				// Nothing
+// Nothing
 			}
 			;
 		}

@@ -1,7 +1,6 @@
 package PokeZoo.bbdd.pojo;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Objects;
 
