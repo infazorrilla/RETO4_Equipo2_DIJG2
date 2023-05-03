@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Product;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -32,22 +33,26 @@ public class ManagerProduct implements ManagerInterface<Product> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Product>();
-				}
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Productos");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Product>();
+					}
 
-				Product product = new Product();
+					Product product = new Product();
 
-				// añadir datos del Pokemon aqui
-				product.setIdProduct(resultSet.getInt("idProduct"));
-				product.setNamePr(resultSet.getString("namePr"));
-				product.setDescriptionPr(resultSet.getString("descripcionPr"));
-				product.setPhotoPr(resultSet.getBlob("photoPr"));
-				product.setValuePr(resultSet.getDouble("valuePr"));
-				product.setQuantityPr(resultSet.getInt("quantityPr"));
+					// añadir datos del Pokemon aqui
+					product.setIdProduct(resultSet.getInt("idProduct"));
+					product.setNamePr(resultSet.getString("namePr"));
+					product.setDescriptionPr(resultSet.getString("descripcionPr"));
+					product.setPhotoPr(resultSet.getBlob("photoPr"));
+					product.setValuePr(resultSet.getDouble("valuePr"));
+					product.setQuantityPr(resultSet.getInt("quantityPr"));
 
-				ret.add(product);
+					ret.add(product);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -92,17 +97,21 @@ public class ManagerProduct implements ManagerInterface<Product> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			if (resultSet.next()) {
-				if (null == ret) {
-					ret = new Product();
-				}
-				// añadir datos del Pokemon aqui
-				ret.setIdProduct(resultSet.getInt("idProduct"));
-				ret.setNamePr(resultSet.getString("namePr"));
-				ret.setDescriptionPr(resultSet.getString("descriptionPr"));
-				ret.setPhotoPr(resultSet.getBlob("photoPr"));
-				ret.setValuePr(resultSet.getDouble("valuePr"));
-				ret.setQuantityPr(resultSet.getInt("quantityPr"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Productos");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Product();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdProduct(resultSet.getInt("idProduct"));
+					ret.setNamePr(resultSet.getString("namePr"));
+					ret.setDescriptionPr(resultSet.getString("descriptionPr"));
+					ret.setPhotoPr(resultSet.getBlob("photoPr"));
+					ret.setValuePr(resultSet.getDouble("valuePr"));
+					ret.setQuantityPr(resultSet.getInt("quantityPr"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());

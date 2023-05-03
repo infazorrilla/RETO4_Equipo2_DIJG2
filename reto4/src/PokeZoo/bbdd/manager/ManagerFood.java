@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -32,21 +33,23 @@ public class ManagerFood implements ManagerInterface<Food>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Food>();
-				}
-
-				Food food = new Food();
-
-				// añadir datos del Pokemon aqui
-				food.setIdFood(resultSet.getInt("idFood"));
-				food.setQuantityFo(resultSet.getInt("quantityFo"));
-				food.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
-				food.setNameFo(resultSet.getString("nameFo"));
-				food.setDescriptionFo(resultSet.getString("descriptionFo"));
-				
-				ret.add(food);
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Food>();
+					}
+					Food food = new Food();
+					// añadir datos del Pokemon aqui
+					food.setIdFood(resultSet.getInt("idFood"));
+					food.setQuantityFo(resultSet.getInt("quantityFo"));
+					food.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					food.setNameFo(resultSet.getString("nameFo"));
+					food.setDescriptionFo(resultSet.getString("descriptionFo"));
+					
+					ret.add(food);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -91,16 +94,20 @@ public class ManagerFood implements ManagerInterface<Food>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			if (resultSet.next()) {
-				if (null == ret) {
-					ret = new Food();
-				}
-				// añadir datos del Pokemon aqui
-				ret.setIdFood(resultSet.getInt("idFood"));
-				ret.setQuantityFo(resultSet.getInt("quantityFo"));
-				ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
-				ret.setNameFo(resultSet.getString("nameFo"));
-				ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Food();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdFood(resultSet.getInt("idFood"));
+					ret.setQuantityFo(resultSet.getInt("quantityFo"));
+					ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					ret.setNameFo(resultSet.getString("nameFo"));
+					ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());

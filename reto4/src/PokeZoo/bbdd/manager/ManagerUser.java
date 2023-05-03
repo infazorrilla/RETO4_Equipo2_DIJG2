@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -33,20 +34,23 @@ public class ManagerUser implements ManagerInterface<User> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<User>();
-				}
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Cuidadores");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<User>();
+					}
+					User user = new User();
 
-				User user = new User();
+					// añadir datos de Shop aqui
+					user.setIdUser(resultSet.getInt("idUser"));
+					user.setAdmin(resultSet.getBoolean("isAdmin"));
+					user.setUsername(resultSet.getString("username"));
+					user.setPasswd(resultSet.getString("passwd"));
 
-				// añadir datos de Shop aqui
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
-
-				ret.add(user);
+					ret.add(user);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -92,15 +96,19 @@ public class ManagerUser implements ManagerInterface<User> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			if (resultSet.next()) {
-				if (null == ret) {
-					ret = new User();
-				}
-				// añadir datos de Shop aqui
-				ret.setIdUser(resultSet.getInt("idUser"));
-				ret.setAdmin(resultSet.getBoolean("isAdmin"));
-				ret.setUsername(resultSet.getString("username"));
-				ret.setPasswd(resultSet.getString("passwd"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Cuidadores");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new User();
+					}
+					// añadir datos de Shop aqui
+					ret.setIdUser(resultSet.getInt("idUser"));
+					ret.setAdmin(resultSet.getBoolean("isAdmin"));
+					ret.setUsername(resultSet.getString("username"));
+					ret.setPasswd(resultSet.getString("passwd"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());

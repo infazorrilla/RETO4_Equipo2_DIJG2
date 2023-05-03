@@ -9,19 +9,19 @@ import java.util.ArrayList;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Caretaker;
 import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerCaretaker implements ManagerInterface<Caretaker>{
+public class ManagerCaretaker implements ManagerInterface<Caretaker> {
 	@Override
 	public ArrayList<Caretaker> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Caretaker> ret = null;
 
 		String sql = "SELECT e.idEmployee, dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd, isBlock\r\n"
-				+ "FROM Employee AS e \r\n"
-				+ "JOIN User AS u ON e.idUser = u.idUser\r\n"
+				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser\r\n"
 				+ "JOIN Caretaker AS c ON e.idEmployee = c.idEmployee;";
 
 		Connection connection = null;
@@ -36,32 +36,37 @@ public class ManagerCaretaker implements ManagerInterface<Caretaker>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Caretaker>();
-				}
-				Caretaker caretaker = new Caretaker();
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Cuidadores");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Caretaker>();
+					}
+					Caretaker caretaker = new Caretaker();
 
-				// añadir datos de Shop aqui
-				caretaker.setIdEmployee(resultSet.getInt("IdEmployee"));
-				caretaker.setDni(resultSet.getString("dni"));
-				caretaker.setNameWo(resultSet.getString("nameEm"));
-				caretaker.setSurnameWo(resultSet.getString("surnameEm"));
-				caretaker.setPhoneWo(resultSet.getString("phoneEm"));
+					// añadir datos de Shop aqui
+					caretaker.setIdEmployee(resultSet.getInt("IdEmployee"));
+					caretaker.setDni(resultSet.getString("dni"));
+					caretaker.setNameWo(resultSet.getString("nameEm"));
+					caretaker.setSurnameWo(resultSet.getString("surnameEm"));
+					caretaker.setPhoneWo(resultSet.getString("phoneEm"));
 
-				User user = new User();
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
-				user.setIsBlocked(resultSet.getBoolean("isBlock"));
+					User user = new User();
+					user.setIdUser(resultSet.getInt("idUser"));
+					user.setAdmin(resultSet.getBoolean("isAdmin"));
+					user.setUsername(resultSet.getString("username"));
+					user.setPasswd(resultSet.getString("passwd"));
+					user.setIsBlocked(resultSet.getBoolean("isBlock"));
 
-				caretaker.setUser(user);
+					caretaker.setUser(user);
 
-				caretaker.setFood(selecAllFoodOfCaretakerByIdEmployee(caretaker.getIdEmployee()));
+					caretaker.setFood(selecAllFoodOfCaretakerByIdEmployee(caretaker.getIdEmployee()));
 
-				ret.add(caretaker);
+					ret.add(caretaker);
+				} while (resultSet.next());
 			}
+
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
 		} catch (Exception e) {
@@ -92,11 +97,9 @@ public class ManagerCaretaker implements ManagerInterface<Caretaker>{
 	private ArrayList<Food> selecAllFoodOfCaretakerByIdEmployee(int idEmployee) {
 		ArrayList<Food> ret = null;
 
-		String sql = "SELECT f.* FROM Food AS f\r\n "
-				+ "JOIN care_food AS cf ON f.idFood = cf.idFood\r\n "
+		String sql = "SELECT f.* FROM Food AS f\r\n " + "JOIN care_food AS cf ON f.idFood = cf.idFood\r\n "
 				+ "JOIN Caretaker AS c ON cf.idCaretaker = c.idCaretaker\r\n "
-				+ "JOIN Employee AS e ON c.idEmployee = e.idEmployee\r\n "
-				+ "WHERE e.idEmployee =  " + idEmployee;
+				+ "JOIN Employee AS e ON c.idEmployee = e.idEmployee\r\n " + "WHERE e.idEmployee =  " + idEmployee;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -110,19 +113,23 @@ public class ManagerCaretaker implements ManagerInterface<Caretaker>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Food>();
-				}						
-				Food food = new Food();
-				
-				food.setIdFood(resultSet.getInt("idFood"));
-				food.setNameFo(resultSet.getString("nameFo"));
-				food.setQuantityFo(resultSet.getInt("quantityFo"));
-				food.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
-				food.setDescriptionFo(resultSet.getString("descriptionFo"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Cuidadores");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Food>();
+					}
+					Food food = new Food();
 
-				ret.add(food);
+					food.setIdFood(resultSet.getInt("idFood"));
+					food.setNameFo(resultSet.getString("nameFo"));
+					food.setQuantityFo(resultSet.getInt("quantityFo"));
+					food.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					food.setDescriptionFo(resultSet.getString("descriptionFo"));
+
+					ret.add(food);
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -154,19 +161,19 @@ public class ManagerCaretaker implements ManagerInterface<Caretaker>{
 	@Override
 	public void insert(Caretaker t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(Caretaker t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(Caretaker t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

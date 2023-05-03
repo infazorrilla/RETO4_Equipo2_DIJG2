@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Enclosure;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -32,19 +33,23 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Enclosure>();
-				}
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Recintos");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Enclosure>();
+					}
 
-				Enclosure enclo = new Enclosure();
+					Enclosure enclo = new Enclosure();
 
-				// añadir datos del Pokemon aqui
-				enclo.setIdEnclosure(resultSet.getInt("idEnclosure"));
-				enclo.setTypeEn(resultSet.getString("typeEn"));
-				enclo.setNumberEn(resultSet.getInt("numberEn"));
+					// añadir datos del Pokemon aqui
+					enclo.setIdEnclosure(resultSet.getInt("idEnclosure"));
+					enclo.setTypeEn(resultSet.getString("typeEn"));
+					enclo.setNumberEn(resultSet.getInt("numberEn"));
 
-				ret.add(enclo);
+					ret.add(enclo);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -89,14 +94,18 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new Enclosure();
-				}
-				// añadir datos del Pokemon aqui
-				ret.setIdEnclosure(resultSet.getInt("idEnclosure"));
-				ret.setTypeEn(resultSet.getString("typeEn"));
-				ret.setNumberEn(resultSet.getInt("numberEn"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Recintos");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Enclosure();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdEnclosure(resultSet.getInt("idEnclosure"));
+					ret.setTypeEn(resultSet.getString("typeEn"));
+					ret.setNumberEn(resultSet.getInt("numberEn"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Employee;
 import PokeZoo.bbdd.pojo.User;
 import PokeZoo.bbdd.utils.DBUtils;
@@ -21,11 +22,9 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		ArrayList<Employee> ret = null;
 
 		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd, isBlock\r\n"
-				+ "FROM Employee AS e\r\n"
-				+ "JOIN User AS u ON e.idUser = u.idUser\r\n"
+				+ "FROM Employee AS e\r\n" + "JOIN User AS u ON e.idUser = u.idUser\r\n"
 				+ "LEFT JOIN Cleaner AS cl ON cl.idEmployee = e.idEmployee\r\n"
-				+ "LEFT JOIN Caretaker AS ca ON ca.idEmployee = e.idEmployee\r\n"
-				+ "WHERE cl.idEmployee IS NULL\r\n"
+				+ "LEFT JOIN Caretaker AS ca ON ca.idEmployee = e.idEmployee\r\n" + "WHERE cl.idEmployee IS NULL\r\n"
 				+ "AND ca.idEmployee IS NULL";
 
 		Connection connection = null;
@@ -40,29 +39,33 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Employee>();
-				}
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Oficinistas");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Employee>();
+					}
 
-				Employee employee = new Employee();
+					Employee employee = new Employee();
 
-				// añadir datos de Shop aqui
-				employee.setDni(resultSet.getString("dni"));
-				employee.setNameWo(resultSet.getString("nameEm"));
-				employee.setSurnameWo(resultSet.getString("surnameEm"));
-				employee.setPhoneWo(resultSet.getString("phoneEm"));
+					// añadir datos de Shop aqui
+					employee.setDni(resultSet.getString("dni"));
+					employee.setNameWo(resultSet.getString("nameEm"));
+					employee.setSurnameWo(resultSet.getString("surnameEm"));
+					employee.setPhoneWo(resultSet.getString("phoneEm"));
 
-				User user = new User();
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
-				user.setIsBlocked(resultSet.getBoolean("isBlock"));
+					User user = new User();
+					user.setIdUser(resultSet.getInt("idUser"));
+					user.setAdmin(resultSet.getBoolean("isAdmin"));
+					user.setUsername(resultSet.getString("username"));
+					user.setPasswd(resultSet.getString("passwd"));
+					user.setIsBlocked(resultSet.getBoolean("isBlock"));
 
-				employee.setUser(user);
+					employee.setUser(user);
 
-				ret.add(employee);
+					ret.add(employee);
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -96,7 +99,7 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 
 		String sql = "SELECT dni, nameEm, surnameEm, phoneEm, e.idUser, isAdmin, username, passwd\r\n"
 				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
-		
+
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -109,23 +112,27 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new Employee();
-				}
-				// añadir datos de Shop aqui
-				ret.setDni(resultSet.getString("dni"));
-				ret.setNameWo(resultSet.getString("nameEm"));
-				ret.setSurnameWo(resultSet.getString("surnameEm"));
-				ret.setPhoneWo(resultSet.getString("phoneEm"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Oficinistas");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Employee();
+					}
+					// añadir datos de Shop aqui
+					ret.setDni(resultSet.getString("dni"));
+					ret.setNameWo(resultSet.getString("nameEm"));
+					ret.setSurnameWo(resultSet.getString("surnameEm"));
+					ret.setPhoneWo(resultSet.getString("phoneEm"));
 
-				User user = new User();
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
+					User user = new User();
+					user.setIdUser(resultSet.getInt("idUser"));
+					user.setAdmin(resultSet.getBoolean("isAdmin"));
+					user.setUsername(resultSet.getString("username"));
+					user.setPasswd(resultSet.getString("passwd"));
 
-				ret.setUser(user);
+					ret.setUser(user);
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -276,8 +283,8 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 	public int getEmployeeIdByDni(String dni) {
 		int ret = 0;
 
-		String sql = "SELECT idEmployee \r\n"
-				+ "FROM Employee AS e \r\n" + "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
+		String sql = "SELECT idEmployee \r\n" + "FROM Employee AS e \r\n"
+				+ "JOIN User AS u ON e.idUser = u.idUser WHERE dni = '" + dni + "';";
 
 		Connection connection = null;
 		Statement statement = null;

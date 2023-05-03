@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Cleaner;
 import PokeZoo.bbdd.pojo.Enclosure;
 import PokeZoo.bbdd.pojo.User;
@@ -37,34 +38,38 @@ public class ManagerCleaner implements ManagerInterface<Cleaner> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Cleaner>();
-				}
-				Cleaner cleaner = new Cleaner();
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Limpiadores");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Cleaner>();
+					}
+					Cleaner cleaner = new Cleaner();
 
-				// añadir datos de Shop aqui
-				cleaner.setDni(resultSet.getString("dni"));
-				cleaner.setNameWo(resultSet.getString("nameEm"));
-				cleaner.setSurnameWo(resultSet.getString("surnameEm"));
-				cleaner.setPhoneWo(resultSet.getString("phoneEm"));
+					// añadir datos de Shop aqui
+					cleaner.setDni(resultSet.getString("dni"));
+					cleaner.setNameWo(resultSet.getString("nameEm"));
+					cleaner.setSurnameWo(resultSet.getString("surnameEm"));
+					cleaner.setPhoneWo(resultSet.getString("phoneEm"));
 
-				User user = new User();
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
-				user.setIsBlocked(resultSet.getBoolean("isBlock"));
+					User user = new User();
+					user.setIdUser(resultSet.getInt("idUser"));
+					user.setAdmin(resultSet.getBoolean("isAdmin"));
+					user.setUsername(resultSet.getString("username"));
+					user.setPasswd(resultSet.getString("passwd"));
+					user.setIsBlocked(resultSet.getBoolean("isBlock"));
 
-				cleaner.setUser(user);
+					cleaner.setUser(user);
 
-				Enclosure enclosure = new Enclosure();
-				enclosure.setIdEnclosure(resultSet.getInt("idEnclosure"));
-				enclosure.setTypeEn(resultSet.getString("typeEn"));
+					Enclosure enclosure = new Enclosure();
+					enclosure.setIdEnclosure(resultSet.getInt("idEnclosure"));
+					enclosure.setTypeEn(resultSet.getString("typeEn"));
 
-				cleaner.setEnclosure(enclosure);
+					cleaner.setEnclosure(enclosure);
 
-				ret.add(cleaner);
+					ret.add(cleaner);
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -113,29 +118,33 @@ public class ManagerCleaner implements ManagerInterface<Cleaner> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new Cleaner();
-				}
-				// añadir datos de Shop aqui
-				ret.setDni(resultSet.getString("dni"));
-				ret.setNameWo(resultSet.getString("nameEm"));
-				ret.setSurnameWo(resultSet.getString("surnameEm"));
-				ret.setPhoneWo(resultSet.getString("phoneEm"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Limpiadores");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Cleaner();
+					}
+					// añadir datos de Shop aqui
+					ret.setDni(resultSet.getString("dni"));
+					ret.setNameWo(resultSet.getString("nameEm"));
+					ret.setSurnameWo(resultSet.getString("surnameEm"));
+					ret.setPhoneWo(resultSet.getString("phoneEm"));
 
-				User user = new User();
-				user.setIdUser(resultSet.getInt("idUser"));
-				user.setAdmin(resultSet.getBoolean("isAdmin"));
-				user.setUsername(resultSet.getString("username"));
-				user.setPasswd(resultSet.getString("passwd"));
+					User user = new User();
+					user.setIdUser(resultSet.getInt("idUser"));
+					user.setAdmin(resultSet.getBoolean("isAdmin"));
+					user.setUsername(resultSet.getString("username"));
+					user.setPasswd(resultSet.getString("passwd"));
 
-				ret.setUser(user);
+					ret.setUser(user);
 
-				Enclosure enclosure = new Enclosure();
-				enclosure.setIdEnclosure(resultSet.getInt("idEnclosure"));
-				enclosure.setTypeEn(resultSet.getString("typeEn"));
+					Enclosure enclosure = new Enclosure();
+					enclosure.setIdEnclosure(resultSet.getInt("idEnclosure"));
+					enclosure.setTypeEn(resultSet.getString("typeEn"));
 
-				ret.setEnclosure(enclosure);
+					ret.setEnclosure(enclosure);
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -167,7 +176,7 @@ public class ManagerCleaner implements ManagerInterface<Cleaner> {
 	@Override
 	public void insert(Cleaner t) throws SQLException, Exception {
 		Connection connection = null;
-		Statement statement = null;		
+		Statement statement = null;
 		try {
 			Class.forName(DBUtils.DRIVER);
 

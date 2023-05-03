@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Shop;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -32,20 +33,23 @@ public class ManagerShop implements ManagerInterface<Shop>{
 
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
+			
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Tiendas");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Shop>();
+					}
+					Shop shop = new Shop();
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Shop>();
-				}
+					// añadir datos de Shop aqui
+					shop.setIdShop(resultSet.getInt("idShop"));
+					shop.setNameSh(resultSet.getString("nameSh"));
+					shop.setCapacitySh(resultSet.getInt("capacitySh"));
 
-				Shop shop = new Shop();
-
-				// añadir datos de Shop aqui
-				shop.setIdShop(resultSet.getInt("idShop"));
-				shop.setNameSh(resultSet.getString("nameSh"));
-				shop.setCapacitySh(resultSet.getInt("capacitySh"));
-
-				ret.add(shop);
+					ret.add(shop);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -91,14 +95,18 @@ public class ManagerShop implements ManagerInterface<Shop>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new Shop();
-				}
-				// añadir datos del Pokemon aqui
-				ret.setIdShop(resultSet.getInt("idShop"));
-				ret.setNameSh(resultSet.getString("nameSh"));
-				ret.setCapacitySh(resultSet.getInt("capacitySh"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Tiendas");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Shop();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdShop(resultSet.getInt("idShop"));
+					ret.setNameSh(resultSet.getString("nameSh"));
+					ret.setCapacitySh(resultSet.getInt("capacitySh"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());

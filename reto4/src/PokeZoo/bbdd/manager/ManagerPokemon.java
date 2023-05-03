@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Pokemon;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -32,23 +33,27 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Pokemon>();
-				}
-				Pokemon poke = new Pokemon();
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Pokemons");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Pokemon>();
+					}
+					Pokemon poke = new Pokemon();
+					
+					// añadir datos del Pokemon aqui
+					poke.setIdPokemon(resultSet.getInt("idPokemon"));
+					poke.setFood(null);
+					poke.setNamePo(resultSet.getString("namePo"));
+					poke.setEggGroup(resultSet.getString("eggGroup"));
+					poke.setTypeP(resultSet.getString("typeP"));
+					poke.setTypeS(resultSet.getString("typeS"));
+					poke.setDescriptionPo(resultSet.getString("descriptionPo"));
+					poke.setNumPokedex(resultSet.getInt("numPokedex"));
 
-// añadir datos del Pokemon aqui
-				poke.setIdPokemon(resultSet.getInt("idPokemon"));
-				poke.setFood(null);
-				poke.setNamePo(resultSet.getString("namePo"));
-				poke.setEggGroup(resultSet.getString("eggGroup"));
-				poke.setTypeP(resultSet.getString("typeP"));
-				poke.setTypeS(resultSet.getString("typeS"));
-				poke.setDescriptionPo(resultSet.getString("descriptionPo"));
-				poke.setNumPokedex(resultSet.getInt("numPokedex"));
-
-				ret.add(poke);
+					ret.add(poke);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -94,19 +99,23 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			if (resultSet.next()) {
-				if (null == ret) {
-					ret = new Pokemon();
-				}
-// añadir datos del Pokemon aqui
-				ret.setIdPokemon(resultSet.getInt("idPokemon"));
-				ret.setNamePo(resultSet.getString("namePo"));
-				ret.setEggGroup(resultSet.getString("eggGroup"));
-				ret.setTypeP(resultSet.getString("typeP"));
-				ret.setTypeS(resultSet.getString("typeS"));
-				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
-				ret.setNumPokedex(resultSet.getInt("numPokedex"));
-				ret.setFood(null);
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Pokemons");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Pokemon();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdPokemon(resultSet.getInt("idPokemon"));
+					ret.setNamePo(resultSet.getString("namePo"));
+					ret.setEggGroup(resultSet.getString("eggGroup"));
+					ret.setTypeP(resultSet.getString("typeP"));
+					ret.setTypeS(resultSet.getString("typeS"));
+					ret.setDescriptionPo(resultSet.getString("descriptionPo"));
+					ret.setNumPokedex(resultSet.getInt("numPokedex"));
+					ret.setFood(null);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
