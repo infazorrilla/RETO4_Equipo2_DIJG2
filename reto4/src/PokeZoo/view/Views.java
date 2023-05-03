@@ -482,8 +482,9 @@ public class Views {
 		panelPokedex.add(lblInfoName);
 
 		JTextArea textPokemonName = new JTextArea();
+		textPokemonName.setBackground(new Color(251,236,171));
 		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonName.setBounds(131, 15, 139, 30);
+		textPokemonName.setBounds(131, 15, 175, 30);
 		textPokemonName.setEditable(false);
 		panelPokedex.add(textPokemonName);
 
@@ -493,8 +494,9 @@ public class Views {
 		panelPokedex.add(lblInfoEggGroup);
 
 		JTextArea textPokemonEggGroup = new JTextArea();
+		textPokemonEggGroup.setBackground(new Color(251,236,171));
 		textPokemonEggGroup.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonEggGroup.setBounds(131, 53, 160, 30);
+		textPokemonEggGroup.setBounds(131, 53, 175, 30);
 		textPokemonEggGroup.setEditable(false);
 		panelPokedex.add(textPokemonEggGroup);
 
@@ -504,14 +506,16 @@ public class Views {
 		panelPokedex.add(lblInfoTypes);
 
 		JTextArea textPokemonTypeP = new JTextArea();
+		textPokemonTypeP.setBackground(new Color(251,236,171));
 		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonTypeP.setBounds(131, 90, 139, 30);
+		textPokemonTypeP.setBounds(131, 90, 86, 30);
 		textPokemonTypeP.setEditable(false);
 		panelPokedex.add(textPokemonTypeP);
 
 		JTextArea textPokemonTypeS = new JTextArea();
+		textPokemonTypeS.setBackground(new Color(251,236,171));
 		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonTypeS.setBounds(281, 90, 122, 30);
+		textPokemonTypeS.setBounds(220, 90, 86, 30);
 		textPokemonTypeS.setEditable(false);
 		panelPokedex.add(textPokemonTypeS);
 
@@ -521,6 +525,7 @@ public class Views {
 		panelPokedex.add(lblDescription);
 
 		JTextArea textPokemonDescription = new JTextArea();
+		textPokemonDescription.setBackground(new Color(251,236,171));
 		textPokemonDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		textPokemonDescription.setBounds(20, 160, 423, 100);
 		textPokemonDescription.setLineWrap(true);
@@ -541,6 +546,7 @@ public class Views {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pokemon pokemonSeleccionado = new Pokemon();
+				textPokemonTypeS.setVisible(true);
 				if (null == managerPokemon) {
 					managerPokemon = new ManagerPokemon();
 				}
@@ -561,7 +567,11 @@ public class Views {
 				textPokemonName.setText(pokemonSeleccionado.getNamePo());
 				textPokemonEggGroup.setText(pokemonSeleccionado.getEggGroup());
 				textPokemonTypeP.setText(pokemonSeleccionado.getTypeP());
-				textPokemonTypeS.setText(pokemonSeleccionado.getTypeS());
+				if(pokemonSeleccionado.getTypeS()==null) {
+					textPokemonTypeS.setVisible(false);
+				}else {
+					textPokemonTypeS.setText(pokemonSeleccionado.getTypeS());
+				}
 				textPokemonDescription.setText(pokemonSeleccionado.getDescriptionPo());
 				lblSelectedPokemonImage.setIcon(null);
 			}
