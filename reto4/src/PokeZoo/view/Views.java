@@ -1273,16 +1273,17 @@ public class Views {
 				Employee selectedEmployee = null;
 				try {
 					selectedEmployee = getSelectedEmployee();
-					
-					int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el empleado?",
-							"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+
+					int confimation = JOptionPane.showConfirmDialog(null,
+							"¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
+							JOptionPane.OK_CANCEL_OPTION);
 					if (confimation == JOptionPane.OK_OPTION) {
 						deleteSelectedEmployee(selectedEmployee);
 					}
 				} catch (EmployeeNotSelected e1) {
 					JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
 							JOptionPane.ERROR_MESSAGE);
-				}				
+				}
 			}
 		});
 		btnDeleteEmployee.setBounds(399, 336, 141, 23);
@@ -1296,7 +1297,9 @@ public class Views {
 				try {
 					selectedEmployee = getSelectedEmployee();
 
-					int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas BLOQUEAR el empleado?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+					int confimation = JOptionPane.showConfirmDialog(null,
+							"¿Estas seguro de que deseas BLOQUEAR el empleado?", "Confirmacion",
+							JOptionPane.OK_CANCEL_OPTION);
 					if (confimation == JOptionPane.OK_OPTION) {
 						blockSelectedEmployee(selectedEmployee);
 					}
@@ -1716,37 +1719,44 @@ public class Views {
 		JButton btnModifyPokemon = new JButton("Modificar Pokemon");
 		btnModifyPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Pokemon selectedPokemon = getSelectedPokemon();
-				 * 
-				 * JLabel id = new JLabel(); id.setText(selectedPokemon.getIdPokemon());
-				 * JTextField namePo = new JTextField();
-				 * namePo.setText(selectedPokemon.getNamePo()); JTextField eggGroup = new
-				 * JTextField(); eggGroup.setText(selectedPokemon.getEggGroup()); JTextField
-				 * typeP = new JTextField(); typeP.setText(selectedPokemon.getTypeP());
-				 * JTextField typeS = new JTextField();
-				 * typeS.setText(selectedPokemon.getTypeS());
-				 * 
-				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
-				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * selectedPokemon.setIdPokemon(managerPokemon.getPokemonIdByName(
-				 * selectedPokemon.getIdPokemon()));
-				 * selectedPokemon.setNamePo(namePo.getText());
-				 * selectedPokemon.setEggGroup(eggGroup.getText());
-				 * selectedPokemon.setTypeP(typeP.getText());
-				 * selectedPokemon.setTypeS(typeS.getText()); try {
-				 * managerPokemon.update(selectedPokemon); } catch (Exception e1) {
-				 * e1.printStackTrace(); }
-				 * 
-				 * loadTablePokemonData(tablePokemon); } }
-				 */
+
+				Pokemon selectedPokemon = getSelectedPokemon();
+
+				JLabel id = new JLabel();
+				id.setText(Integer.toString(selectedPokemon.getIdPokemon()));
+				JTextField namePo = new JTextField();
+				namePo.setText(selectedPokemon.getNamePo());
+				JTextField eggGroup = new JTextField();
+				eggGroup.setText(selectedPokemon.getEggGroup());
+				JTextField typeP = new JTextField();
+				typeP.setText(selectedPokemon.getTypeP());
+				JTextField typeS = new JTextField();
+				typeS.setText(selectedPokemon.getTypeS());
+
+				Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:", typeP,
+						"typeS: ", typeS };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					int confimation = JOptionPane.showConfirmDialog(null,
+							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (confimation == JOptionPane.OK_OPTION) {
+						selectedPokemon.setNumPokedex(selectedPokemon.getIdPokemon());
+						selectedPokemon.setNamePo(namePo.getText());
+						selectedPokemon.setEggGroup(eggGroup.getText());
+						selectedPokemon.setTypeP(typeP.getText());
+						selectedPokemon.setTypeS(typeS.getText());
+						try {
+							managerPokemon.update(selectedPokemon);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+
+						loadTablePokemonData(tablePokemon);
+					}
+				}
 			}
 		});
 		btnModifyPokemon.setBounds(180, 336, 141, 23);
@@ -1755,13 +1765,11 @@ public class Views {
 		JButton btnDeletePokemon = new JButton("Borrar Pokemon");
 		btnDeletePokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Pokemon selectedPokemon = getSelectedPokemon(); int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * deleteSelectedPokemon(selectedPokemon); }
-				 */
+				 Pokemon selectedPokemon = getSelectedPokemon(); int confimation =
+				 JOptionPane.showConfirmDialog(null,
+				 "¿Estas seguro de que deseas borrar el pokemon?", "Confirmacion",
+				 JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
+				 deleteSelectedPokemon(selectedPokemon); }
 			}
 		});
 		btnDeletePokemon.setBounds(399, 336, 141, 23);
@@ -2001,19 +2009,19 @@ public class Views {
 		});
 		btnLogOut.setBounds(0, 437, 117, 24);
 		panelAdmin.add(btnLogOut);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(0, 0, 46, 14);
 		panelAdmin.add(lblNewLabel);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
-		
+
 		JLabel lblWelcome = new JLabel("¡¡ Bienvenido !!");
 		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblWelcome.setBounds(246, 10, 245, 105);
 		panelWelcome.add(lblWelcome);
-		
+
 		JLabel lblWelcomeGif = new JLabel("");
 		lblWelcomeGif.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblWelcomeGif.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -2214,6 +2222,20 @@ public class Views {
 
 	// otros metodos
 	// ----------------------------------------------------------------------------
+	private void deleteSelectedPokemon(Pokemon selectedPokemon) {
+		if (null == managerPokemon) {
+			managerPokemon = new ManagerPokemon();
+		}
+		selectedPokemon.setIdPokemon(selectedPokemon.getNumPokedex());
+		try {
+			JOptionPane.showMessageDialog(null, "Pokemon borrado correctamente", "Correcto!",
+					JOptionPane.PLAIN_MESSAGE);
+			loadTablePokemonData(tablePokemon);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void deleteSelectedEmployee(Employee selectedEmployee) {
 		if (null == managerEmployee) {
 			managerEmployee = new ManagerEmployee();
@@ -2428,6 +2450,23 @@ public class Views {
 		}
 	}
 
+	private Pokemon getSelectedPokemon(){
+		Pokemon ret = null;
+		if (tablePokemon.getSelectionModel().isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			ret = new Pokemon();
+
+			int row = tablePokemon.getSelectedRow();
+
+			int id = (int) tablePokemon.getValueAt(row, 0);
+			ret = managerPokemon.getPokemonById(id);
+		}
+
+		return ret;
+	}
+	
 	private Employee getSelectedEmployee() throws EmployeeNotSelected {
 		Employee ret = null;
 		if (tableEmployee.getSelectionModel().isSelectionEmpty()) {
@@ -2559,10 +2598,10 @@ public class Views {
 	}
 
 	private void recipeMaker(int quantity2) throws IOException {
-		if(null == managerFile) {
+		if (null == managerFile) {
 			managerFile = new ManagerFile();
 		}
-		
+
 		managerFile.createFile(quantity2);
 	}
 }
