@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import PokeZoo.bbdd.exception.EmployeeNotSelected;
 import PokeZoo.bbdd.manager.ManagerCaretaker;
 import PokeZoo.bbdd.manager.ManagerCleaner;
 import PokeZoo.bbdd.manager.ManagerEmployee;
@@ -1210,50 +1211,57 @@ public class Views {
 		btnModifyEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO CUIDADO CON LA CONTRASEÑAAAAAAA
-				Employee selectedEmployee = getSelectedEmployee();
+				Employee selectedEmployee = null;
+				try {
+					selectedEmployee = getSelectedEmployee();
 
-				JLabel dni = new JLabel();
-				dni.setText(selectedEmployee.getDni());
-				JTextField name = new JTextField();
-				name.setText(selectedEmployee.getNameWo());
-				JTextField surName = new JTextField();
-				surName.setText(selectedEmployee.getSurnameWo());
-				JTextField phone = new JTextField();
-				phone.setText(selectedEmployee.getPhoneWo());
-				JTextField username = new JTextField();
-				username.setText(selectedEmployee.getUser().getUsername());
-				JPasswordField password = new JPasswordField();
-				password.setText(selectedEmployee.getUser().getPasswd());
+					JLabel dni = new JLabel();
+					dni.setText(selectedEmployee.getDni());
+					JTextField name = new JTextField();
+					name.setText(selectedEmployee.getNameWo());
+					JTextField surName = new JTextField();
+					surName.setText(selectedEmployee.getSurnameWo());
+					JTextField phone = new JTextField();
+					phone.setText(selectedEmployee.getPhoneWo());
+					JTextField username = new JTextField();
+					username.setText(selectedEmployee.getUser().getUsername());
+					JPasswordField password = new JPasswordField();
+					password.setText(selectedEmployee.getUser().getPasswd());
 
-				Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
-						"Username: *", username, "Password: ", password };
+					Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
+							"Username: *", username, "Password: ", password };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (option == JOptionPane.OK_OPTION) {
-					int confimation = JOptionPane.showConfirmDialog(null,
-							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
 							JOptionPane.OK_CANCEL_OPTION);
-					if (confimation == JOptionPane.OK_OPTION) {
-						selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
-						selectedEmployee.setNameWo(name.getText());
-						selectedEmployee.setSurnameWo(surName.getText());
-						selectedEmployee.setPhoneWo(phone.getText());
-						selectedEmployee.getUser().setUsername(username.getText());
-						selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
-						try {
-							managerEmployee.update(selectedEmployee);
+					if (option == JOptionPane.OK_OPTION) {
+						int confimation = JOptionPane.showConfirmDialog(null,
+								"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+								JOptionPane.OK_CANCEL_OPTION);
+						if (confimation == JOptionPane.OK_OPTION) {
+							selectedEmployee
+									.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
+							selectedEmployee.setNameWo(name.getText());
+							selectedEmployee.setSurnameWo(surName.getText());
+							selectedEmployee.setPhoneWo(phone.getText());
+							selectedEmployee.getUser().setUsername(username.getText());
+							selectedEmployee.getUser().setPasswd(new String(password.getPassword()));
+							try {
+								managerEmployee.update(selectedEmployee);
 
-							if (null == managerUser) {
-								managerUser = new ManagerUser();
+								if (null == managerUser) {
+									managerUser = new ManagerUser();
+								}
+								managerUser.update(selectedEmployee.getUser());
+							} catch (Exception e1) {
+								e1.printStackTrace();
 							}
-							managerUser.update(selectedEmployee.getUser());
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
 
-						loadTableEmployeeData(tableEmployee);
+							loadTableEmployeeData(tableEmployee);
+						}
 					}
+				} catch (EmployeeNotSelected e2) {
+					JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -1263,12 +1271,19 @@ public class Views {
 		JButton btnDeleteEmployee = new JButton("Borrar Empleado");
 		btnDeleteEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Employee selectedEmployee = getSelectedEmployee();
-				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el empleado?",
-						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
-				if (confimation == JOptionPane.OK_OPTION) {
-					deleteSelectedEmployee(selectedEmployee);
-				}
+				Employee selectedEmployee = null;
+				try {
+					selectedEmployee = getSelectedEmployee();
+					
+					int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el empleado?",
+							"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+					if (confimation == JOptionPane.OK_OPTION) {
+						deleteSelectedEmployee(selectedEmployee);
+					}
+				} catch (EmployeeNotSelected e1) {
+					JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+							JOptionPane.ERROR_MESSAGE);
+				}				
 			}
 		});
 		btnDeleteEmployee.setBounds(399, 336, 141, 23);
@@ -1278,23 +1293,27 @@ public class Views {
 		btnBlockEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO SI SE SELECCIONA EL USUARIO QUE ES DEPENDENDIENTE NO FUNCIONA NADA :S
-				Employee selectedEmployee = getSelectedEmployee();
+				Employee selectedEmployee = null;
+				try {
+					selectedEmployee = getSelectedEmployee();
 
-				int confimation = JOptionPane.showConfirmDialog(null,
-						"¿Estas seguro de que deseas BLOQUEAR el empleado?", "Confirmacion",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (confimation == JOptionPane.OK_OPTION) {
-					blockSelectedEmployee(selectedEmployee);
+					int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas BLOQUEAR el empleado?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+					if (confimation == JOptionPane.OK_OPTION) {
+						blockSelectedEmployee(selectedEmployee);
+					}
+
+					loadTableEmployeeData(tableEmployee);
+				} catch (EmployeeNotSelected e1) {
+					JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+							JOptionPane.ERROR_MESSAGE);
 				}
-
-				loadTableEmployeeData(tableEmployee);
 			}
 		});
 		btnBlockEmployee.setBounds(563, 336, 141, 23);
 		panelAdminEmployee.add(btnBlockEmployee);
 
 		// PANEL CLEANER
-		// TODO
+		// TODO faltan cosis
 		panelAdminCleaner = new JPanel();
 		panelAdminCleaner.setBounds(10, 68, 714, 370);
 		panelAdmin.add(panelAdminCleaner);
@@ -2398,18 +2417,19 @@ public class Views {
 		}
 	}
 
-	private Employee getSelectedEmployee() {
+	private Employee getSelectedEmployee() throws EmployeeNotSelected {
 		Employee ret = null;
 		if (tableEmployee.getSelectionModel().isSelectionEmpty()) {
-			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
-					JOptionPane.ERROR_MESSAGE);
+			throw new EmployeeNotSelected("No hay empleado seleccionado");
 		} else {
 			ret = new Employee();
-		}
-		int row = tableEmployee.getSelectedRow();
 
-		String dni = (String) tableEmployee.getValueAt(row, 0);
-		ret = managerEmployee.selectEmployeeByDni(dni);
+			int row = tableEmployee.getSelectedRow();
+
+			String dni = (String) tableEmployee.getValueAt(row, 0);
+			ret = managerEmployee.selectEmployeeByDni(dni);
+		}
+
 		return ret;
 	}
 
@@ -2493,7 +2513,7 @@ public class Views {
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 	}
 
-	private void buyTicket() {		 
+	private void buyTicket() {
 		if (Integer.parseInt(textFieldTicketQuantity.getText()) == 0) {
 			JOptionPane.showMessageDialog(null, "No se han seleccionado entradas!!", "Oye!", JOptionPane.ERROR_MESSAGE);
 		} else {
