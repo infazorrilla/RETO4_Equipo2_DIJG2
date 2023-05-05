@@ -1,5 +1,8 @@
 package PokeZoo.JUnit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +16,14 @@ class FileTest {
 	@Test
 	void testFileCreationAndRead() {
 		try {
-			managerFile.createFile(0);
+			File newFile = managerFile.createFile(5);
+			
+			String textFromFile = managerFile.readFile(newFile);
+			
+			String expectedText = "Cantidad de entradas: 5Precio: 25€";
+			
+			assertEquals(textFromFile, expectedText);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
