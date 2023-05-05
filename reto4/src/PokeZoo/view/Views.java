@@ -7,12 +7,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -96,6 +104,18 @@ public class Views {
 	JButton btnEnclosure = null;
 	JButton btnFood = null;
 
+	// Variables for Tickts
+	private int totalTicket = 40;
+	private int quantity = 0;
+
+	// JTextFields Tickets
+	private JTextField textFieldTicketTotalPrice = null;
+	private JTextField textFieldTicketJournal = null;
+	private JTextField textFieldTicketDate = null;
+	private JTextField textFieldTicketQuantity = null;
+	private JTextField textFieldTicketPrice = null;
+	private JTextField textFieldTotalTicket = null;
+
 	/**
 	 * Create the application.
 	 */
@@ -132,6 +152,34 @@ public class Views {
 		// PANEL ADMIN
 		panelAdmin = new JPanel();
 		panelAdmin.setVisible(false);
+		panelAdmin.setBounds(0, 0, 734, 461);
+		frame.getContentPane().add(panelAdmin);
+		panelAdmin.setLayout(null);
+
+		JButton btnZooArea = new JButton("Zoo");
+
+		JButton btnWorkerArea = new JButton("Trabajadores");
+		btnWorkerArea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO ocultar btnWorkerArea y mostrar los 3 botones hijos
+				btnWorkerArea.setVisible(false);
+				btnZooArea.setVisible(true);
+			}
+		});
+		btnWorkerArea.setBackground(new Color(255, 255, 255));
+		btnWorkerArea.setBounds(0, 0, 370, 46);
+		panelAdmin.add(btnWorkerArea);
+
+		btnZooArea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO ocultar btnZooArea y mostrar los otros 3 bottones que estan abajo
+				btnWorkerArea.setVisible(true);
+				btnZooArea.setVisible(false);
+			}
+		});
+		btnZooArea.setBackground(new Color(255, 255, 255));
+		btnZooArea.setBounds(369, 0, 365, 46);
+		panelAdmin.add(btnZooArea);
 
 		// PANEL MAIN
 		panelMain = new JPanel();
@@ -578,7 +626,8 @@ public class Views {
 				textPokemonTypeS.setText(pokemonSeleccionado.getTypeS());
 				textPokemonDescription.setText(pokemonSeleccionado.getDescriptionPo());
 				lblSelectedPokemonImage.setBounds(550, 0, 110, 110);
-				RSScaleLabel.setScaleLabel(lblSelectedPokemonImage, "img/pokemon/" + pokemonSeleccionado.getIdPokemon() + ".png");
+				RSScaleLabel.setScaleLabel(lblSelectedPokemonImage,
+						"img/pokemon/" + pokemonSeleccionado.getIdPokemon() + ".png");
 				if (pokemonSeleccionado.getTypeP() != "") {
 					textPokemonTypeP.setVisible(true);
 					if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Bicho")) {
@@ -667,7 +716,8 @@ public class Views {
 
 		JLabel lblPokedexImage = new JLabel();
 		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Pokedex.png")).getImage()
+				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
 		// PANEL MAIN TIENDA
@@ -677,17 +727,146 @@ public class Views {
 		panelMain.add(panelShop);
 		panelShop.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 694, 303);
-		panelShop.add(scrollPane);
+		JLabel lblShopImage1 = new JLabel("New label");
+		lblShopImage1.setBounds(136, 66, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage1, "img/products/Eevee Primavera.png");
+		lblShopImage1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Eevee");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
-		JPanel panelProducts = new JPanel();
-		scrollPane.setViewportView(panelProducts);
-		panelProducts.setLayout(null);
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-		JLabel lblNewLabel = new JLabel("(imagen 1 ejemplo)");
-		lblNewLabel.setBounds(10, 11, 93, 55);
-		panelProducts.add(lblNewLabel);
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage1);
+
+		JLabel lblShopImage2 = new JLabel("New label");
+		lblShopImage2.setBounds(253, 66, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage2, "img/products/Juego de ajedrez Pokémon.png");
+		lblShopImage2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Ajedrez Pokemon");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage2);
+
+		JLabel lblShopImage3 = new JLabel("New label");
+		lblShopImage3.setBounds(373, 66, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage3, "products/Maceta grande Pokémon.png");
+		lblShopImage3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Maceta Pokemon");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage3);
+
+		JLabel lblShopImage4 = new JLabel("New label");
+		lblShopImage4.setBounds(472, 66, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage4, "img/products/Lapras Flotador de Piscina.png");
+		lblShopImage4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Flotador Lapras");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage4);
+
+		JLabel lblShopImage5 = new JLabel("New label");
+		lblShopImage5.setBounds(136, 162, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage5, "img/products/Marco para diploma de graduación Pikachu.png");
+		lblShopImage5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Marco Pokemon de Pikachu");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage5);
+
+		JLabel lblShopImage6 = new JLabel("New label");
+		lblShopImage6.setBounds(253, 162, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage6, "img/products/Mareep Llavero de peluche.png");
+		lblShopImage6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-LLavero Mareep de peluche");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage6);
+
+		JLabel lblShopImage7 = new JLabel("New label");
+		lblShopImage7.setBounds(373, 162, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage7, "img/products/Peluche Oshawott Sentado.png");
+		lblShopImage7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Peluche Oshawott");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage7);
+
+		JLabel lblShopImage8 = new JLabel("New label");
+		lblShopImage8.setBounds(472, 162, 89, 85);
+		RSScaleLabel.setScaleLabel(lblShopImage8, "img/products/PikachuMood-Hungry.png");
+		lblShopImage8.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Frame frame = new Frame();
+				JLabel productName = new JLabel("-Figura de Pikachu comiendo");
+				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+
+				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+
+				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		panelShop.add(lblShopImage8);
+
+		JLabel lblShopBackground = new JLabel("");
+		lblShopBackground.setBounds(0, 0, 714, 328);
+		RSScaleLabel.setScaleLabel(lblShopBackground, "img/background/shopBackground.jpg");
+		panelShop.add(lblShopBackground);
 
 		// PANEL MAIN TICKETS
 		panelTickets = new JPanel();
@@ -696,37 +875,143 @@ public class Views {
 		panelMain.add(panelTickets);
 		panelTickets.setLayout(null);
 
-		JLabel lblNewLabel_1 = new JLabel("Working working");
-		lblNewLabel_1.setBounds(126, 113, 231, 76);
+		JButton btnTicketMore = new JButton("");
+		ImageIcon imageMore = new ImageIcon("img/varios/mas.png");
+		int heightMore = 23;
+		int widthMore = 27;
+		ImageIcon iconoEscalaMore = new ImageIcon(
+				imageMore.getImage().getScaledInstance(widthMore, heightMore, java.awt.Image.SCALE_DEFAULT));
+		btnTicketMore.setIcon(iconoEscalaMore);
+		btnTicketMore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quantityPlusOne();
+			}
+		});
+		btnTicketMore.setBorder(null);
+
+		JButton btnTicketLess = new JButton("");
+		ImageIcon imageLess = new ImageIcon("img/varios/menos.png");
+		int heightLess = 23;
+		int widthLess = 27;
+		ImageIcon iconoEscalaLess = new ImageIcon(
+				imageLess.getImage().getScaledInstance(widthLess, heightLess, java.awt.Image.SCALE_DEFAULT));
+		btnTicketLess.setIcon(iconoEscalaLess);
+		btnTicketLess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quantityMinusOne();
+			}
+		});
+		btnTicketLess.setBounds(525, 65, 27, 23);
+		btnTicketLess.setBorder(null);
+		panelTickets.add(btnTicketLess);
+
+		textFieldTicketTotalPrice = new JTextField();
+		textFieldTicketTotalPrice.setText("0");
+		textFieldTicketTotalPrice.setColumns(10);
+		textFieldTicketTotalPrice.setBounds(525, 181, 78, 20);
+		textFieldTicketTotalPrice.setEditable(false);
+
+		textFieldTicketJournal = new JTextField();
+		textFieldTicketJournal.setText("10:00-17:00");
+		textFieldTicketJournal.setColumns(10);
+		textFieldTicketJournal.setBounds(148, 153, 86, 21);
+		textFieldTicketJournal.setEditable(false);
+
+		JLabel lblNewLabel_1_1 = new JLabel("€");
+		lblNewLabel_1_1.setBounds(607, 184, 19, 14);
+		panelTickets.add(lblNewLabel_1_1);
+
+		JLabel lblNewLabel_1 = new JLabel("€");
+		lblNewLabel_1.setBounds(607, 125, 19, 14);
 		panelTickets.add(lblNewLabel_1);
-		panelAdmin.setBounds(0, 0, 734, 461);
-		frame.getContentPane().add(panelAdmin);
-		panelAdmin.setLayout(null);
 
-		JButton btnZooArea = new JButton("Zoo");
+		textFieldTicketDate = new JTextField();
+		textFieldTicketDate.setBounds(148, 98, 86, 21);
+		panelTickets.add(textFieldTicketDate);
+		textFieldTicketDate.setEditable(false);
+		textFieldTicketDate.setColumns(10);
+		Date fecha = new Date();
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String today = formatter.format(fecha);
+		textFieldTicketDate.setText(today);
+		panelTickets.add(textFieldTicketJournal);
 
-		JButton btnWorkerArea = new JButton("Trabajadores");
-		btnWorkerArea.addActionListener(new ActionListener() {
+		textFieldTicketQuantity = new JTextField();
+		textFieldTicketQuantity.setText("0");
+		textFieldTicketQuantity.setBounds(562, 65, 27, 23);
+		panelTickets.add(textFieldTicketQuantity);
+		textFieldTicketQuantity.setEditable(false);
+		textFieldTicketQuantity.setColumns(10);
+
+		textFieldTicketPrice = new JTextField();
+		textFieldTicketPrice.setText("5");
+		textFieldTicketPrice.setBounds(525, 122, 78, 20);
+		panelTickets.add(textFieldTicketPrice);
+		textFieldTicketPrice.setEditable(false);
+		textFieldTicketPrice.setColumns(10);
+		panelTickets.add(textFieldTicketTotalPrice);
+
+		textFieldTotalTicket = new JTextField();
+		textFieldTotalTicket.setBounds(182, 271, 66, 20);
+		panelTickets.add(textFieldTotalTicket);
+		textFieldTotalTicket.setEditable(false);
+		textFieldTotalTicket.setColumns(10);
+		textFieldTotalTicket.setText(Integer.toString(totalTicket));
+		btnTicketMore.setBounds(599, 65, 27, 23);
+		panelTickets.add(btnTicketMore);
+
+		JLabel lblTotalPrice = new JLabel("Total");
+		lblTotalPrice.setBounds(448, 184, 46, 14);
+		panelTickets.add(lblTotalPrice);
+
+		JLabel lblPriceTicket = new JLabel("Precio");
+		lblPriceTicket.setBounds(448, 125, 46, 14);
+		panelTickets.add(lblPriceTicket);
+
+		JLabel lblTicketQuantity = new JLabel("Cantidad");
+		lblTicketQuantity.setBounds(448, 72, 58, 14);
+		panelTickets.add(lblTicketQuantity);
+
+		JLabel lblTicketCount = new JLabel("Entradas restantes");
+		lblTicketCount.setBounds(46, 274, 130, 14);
+		panelTickets.add(lblTicketCount);
+
+		JLabel labelTicketDate = new JLabel("Fecha");
+		labelTicketDate.setBounds(62, 98, 66, 21);
+		panelTickets.add(labelTicketDate);
+
+		JLabel labelTicketJournal = new JLabel("Horario");
+		labelTicketJournal.setBounds(62, 153, 66, 21);
+		panelTickets.add(labelTicketJournal);
+
+		JLabel labelTicketDates = new JLabel("");
+		labelTicketDates.setBounds(32, 65, 234, 149);
+		RSScaleLabel.setScaleLabel(labelTicketDates, "img/background/fondo.jpg");
+		panelTickets.add(labelTicketDates);
+
+		JLabel labelTicketQuantitys = new JLabel("");
+		labelTicketQuantitys.setBounds(415, 35, 234, 197);
+		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/background/fondo.jpg");
+		panelTickets.add(labelTicketQuantitys);
+
+		JLabel labelTickets = new JLabel("");
+		labelTickets.setBounds(32, 263, 234, 38);
+		RSScaleLabel.setScaleLabel(labelTickets, "img/background/fondo.jpg");
+		panelTickets.add(labelTickets);
+
+		JButton btnBuyTickets = new JButton("Comprar");
+		btnBuyTickets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Una vez cerrados los paneles volver a poner ambos botones visibles
-				btnWorkerArea.setVisible(false);
-				btnZooArea.setVisible(true);
+				buyTicket();
 			}
 		});
-		btnWorkerArea.setBackground(new Color(255, 255, 255));
-		btnWorkerArea.setBounds(0, 0, 370, 46);
-		panelAdmin.add(btnWorkerArea);
+		btnBuyTickets.setBounds(551, 279, 98, 38);
+		panelTickets.add(btnBuyTickets);
 
-		btnZooArea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO ocultar btnZooArea y mostrar los otros 3 bottones que estan abajo
-				btnWorkerArea.setVisible(true);
-				btnZooArea.setVisible(false);
-			}
-		});
-		btnZooArea.setBackground(new Color(255, 255, 255));
-		btnZooArea.setBounds(369, 0, 365, 46);
-		panelAdmin.add(btnZooArea);
+		JLabel lblTicketBackground = new JLabel("");
+		lblTicketBackground.setBounds(0, 0, 714, 328);
+		RSScaleLabel.setScaleLabel(lblTicketBackground, "img/background/ticketsBackground.jpg");
+		panelTickets.add(lblTicketBackground);
 
 		// PANEL ADMIN WELCOME
 		panelAdminWelcome = new JPanel();
@@ -919,7 +1204,7 @@ public class Views {
 		JButton btnModifyEmployee = new JButton("Modificar Empleado");
 		btnModifyEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO AAAAAAAAAAAAAAAAAAAAAAAAAAA
+				// TODO CUIDADO CON LA CONTRASEÑAAAAAAA
 				Employee selectedEmployee = getSelectedEmployee();
 
 				JLabel dni = new JLabel();
@@ -933,9 +1218,10 @@ public class Views {
 				JTextField username = new JTextField();
 				username.setText(selectedEmployee.getUser().getUsername());
 				JPasswordField password = new JPasswordField();
+				password.setText(selectedEmployee.getUser().getPasswd());
 
 				Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
-						"Username: *", username, "Password: *", password };
+						"Username: *", username, "Password: ", password };
 
 				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
@@ -1899,13 +2185,18 @@ public class Views {
 		}
 		selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(selectedEmployee.getDni()));
 
-		try {
-			managerUser.delete(selectedEmployee.getUser());
-			JOptionPane.showMessageDialog(null, "Empleado Borrado correctamente", "Correcto!",
-					JOptionPane.PLAIN_MESSAGE);
-			loadTableEmployeeData(tableEmployee);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (selectedEmployee.getUser().isAdmin()) {
+			JOptionPane.showMessageDialog(null, "El usuario administrador no se puede Borrar !!!!", "Oye!!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			try {
+				managerUser.delete(selectedEmployee.getUser());
+				JOptionPane.showMessageDialog(null, "Empleado Borrado correctamente", "Correcto!",
+						JOptionPane.PLAIN_MESSAGE);
+				loadTableEmployeeData(tableEmployee);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -2168,4 +2459,95 @@ public class Views {
 			System.out.println("This is not supposed to happen");
 		}
 	}
+
+	//
+	// Methods of Ticket Panel
+	private void quantityPlusOne() {
+		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
+		int ticketValue = Integer.valueOf(textFieldTicketPrice.getText());
+		if (totalTicket != 0) {
+			ticketQuantity++;
+			totalTicket--;
+		}
+		int total = ticketQuantity * ticketValue;
+		textFieldTicketTotalPrice.setText(Integer.toString(total));
+		textFieldTicketQuantity.setText(Integer.toString(ticketQuantity));
+		textFieldTotalTicket.setText(Integer.toString(totalTicket));
+	}
+
+	private void quantityMinusOne() {
+		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
+		int ticketValue = Integer.valueOf(textFieldTicketPrice.getText());
+		if (ticketQuantity != 0) {
+			ticketQuantity--;
+			totalTicket++;
+		}
+		int total = ticketValue * ticketQuantity;
+		textFieldTicketTotalPrice.setText(Integer.toString(total));
+		textFieldTicketQuantity.setText(Integer.toString(ticketQuantity));
+		textFieldTotalTicket.setText(Integer.toString(totalTicket));
+	}
+
+	private void buyTicket() {
+		JFrame jFrame = new JFrame();
+		if (totalTicket != 0) {
+			totalTicket--;
+
+			JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
+
+			int totalReset = Integer.valueOf(textFieldTicketTotalPrice.getText());
+			int ticketDecreaser = Integer.valueOf(textFieldTotalTicket.getText());
+			totalReset = 0;
+			textFieldTotalTicket.setText(Integer.toString(ticketDecreaser));
+			textFieldTicketTotalPrice.setText(Integer.toString(totalReset));
+		} else if (totalTicket <= 0) {
+			JOptionPane.showMessageDialog(jFrame, "No quedan entradas, vuelva mañana");
+		}
+		int resp = JOptionPane.showConfirmDialog(jFrame, "¿Desea imprimir un recibo?", "Recibo",
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		if (resp == JOptionPane.YES_OPTION) {
+			try {
+				quantity = Integer.parseInt(textFieldTicketQuantity.getText());
+				recipeMaker(quantity);
+				quantity = 0;
+				textFieldTicketQuantity.setText(Integer.toString(quantity));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void recipeMaker(int quantity2) throws IOException {
+
+		String ruta = System.getProperty("user.home") + "/Desktop/";
+		String nombre = null;
+		String datos = null;
+
+		Date fecha = new Date();
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss");
+		nombre = formatter.format(fecha);
+
+		File archivo = new File(ruta + nombre + ".txt");
+		FileWriter fileWriter = new FileWriter(archivo);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+
+		int totalPrice = quantity2 * 5;
+
+		datos = "Cantidad de entradas: " + quantity2 + "\n" + "Precio: " + totalPrice + "€";
+
+		try {
+			printWriter.println(datos);
+		} finally {
+			printWriter.close();
+			try {
+				fileWriter.close();
+
+			} catch (IOException e) {
+				// Nothing
+			}
+		}
+
+	}
+
 }
