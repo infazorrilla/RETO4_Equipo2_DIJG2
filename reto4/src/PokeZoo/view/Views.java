@@ -13,10 +13,7 @@ import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +32,7 @@ import PokeZoo.bbdd.manager.ManagerCaretaker;
 import PokeZoo.bbdd.manager.ManagerCleaner;
 import PokeZoo.bbdd.manager.ManagerEmployee;
 import PokeZoo.bbdd.manager.ManagerEnclosure;
+import PokeZoo.bbdd.manager.ManagerFile;
 import PokeZoo.bbdd.manager.ManagerFood;
 import PokeZoo.bbdd.manager.ManagerPokemon;
 import PokeZoo.bbdd.manager.ManagerUser;
@@ -83,12 +81,12 @@ public class Views {
 	// Managers
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
-	// private ManagerDependent managerDependent = null;
 	private ManagerCleaner managerCleaner = null;
 	private ManagerCaretaker managerCaretaker = null;
 	private ManagerPokemon managerPokemon = null;
 	private ManagerEnclosure managerEnclosure = null;
 	private ManagerFood managerFood = null;
+	private ManagerFile managerFile = null;
 
 	// JTables admin
 	private JTable tableEmployee = null;
@@ -627,7 +625,7 @@ public class Views {
 				textPokemonTypeP.setText(pokemonSeleccionado.getTypeP());
 				textPokemonTypeS.setText(pokemonSeleccionado.getTypeS());
 				textPokemonDescription.setText(pokemonSeleccionado.getDescriptionPo());
-				lblSelectedPokemonImage.setBounds(550, 0, 110, 110);
+				lblSelectedPokemonImage.setBounds(550, 20, 110, 90);
 				RSScaleLabel.setScaleLabel(lblSelectedPokemonImage,
 						"img/pokemon/" + pokemonSeleccionado.getIdPokemon() + ".png");
 				if (pokemonSeleccionado.getTypeP() != "") {
@@ -932,9 +930,9 @@ public class Views {
 		panelTickets.add(textFieldTicketDate);
 		textFieldTicketDate.setEditable(false);
 		textFieldTicketDate.setColumns(10);
-		Date fecha = new Date();
+		Date date = new Date();
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		String today = formatter.format(fecha);
+		String today = formatter.format(date);
 		textFieldTicketDate.setText(today);
 		panelTickets.add(textFieldTicketJournal);
 
@@ -977,7 +975,7 @@ public class Views {
 		lblTicketCount.setBounds(46, 274, 130, 14);
 		panelTickets.add(lblTicketCount);
 
-		JLabel labelTicketDate = new JLabel("Fecha");
+		JLabel labelTicketDate = new JLabel("date");
 		labelTicketDate.setBounds(62, 98, 66, 21);
 		panelTickets.add(labelTicketDate);
 
@@ -2009,7 +2007,7 @@ public class Views {
 		panelAdmin.add(lblNewLabel);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
-//dsah
+		
 		JLabel lblWelcome = new JLabel("¡¡ Bienvenido !!");
 		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -2561,34 +2559,10 @@ public class Views {
 	}
 
 	private void recipeMaker(int quantity2) throws IOException {
-
-		String ruta = System.getProperty("user.home") + "/Desktop/";
-		String nombre = null;
-		String datos = null;
-
-		Date fecha = new Date();
-		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss");
-		nombre = formatter.format(fecha);
-
-		File archivo = new File(ruta + nombre + ".txt");
-		FileWriter fileWriter = new FileWriter(archivo);
-		PrintWriter printWriter = new PrintWriter(fileWriter);
-
-		int totalPrice = quantity2 * 5;
-
-		datos = "Cantidad de entradas: " + quantity2 + "\n" + "Precio: " + totalPrice + "€";
-
-		try {
-			printWriter.println(datos);
-		} finally {
-			printWriter.close();
-			try {
-				fileWriter.close();
-
-			} catch (IOException e) {
-				// Nothing
-			}
+		if(null == managerFile) {
+			managerFile = new ManagerFile();
 		}
-
+		
+		managerFile.createFile(quantity2);
 	}
 }

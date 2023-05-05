@@ -24,7 +24,7 @@ class UserTest {
 			expectedUser.setIdUser(1);
 			expectedUser.setAdmin(true);
 			expectedUser.setUsername("admin");
-			expectedUser.setPasswd("admin1234");
+			expectedUser.setPasswd("admin");
 			
 			assertEquals(fistUserFromBBDD, expectedUser);
 			
@@ -34,7 +34,7 @@ class UserTest {
 	}
 	
 	@Test
-	public void testInsertNewShop() {
+	public void testInsertNewUser() {
 		User newUserInsertTest = new User();
 		
 		newUserInsertTest.setIdUser(10);
@@ -54,7 +54,7 @@ class UserTest {
 	}
 	
 	@Test
-	public void testDeletePokemon() {
+	public void testDeleteUser() {
 		User userToDelete = new User();
 		
 		userToDelete.setIdUser(10);
