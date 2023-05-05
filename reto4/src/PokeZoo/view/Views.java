@@ -763,7 +763,7 @@ public class Views {
 
 		JLabel lblShopImage3 = new JLabel("New label");
 		lblShopImage3.setBounds(373, 66, 89, 85);
-		RSScaleLabel.setScaleLabel(lblShopImage3, "products/Maceta grande Pokémon.png");
+		RSScaleLabel.setScaleLabel(lblShopImage3, "img/products/Maceta grande Pokémon.png");
 		lblShopImage3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -865,7 +865,7 @@ public class Views {
 
 		JLabel lblShopBackground = new JLabel("");
 		lblShopBackground.setBounds(0, 0, 714, 328);
-		RSScaleLabel.setScaleLabel(lblShopBackground, "img/background/shopBackground.jpg");
+		RSScaleLabel.setScaleLabel(lblShopBackground, "img/misc/shopBackground.jpg");
 		panelShop.add(lblShopBackground);
 
 		// PANEL MAIN TICKETS
@@ -876,7 +876,7 @@ public class Views {
 		panelTickets.setLayout(null);
 
 		JButton btnTicketMore = new JButton("");
-		ImageIcon imageMore = new ImageIcon("img/varios/mas.png");
+		ImageIcon imageMore = new ImageIcon("img/misc/mas.png");
 		int heightMore = 23;
 		int widthMore = 27;
 		ImageIcon iconoEscalaMore = new ImageIcon(
@@ -890,7 +890,7 @@ public class Views {
 		btnTicketMore.setBorder(null);
 
 		JButton btnTicketLess = new JButton("");
-		ImageIcon imageLess = new ImageIcon("img/varios/menos.png");
+		ImageIcon imageLess = new ImageIcon("img/misc/menos.png");
 		int heightLess = 23;
 		int widthLess = 27;
 		ImageIcon iconoEscalaLess = new ImageIcon(
@@ -955,7 +955,6 @@ public class Views {
 		textFieldTotalTicket.setBounds(182, 271, 66, 20);
 		panelTickets.add(textFieldTotalTicket);
 		textFieldTotalTicket.setEditable(false);
-		textFieldTotalTicket.setColumns(10);
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 		btnTicketMore.setBounds(599, 65, 27, 23);
 		panelTickets.add(btnTicketMore);
@@ -985,18 +984,18 @@ public class Views {
 		panelTickets.add(labelTicketJournal);
 
 		JLabel labelTicketDates = new JLabel("");
-		labelTicketDates.setBounds(32, 65, 234, 149);
-		RSScaleLabel.setScaleLabel(labelTicketDates, "img/background/fondo.jpg");
+		labelTicketDates.setBounds(50, 90, 200, 100);
+		RSScaleLabel.setScaleLabel(labelTicketDates, "img/misc/fondo.jpg");
 		panelTickets.add(labelTicketDates);
 
 		JLabel labelTicketQuantitys = new JLabel("");
-		labelTicketQuantitys.setBounds(415, 35, 234, 197);
-		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/background/fondo.jpg");
+		labelTicketQuantitys.setBounds(440, 50, 200, 170);
+		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/misc/fondo.jpg");
 		panelTickets.add(labelTicketQuantitys);
 
 		JLabel labelTickets = new JLabel("");
-		labelTickets.setBounds(32, 263, 234, 38);
-		RSScaleLabel.setScaleLabel(labelTickets, "img/background/fondo.jpg");
+		labelTickets.setBounds(40, 263, 220, 38);
+		RSScaleLabel.setScaleLabel(labelTickets, "img/misc/fondo.jpg");
 		panelTickets.add(labelTickets);
 
 		JButton btnBuyTickets = new JButton("Comprar");
@@ -1010,7 +1009,7 @@ public class Views {
 
 		JLabel lblTicketBackground = new JLabel("");
 		lblTicketBackground.setBounds(0, 0, 714, 328);
-		RSScaleLabel.setScaleLabel(lblTicketBackground, "img/background/ticketsBackground.jpg");
+		RSScaleLabel.setScaleLabel(lblTicketBackground, "img/misc/ticketsBackground.jpg");
 		panelTickets.add(lblTicketBackground);
 
 		// PANEL ADMIN WELCOME
@@ -2494,32 +2493,36 @@ public class Views {
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 	}
 
-	private void buyTicket() {
-		JFrame jFrame = new JFrame();
-		if (totalTicket != 0) {
-			totalTicket--;
+	private void buyTicket() {		 
+		if (Integer.parseInt(textFieldTicketQuantity.getText()) == 0) {
+			JOptionPane.showMessageDialog(null, "No se han seleccionado entradas!!", "Oye!", JOptionPane.ERROR_MESSAGE);
+		} else {
+			JFrame jFrame = new JFrame();
+			if (totalTicket != 0) {
+				totalTicket--;
 
-			JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
+				JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
 
-			int totalReset = Integer.valueOf(textFieldTicketTotalPrice.getText());
-			int ticketDecreaser = Integer.valueOf(textFieldTotalTicket.getText());
-			totalReset = 0;
-			textFieldTotalTicket.setText(Integer.toString(ticketDecreaser));
-			textFieldTicketTotalPrice.setText(Integer.toString(totalReset));
-		} else if (totalTicket <= 0) {
-			JOptionPane.showMessageDialog(jFrame, "No quedan entradas, vuelva mañana");
-		}
-		int resp = JOptionPane.showConfirmDialog(jFrame, "¿Desea imprimir un recibo?", "Recibo",
-				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				int totalReset = Integer.valueOf(textFieldTicketTotalPrice.getText());
+				int ticketDecreaser = Integer.valueOf(textFieldTotalTicket.getText());
+				totalReset = 0;
+				textFieldTotalTicket.setText(Integer.toString(ticketDecreaser));
+				textFieldTicketTotalPrice.setText(Integer.toString(totalReset));
+			} else if (totalTicket <= 0) {
+				JOptionPane.showMessageDialog(jFrame, "No quedan entradas, vuelva mañana");
+			}
+			int resp = JOptionPane.showConfirmDialog(jFrame, "¿Desea imprimir un recibo?", "Recibo",
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-		if (resp == JOptionPane.YES_OPTION) {
-			try {
-				quantity = Integer.parseInt(textFieldTicketQuantity.getText());
-				recipeMaker(quantity);
-				quantity = 0;
-				textFieldTicketQuantity.setText(Integer.toString(quantity));
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (resp == JOptionPane.YES_OPTION) {
+				try {
+					quantity = Integer.parseInt(textFieldTicketQuantity.getText());
+					recipeMaker(quantity);
+					quantity = 0;
+					textFieldTicketQuantity.setText(Integer.toString(quantity));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
