@@ -865,7 +865,7 @@ public class Views {
 
 		JLabel lblShopBackground = new JLabel("");
 		lblShopBackground.setBounds(0, 0, 714, 328);
-		RSScaleLabel.setScaleLabel(lblShopBackground, "img/background/shopBackground.jpg");
+		RSScaleLabel.setScaleLabel(lblShopBackground, "img/misc/shopBackground.jpg");
 		panelShop.add(lblShopBackground);
 
 		// PANEL MAIN TICKETS
@@ -876,7 +876,7 @@ public class Views {
 		panelTickets.setLayout(null);
 
 		JButton btnTicketMore = new JButton("");
-		ImageIcon imageMore = new ImageIcon("img/varios/mas.png");
+		ImageIcon imageMore = new ImageIcon("img/misc/mas.png");
 		int heightMore = 23;
 		int widthMore = 27;
 		ImageIcon iconoEscalaMore = new ImageIcon(
@@ -890,7 +890,7 @@ public class Views {
 		btnTicketMore.setBorder(null);
 
 		JButton btnTicketLess = new JButton("");
-		ImageIcon imageLess = new ImageIcon("img/varios/menos.png");
+		ImageIcon imageLess = new ImageIcon("img/misc/menos.png");
 		int heightLess = 23;
 		int widthLess = 27;
 		ImageIcon iconoEscalaLess = new ImageIcon(
@@ -986,17 +986,17 @@ public class Views {
 
 		JLabel labelTicketDates = new JLabel("");
 		labelTicketDates.setBounds(32, 65, 234, 149);
-		RSScaleLabel.setScaleLabel(labelTicketDates, "img/background/fondo.jpg");
+		RSScaleLabel.setScaleLabel(labelTicketDates, "img/misc/fondo.jpg");
 		panelTickets.add(labelTicketDates);
 
 		JLabel labelTicketQuantitys = new JLabel("");
 		labelTicketQuantitys.setBounds(415, 35, 234, 197);
-		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/background/fondo.jpg");
+		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/misc/fondo.jpg");
 		panelTickets.add(labelTicketQuantitys);
 
 		JLabel labelTickets = new JLabel("");
 		labelTickets.setBounds(32, 263, 234, 38);
-		RSScaleLabel.setScaleLabel(labelTickets, "img/background/fondo.jpg");
+		RSScaleLabel.setScaleLabel(labelTickets, "img/misc/fondo.jpg");
 		panelTickets.add(labelTickets);
 
 		JButton btnBuyTickets = new JButton("Comprar");
@@ -1010,7 +1010,7 @@ public class Views {
 
 		JLabel lblTicketBackground = new JLabel("");
 		lblTicketBackground.setBounds(0, 0, 714, 328);
-		RSScaleLabel.setScaleLabel(lblTicketBackground, "img/background/ticketsBackground.jpg");
+		RSScaleLabel.setScaleLabel(lblTicketBackground, "img/misc/ticketsBackground.jpg");
 		panelTickets.add(lblTicketBackground);
 
 		// PANEL ADMIN WELCOME
