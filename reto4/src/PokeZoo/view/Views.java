@@ -2009,7 +2009,7 @@ public class Views {
 		panelAdmin.add(lblNewLabel);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
-
+//dsah
 		JLabel lblWelcome = new JLabel("¡¡ Bienvenido !!");
 		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 30));
