@@ -1,16 +1,18 @@
 package PokeZoo.bbdd.manager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class ManagerFile {
-	
-	public void createFile(int quantity2) throws IOException {
+
+	public File createFile(int quantity2) throws IOException {
 		String path = System.getProperty("user.home") + "/Desktop/";
 
 		Date date = new Date();
@@ -31,10 +33,22 @@ public class ManagerFile {
 				// Nothing
 			}
 		}
+		return file;
 	}
-	
-	public void readFile() {
-		
+
+	public String readFile(File newFile) {
+		String ret = "";
+		try {
+			Scanner myReader = new Scanner(newFile);
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				ret += data;
+			}
+			myReader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 }
