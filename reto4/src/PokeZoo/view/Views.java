@@ -51,6 +51,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 public class Views {
 
@@ -2002,13 +2003,25 @@ public class Views {
 		});
 		btnLogOut.setBounds(0, 437, 117, 24);
 		panelAdmin.add(btnLogOut);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 46, 14);
+		panelAdmin.add(lblNewLabel);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
 
 		JLabel lblWelcome = new JLabel("¡¡ Bienvenido !!");
-		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblWelcome.setBounds(280, 149, 170, 105);
+		lblWelcome.setForeground(new Color(255, 255, 255));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblWelcome.setBounds(246, 10, 245, 105);
 		panelWelcome.add(lblWelcome);
+		
+		JLabel lblWelcomeGif = new JLabel("");
+		lblWelcomeGif.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblWelcomeGif.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblWelcomeGif.setBounds(0, 0, 734, 461);
+		RSScaleLabel.setScaleLabel(lblWelcomeGif, "img/misc/openZoo.gif");
+		panelWelcome.add(lblWelcomeGif);
 
 		/*
 		 * JButton btnMap = new JButton("Mapa"); btnMap.addActionListener(new
@@ -2578,5 +2591,4 @@ public class Views {
 		}
 
 	}
-
 }
