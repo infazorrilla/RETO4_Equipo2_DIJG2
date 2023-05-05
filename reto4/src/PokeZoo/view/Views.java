@@ -763,7 +763,7 @@ public class Views {
 
 		JLabel lblShopImage3 = new JLabel("New label");
 		lblShopImage3.setBounds(373, 66, 89, 85);
-		RSScaleLabel.setScaleLabel(lblShopImage3, "products/Maceta grande Pokémon.png");
+		RSScaleLabel.setScaleLabel(lblShopImage3, "img/products/Maceta grande Pokémon.png");
 		lblShopImage3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
