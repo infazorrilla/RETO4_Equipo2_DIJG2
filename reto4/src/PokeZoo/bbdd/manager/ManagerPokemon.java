@@ -223,7 +223,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-// añadir datos del Pokemon aqui
+				// añadir datos del Pokemon aqui
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
 				ret.setEggGroup(resultSet.getString("eggGroup"));
@@ -275,15 +275,15 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
 			statement = connection.createStatement();
 			if (t.getIdPokemon() == 0) {
-				sql = "INSERT INTO Pokemon (codFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex, photoPo) "
+				sql = "INSERT INTO Pokemon (idFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex) "
 						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getEggGroup()
 						+ "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '"
-						+ t.getNumPokedex() + "', NULL);";
+						+ t.getNumPokedex() + "');";
 			} else {
-				sql = "INSERT INTO Pokemon (idPokemon, codFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex, photoPo) "
+				sql = "INSERT INTO Pokemon (idPokemon, idFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex) "
 						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo()
 						+ t.getEggGroup() + "', '" + "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '"
-						+ t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
+						+ t.getDescriptionPo() + "', '" + t.getNumPokedex() + "');";
 			}
 
 			statement.executeUpdate(sql);

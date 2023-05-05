@@ -18,9 +18,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -279,234 +281,387 @@ public class Views {
 		panelMapa.setLayout(new GridLayout(6, 7, 0, 0));
 
 		JLabel lblMapa1_0 = new JLabel();
-		lblMapa1_0.setBounds(0, 0, 105, 55);
+		lblMapa1_0.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_0, "img/map/mapa1-0.png");
 		panelMapa.add(lblMapa1_0);
 
 		JLabel lblMapa1_1 = new JLabel();
-		lblMapa1_1.setBounds(0, 0, 105, 55);
+		lblMapa1_1.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_1, "img/map/mapa1-1.png");
 		panelMapa.add(lblMapa1_1);
 
 		JLabel lblMapa1_2 = new JLabel();
-		lblMapa1_2.setBounds(0, 0, 105, 55);
+		lblMapa1_2.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_2, "img/map/mapa1-2.png");
 		panelMapa.add(lblMapa1_2);
 
 		JLabel lblMapa1_3 = new JLabel();
-		lblMapa1_3.setBounds(0, 0, 105, 55);
+		lblMapa1_3.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_3, "img/map/mapa1-3.png");
 		panelMapa.add(lblMapa1_3);
 
 		JLabel lblMapa1_4 = new JLabel();
-		lblMapa1_4.setBounds(0, 0, 105, 55);
+		lblMapa1_4.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_4, "img/map/mapa1-4.png");
 		panelMapa.add(lblMapa1_4);
 
 		JLabel lblMapa1_5 = new JLabel();
-		lblMapa1_5.setBounds(0, 0, 105, 55);
+		lblMapa1_5.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_5, "img/map/mapa1-5.png");
 		panelMapa.add(lblMapa1_5);
 
 		JLabel lblMapa1_6 = new JLabel();
-		lblMapa1_6.setBounds(0, 0, 105, 55);
+		lblMapa1_6.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa1_6, "img/map/mapa1-6.png");
 		panelMapa.add(lblMapa1_6);
 
 		JLabel lblMapa2_0 = new JLabel();
-		lblMapa2_0.setBounds(0, 0, 105, 55);
+		lblMapa2_0.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_0, "img/map/mapa2-0.png");
 		panelMapa.add(lblMapa2_0);
 
 		JLabel lblMapa2_1 = new JLabel();
-		lblMapa2_1.setBounds(0, 0, 105, 55);
+		lblMapa2_1.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_1, "img/map/mapa2-1.png");
 		panelMapa.add(lblMapa2_1);
 
 		JLabel lblMapa2_2 = new JLabel();
-		lblMapa2_2.setBounds(0, 0, 105, 55);
+		lblMapa2_2.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_2, "img/map/mapa2-2.png");
 		panelMapa.add(lblMapa2_2);
 
 		JLabel lblMapa2_3 = new JLabel();
-		lblMapa2_3.setBounds(0, 0, 105, 55);
+		lblMapa2_3.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_3, "img/map/mapa2-3.png");
 		panelMapa.add(lblMapa2_3);
 
 		JLabel lblMapa2_4 = new JLabel();
-		lblMapa2_4.setBounds(0, 0, 105, 55);
+		lblMapa2_4.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_4, "img/map/mapa2-4.png");
 		panelMapa.add(lblMapa2_4);
 
 		JLabel lblMapa2_5 = new JLabel();
-		lblMapa2_5.setBounds(0, 0, 105, 55);
+		lblMapa2_5.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_5, "img/map/mapa2-5.png");
 		panelMapa.add(lblMapa2_5);
 
 		JLabel lblMapa2_6 = new JLabel();
-		lblMapa2_6.setBounds(0, 0, 105, 55);
+		lblMapa2_6.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa2_6, "img/map/mapa2-6.png");
 		panelMapa.add(lblMapa2_6);
 
 		JLabel lblMapa3_0 = new JLabel();
-		lblMapa3_0.setBounds(0, 0, 105, 55);
+		lblMapa3_0.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_0, "img/map/mapa3-0.png");
 		panelMapa.add(lblMapa3_0);
 
 		JLabel lblMapa3_1 = new JLabel();
-		lblMapa3_1.setBounds(0, 0, 105, 55);
+		lblMapa3_1.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_1, "img/map/mapa3-1.png");
 		panelMapa.add(lblMapa3_1);
 
 		JLabel lblMapa3_2 = new JLabel();
-		lblMapa3_2.setBounds(0, 0, 105, 55);
+		lblMapa3_2.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_2, "img/map/mapa3-2.png");
 		panelMapa.add(lblMapa3_2);
 
 		JLabel lblMapa3_3 = new JLabel();
-		lblMapa3_3.setBounds(0, 0, 105, 55);
+		lblMapa3_3.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_3, "img/map/mapa3-3.png");
 		panelMapa.add(lblMapa3_3);
 
 		JLabel lblMapa3_4 = new JLabel();
-		lblMapa3_4.setBounds(0, 0, 105, 55);
+		lblMapa3_4.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_4, "img/map/mapa3-4.png");
 		panelMapa.add(lblMapa3_4);
 
 		JLabel lblMapa3_5 = new JLabel();
-		lblMapa3_5.setBounds(0, 0, 105, 55);
+		lblMapa3_5.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_5, "img/map/mapa3-5.png");
 		panelMapa.add(lblMapa3_5);
 
 		JLabel lblMapa3_6 = new JLabel();
-		lblMapa3_6.setBounds(0, 0, 105, 55);
+		lblMapa3_6.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa3_6, "img/map/mapa3-6.png");
 		panelMapa.add(lblMapa3_6);
 
 		JLabel lblMapa4_0 = new JLabel();
-		lblMapa4_0.setBounds(0, 0, 105, 55);
+		lblMapa4_0.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_0, "img/map/mapa4-0.png");
 		panelMapa.add(lblMapa4_0);
 
 		JLabel lblMapa4_1 = new JLabel();
-		lblMapa4_1.setBounds(0, 0, 105, 55);
+		lblMapa4_1.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_1, "img/map/mapa4-1.png");
 		panelMapa.add(lblMapa4_1);
 
 		JLabel lblMapa4_2 = new JLabel();
-		lblMapa4_2.setBounds(0, 0, 105, 55);
+		lblMapa4_2.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_2, "img/map/mapa4-2.png");
 		panelMapa.add(lblMapa4_2);
 
 		JLabel lblMapa4_3 = new JLabel();
-		lblMapa4_3.setBounds(0, 0, 105, 55);
+		lblMapa4_3.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_3, "img/map/mapa4-3.png");
 		panelMapa.add(lblMapa4_3);
 
 		JLabel lblMapa4_4 = new JLabel();
-		lblMapa4_4.setBounds(0, 0, 105, 55);
+		lblMapa4_4.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_4, "img/map/mapa4-4.png");
 		panelMapa.add(lblMapa4_4);
 
 		JLabel lblMapa4_5 = new JLabel();
-		lblMapa4_5.setBounds(0, 0, 105, 55);
+		lblMapa4_5.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5.png");
 		panelMapa.add(lblMapa4_5);
 
 		JLabel lblMapa4_6 = new JLabel();
-		lblMapa4_6.setBounds(0, 0, 105, 55);
+		lblMapa4_6.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa4_6, "img/map/mapa4-6.png");
 		panelMapa.add(lblMapa4_6);
 
 		JLabel lblMapa5_0 = new JLabel();
-		lblMapa5_0.setBounds(0, 0, 105, 55);
+		lblMapa5_0.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_0, "img/map/mapa5-0.png");
 		panelMapa.add(lblMapa5_0);
 
 		JLabel lblMapa5_1 = new JLabel();
-		lblMapa5_1.setBounds(0, 0, 105, 55);
+		lblMapa5_1.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_1, "img/map/mapa5-1.png");
 		panelMapa.add(lblMapa5_1);
 
 		JLabel lblMapa5_2 = new JLabel();
-		lblMapa5_2.setBounds(0, 0, 105, 55);
+		lblMapa5_2.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_2, "img/map/mapa5-2.png");
 		panelMapa.add(lblMapa5_2);
 
 		JLabel lblMapa5_3 = new JLabel();
-		lblMapa5_3.setBounds(0, 0, 105, 55);
+		lblMapa5_3.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_3, "img/map/mapa5-3.png");
 		panelMapa.add(lblMapa5_3);
 
 		JLabel lblMapa5_4 = new JLabel();
-		lblMapa5_4.setBounds(0, 0, 105, 55);
+		lblMapa5_4.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_4, "img/map/mapa5-4.png");
 		panelMapa.add(lblMapa5_4);
 
 		JLabel lblMapa5_5 = new JLabel();
-		lblMapa5_5.setBounds(0, 0, 105, 55);
+		lblMapa5_5.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_5, "img/map/mapa5-5.png");
 		panelMapa.add(lblMapa5_5);
 
 		JLabel lblMapa5_6 = new JLabel();
-		lblMapa5_6.setBounds(0, 0, 105, 55);
+		lblMapa5_6.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa5_6, "img/map/mapa5-6.png");
 		panelMapa.add(lblMapa5_6);
 
 		JLabel lblMapa6_0 = new JLabel();
-		lblMapa6_0.setBounds(0, 0, 105, 55);
+		lblMapa6_0.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_0, "img/map/mapa6-0.png");
 		panelMapa.add(lblMapa6_0);
 
 		JLabel lblMapa6_1 = new JLabel();
-		lblMapa6_1.setBounds(0, 0, 105, 55);
+		lblMapa6_1.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_1, "img/map/mapa6-1.png");
 		panelMapa.add(lblMapa6_1);
 
 		JLabel lblMapa6_2 = new JLabel();
-		lblMapa6_2.setBounds(0, 0, 105, 55);
+		lblMapa6_2.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_2, "img/map/mapa6-2.png");
 		panelMapa.add(lblMapa6_2);
 
 		JLabel lblMapa6_3 = new JLabel();
-		lblMapa6_3.setBounds(0, 0, 105, 55);
+		lblMapa6_3.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_3, "img/map/mapa6-3.png");
 		panelMapa.add(lblMapa6_3);
 
 		JLabel lblMapa6_4 = new JLabel();
-		lblMapa6_4.setBounds(0, 0, 105, 55);
+		lblMapa6_4.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_4, "img/map/mapa6-4.png");
 		panelMapa.add(lblMapa6_4);
 
 		JLabel lblMapa6_5 = new JLabel();
-		lblMapa6_5.setBounds(0, 0, 105, 55);
+		lblMapa6_5.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_5, "img/map/mapa6-5.png");
 		panelMapa.add(lblMapa6_5);
 
 		JLabel lblMapa6_6 = new JLabel();
-		lblMapa6_6.setBounds(0, 0, 105, 55);
+		lblMapa6_6.setBounds(0, 0, 104, 55);
 		RSScaleLabel.setScaleLabel(lblMapa6_6, "img/map/mapa6-6.png");
 		panelMapa.add(lblMapa6_6);
 
 		btnMapSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String type1 = null;
+				String type2 = null;
+				if (managerPokemon == null) {
+					managerPokemon = new ManagerPokemon();
+				}
+				lblMapa6_0.setIcon(new ImageIcon(Views.class.getResource("/map/mapa6-0.png")));
+				lblMapa6_0.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa6_0, "img/map/mapa6-0.png");
+
+				lblMapa3_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa3-2.png")));
+				lblMapa3_2.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa3_2, "img/map/mapa3-2.png");
+
+				lblMapa2_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-4.png")));
+				lblMapa2_4.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa2_4, "img/map/mapa2-4.png");
+
+				lblMapa1_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa1-4.png")));
+				lblMapa1_4.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa1_4, "img/map/mapa1-4.png");
+
+				lblMapa2_1.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-1.png")));
+				lblMapa2_1.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa2_1, "img/map/mapa2-1.png");
+
 				lblMapa4_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-5.png")));
-				lblMapa4_5.setBounds(0, 0, 105, 55);
+				lblMapa4_5.setBounds(0, 0, 104, 55);
 				RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5.png");
+
+				lblMapa5_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa5-5.png")));
+				lblMapa5_5.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa5_5, "img/map/mapa5-5.png");
+
+				lblMapa2_3.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-3.png")));
+				lblMapa2_3.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa2_3, "img/map/mapa2-3.png");
+
+				lblMapa3_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa3-4.png")));
+				lblMapa3_4.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa3_4, "img/map/mapa3-4.png");
+
+				lblMapa1_0.setIcon(new ImageIcon(Views.class.getResource("/map/mapa1-0.png")));
+				lblMapa1_0.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa1_0, "img/map/mapa1-0.png");
+
+				lblMapa5_3.setIcon(new ImageIcon(Views.class.getResource("/map/mapa5-3.png")));
+				lblMapa5_3.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa5_3, "img/map/mapa5-3.png");
+
 				lblMapa2_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-2.png")));
-				lblMapa2_2.setBounds(0, 0, 105, 55);
+				lblMapa2_2.setBounds(0, 0, 104, 55);
 				RSScaleLabel.setScaleLabel(lblMapa2_2, "img/map/mapa2-2.png");
-				if (textFieldAllPokemons.getText().equalsIgnoreCase("charmander")) {
+
+				lblMapa4_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-4.png")));
+				lblMapa4_4.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa4_4, "img/map/mapa4-4.png");
+
+				lblMapa5_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa5-4.png")));
+				lblMapa5_4.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa5_4, "img/map/mapa5-4.png");
+
+				lblMapa4_1.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-1.png")));
+				lblMapa4_1.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa4_1, "img/map/mapa4-1.png");
+
+				lblMapa6_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa6-5.png")));
+				lblMapa6_5.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa6_5, "img/map/mapa6-5.png");
+
+				lblMapa4_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-2.png")));
+				lblMapa4_2.setBounds(0, 0, 104, 55);
+				RSScaleLabel.setScaleLabel(lblMapa4_2, "img/map/mapa4-2.png");
+
+				Pokemon pokemonSeleccionado = managerPokemon.getPokemonByName(textFieldAllPokemons.getText());
+				if (pokemonSeleccionado != null) {
+					type1 = pokemonSeleccionado.getTypeP();
+					if (pokemonSeleccionado.getTypeS() != null) {
+						type2 = pokemonSeleccionado.getTypeS();
+					}
+				}
+				if (type1 == null) {
+					type1 = "";
+				}
+				if (type2 == null) {
+					type2 = "";
+				}
+				if (type1.equalsIgnoreCase("Bicho") || type2.equalsIgnoreCase("Bicho")) {
+					lblMapa6_0.setIcon(new ImageIcon(Views.class.getResource("/map/mapa6-0-Alter.png")));
+					lblMapa6_0.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa6_0, "img/map/mapa6-0-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Dragon") || type2.equalsIgnoreCase("Dragon")) {
+					lblMapa3_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa3-2-Alter.png")));
+					lblMapa3_2.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa3_2, "img/map/mapa3-2-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Electrico") || type2.equalsIgnoreCase("Electrico")) {
+					lblMapa2_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-4-Alter.png")));
+					lblMapa2_4.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa2_4, "img/map/mapa2-4-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Hada") || type2.equalsIgnoreCase("Hada")) {
+					lblMapa1_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa1-4-Alter.png")));
+					lblMapa1_4.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa1_4, "img/map/mapa1-4-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Lucha") || type2.equalsIgnoreCase("Lucha")) {
+					lblMapa2_1.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-1-Alter.png")));
+					lblMapa2_1.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa2_1, "img/map/mapa2-1-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Fuego") || type2.equalsIgnoreCase("Fuego")) {
 					lblMapa4_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-5-Alter.png")));
-					lblMapa4_5.setBounds(0, 0, 105, 55);
+					lblMapa4_5.setBounds(0, 0, 104, 55);
 					RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5-Alter.png");
-				} else if (textFieldAllPokemons.getText().equalsIgnoreCase("charizard")) {
-					lblMapa4_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-5-Alter.png")));
-					lblMapa4_5.setBounds(0, 0, 105, 55);
-					RSScaleLabel.setScaleLabel(lblMapa4_5, "img/map/mapa4-5-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Volador") || type2.equalsIgnoreCase("Volador")) {
+					lblMapa5_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa5-5-Alter.png")));
+					lblMapa5_5.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa5_5, "img/map/mapa5-5-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Fantasma") || type2.equalsIgnoreCase("Fantasma")) {
+					lblMapa2_3.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-3-Alter.png")));
+					lblMapa2_3.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa2_3, "img/map/mapa2-3-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Planta") || type2.equalsIgnoreCase("Planta")) {
+					lblMapa3_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa3-4-Alter.png")));
+					lblMapa3_4.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa3_4, "img/map/mapa3-4-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Tierra") || type2.equalsIgnoreCase("Tierra")) {
+					lblMapa1_0.setIcon(new ImageIcon(Views.class.getResource("/map/mapa1-0-Alter.png")));
+					lblMapa1_0.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa1_0, "img/map/mapa1-0-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Hielo") || type2.equalsIgnoreCase("Hielo")) {
+					lblMapa5_3.setIcon(new ImageIcon(Views.class.getResource("/map/mapa5-3-Alter.png")));
+					lblMapa5_3.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa5_3, "img/map/mapa5-3-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Normal") || type2.equalsIgnoreCase("Normal")) {
 					lblMapa2_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa2-2-Alter.png")));
-					lblMapa2_2.setBounds(0, 0, 105, 55);
+					lblMapa2_2.setBounds(0, 0, 104, 55);
 					RSScaleLabel.setScaleLabel(lblMapa2_2, "img/map/mapa2-2-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Veneno") || type2.equalsIgnoreCase("Veneno")) {
+					lblMapa4_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-4-Alter.png")));
+					lblMapa4_4.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa4_4, "img/map/mapa4-4-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Psiquico") || type2.equalsIgnoreCase("Psiquico")) {
+					lblMapa5_4.setIcon(new ImageIcon(Views.class.getResource("/map/mapa5-4-Alter.png")));
+					lblMapa5_4.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa5_4, "img/map/mapa5-4-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Roca") || type2.equalsIgnoreCase("Roca")) {
+					lblMapa4_1.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-1-Alter.png")));
+					lblMapa4_1.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa4_1, "img/map/mapa4-1-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Acero") || type2.equalsIgnoreCase("Acero")) {
+					lblMapa6_5.setIcon(new ImageIcon(Views.class.getResource("/map/mapa6-5-Alter.png")));
+					lblMapa6_5.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa6_5, "img/map/mapa6-5-Alter.png");
+				}
+				if (type1.equalsIgnoreCase("Agua") || type2.equalsIgnoreCase("Agua")) {
+					lblMapa4_2.setIcon(new ImageIcon(Views.class.getResource("/map/mapa4-2-Alter.png")));
+					lblMapa4_2.setBounds(0, 0, 104, 55);
+					RSScaleLabel.setScaleLabel(lblMapa4_2, "img/map/mapa4-2-Alter.png");
 				}
 			}
 		});
@@ -1348,7 +1503,7 @@ public class Views {
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password, "Recinto*: ", enclosure };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Oficinista",
+				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()
@@ -1525,7 +1680,7 @@ public class Views {
 				 * password, "Recinto*: ", enclosure };
 				 * 
 				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Resgistrar nuevo Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * "Registrar nuevo Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
 				 * JOptionPane.OK_OPTION) { if (dni.getText().isEmpty() ||
 				 * name.getText().isEmpty() || surName.getText().isEmpty() ||
 				 * enclosure.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
@@ -1673,23 +1828,29 @@ public class Views {
 		JButton btnAddNewPokemon = new JButton("Añadir Pokemon");
 		btnAddNewPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (null == managerFood) {
+					managerFood = new ManagerFood();
+				}
 				JTextField id = new JTextField();
 				JTextField namePo = new JTextField();
 				JTextField eggGroup = new JTextField();
 				JTextField typeP = new JTextField();
 				JTextField typeS = new JTextField();
+				JComboBox<String> comboFoods = new JComboBox<String>();
+
+				ArrayList<String> allFoods = managerFood.selectAllFoodNames();
+				comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
 
 				Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:", typeP,
-						"typeS: ", typeS };
+						"typeS: ", typeS, "Alimento", comboFoods };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Resgistrar nuevo Pokemon",
+				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Pokemon",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					if (id.getText().isEmpty() || namePo.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Pokemon!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-
 						Pokemon pokemonToInsert = new Pokemon();
 						pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
 						pokemonToInsert.setNamePo(namePo.getText());
@@ -1697,11 +1858,12 @@ public class Views {
 						pokemonToInsert.setTypeP(typeP.getText());
 						pokemonToInsert.setTypeS(typeS.getText());
 
+						String nameFood = String.valueOf(comboFoods.getSelectedItem());
+						pokemonToInsert.setFood(managerFood.selectFoodByName(nameFood));
 						try {
 							if (null == managerPokemon) {
 								managerPokemon = new ManagerPokemon();
 							}
-							// TODO Comprobar que el usuario no existe ya
 							managerPokemon.insert(pokemonToInsert);
 							JOptionPane.showMessageDialog(null, "Pokemon registrado correctamente", "Yay!",
 									JOptionPane.INFORMATION_MESSAGE);
@@ -1719,44 +1881,46 @@ public class Views {
 		JButton btnModifyPokemon = new JButton("Modificar Pokemon");
 		btnModifyPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				Pokemon selectedPokemon = getSelectedPokemon();
 
-				JLabel id = new JLabel();
-				id.setText(Integer.toString(selectedPokemon.getIdPokemon()));
-				JTextField namePo = new JTextField();
-				namePo.setText(selectedPokemon.getNamePo());
-				JTextField eggGroup = new JTextField();
-				eggGroup.setText(selectedPokemon.getEggGroup());
-				JTextField typeP = new JTextField();
-				typeP.setText(selectedPokemon.getTypeP());
-				JTextField typeS = new JTextField();
-				typeS.setText(selectedPokemon.getTypeS());
+				if (null != selectedPokemon) {
+					JLabel id = new JLabel();
+					id.setText(Integer.toString(selectedPokemon.getIdPokemon()));
+					JTextField namePo = new JTextField();
+					namePo.setText(selectedPokemon.getNamePo());
+					JTextField eggGroup = new JTextField();
+					eggGroup.setText(selectedPokemon.getEggGroup());
+					JTextField typeP = new JTextField();
+					typeP.setText(selectedPokemon.getTypeP());
+					JTextField typeS = new JTextField();
+					typeS.setText(selectedPokemon.getTypeS());
 
-				Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:", typeP,
-						"typeS: ", typeS };
+					Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:",
+							typeP, "typeS: ", typeS };
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (option == JOptionPane.OK_OPTION) {
-					int confimation = JOptionPane.showConfirmDialog(null,
-							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
 							JOptionPane.OK_CANCEL_OPTION);
-					if (confimation == JOptionPane.OK_OPTION) {
-						selectedPokemon.setNumPokedex(selectedPokemon.getIdPokemon());
-						selectedPokemon.setNamePo(namePo.getText());
-						selectedPokemon.setEggGroup(eggGroup.getText());
-						selectedPokemon.setTypeP(typeP.getText());
-						selectedPokemon.setTypeS(typeS.getText());
-						try {
-							managerPokemon.update(selectedPokemon);
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
+					if (option == JOptionPane.OK_OPTION) {
+						int confimation = JOptionPane.showConfirmDialog(null,
+								"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+								JOptionPane.OK_CANCEL_OPTION);
+						if (confimation == JOptionPane.OK_OPTION) {
+							selectedPokemon.setNumPokedex(selectedPokemon.getIdPokemon());
+							selectedPokemon.setNamePo(namePo.getText());
+							selectedPokemon.setEggGroup(eggGroup.getText());
+							selectedPokemon.setTypeP(typeP.getText());
+							selectedPokemon.setTypeS(typeS.getText());
+							try {
+								managerPokemon.update(selectedPokemon);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
 
-						loadTablePokemonData(tablePokemon);
+							loadTablePokemonData(tablePokemon);
+						}
 					}
 				}
+
 			}
 		});
 		btnModifyPokemon.setBounds(180, 336, 141, 23);
@@ -1765,11 +1929,12 @@ public class Views {
 		JButton btnDeletePokemon = new JButton("Borrar Pokemon");
 		btnDeletePokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 Pokemon selectedPokemon = getSelectedPokemon(); int confimation =
-				 JOptionPane.showConfirmDialog(null,
-				 "¿Estas seguro de que deseas borrar el pokemon?", "Confirmacion",
-				 JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 deleteSelectedPokemon(selectedPokemon); }
+				Pokemon selectedPokemon = getSelectedPokemon();				
+				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el pokemon?",
+						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+				if (confimation == JOptionPane.OK_OPTION) {
+					deleteSelectedPokemon(selectedPokemon);
+				}
 			}
 		});
 		btnDeletePokemon.setBounds(399, 336, 141, 23);
@@ -1805,7 +1970,7 @@ public class Views {
 				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
 				 * 
 				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Resgistrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * "Registrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
 				 * JOptionPane.OK_OPTION) { if (id.getText().isEmpty() ||
 				 * namePo.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
 				 * "Faltan datos obligatorios del Pokemon!", "Oye!", JOptionPane.ERROR_MESSAGE);
@@ -1915,7 +2080,7 @@ public class Views {
 				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
 				 * 
 				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Resgistrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
+				 * "Registrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
 				 * JOptionPane.OK_OPTION) { if (id.getText().isEmpty() ||
 				 * namePo.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
 				 * "Faltan datos obligatorios del Pokemon!", "Oye!", JOptionPane.ERROR_MESSAGE);
@@ -2235,7 +2400,7 @@ public class Views {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void deleteSelectedEmployee(Employee selectedEmployee) {
 		if (null == managerEmployee) {
 			managerEmployee = new ManagerEmployee();
@@ -2450,7 +2615,7 @@ public class Views {
 		}
 	}
 
-	private Pokemon getSelectedPokemon(){
+	private Pokemon getSelectedPokemon() {
 		Pokemon ret = null;
 		if (tablePokemon.getSelectionModel().isSelectionEmpty()) {
 			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
@@ -2466,7 +2631,7 @@ public class Views {
 
 		return ret;
 	}
-	
+
 	private Employee getSelectedEmployee() throws EmployeeNotSelected {
 		Employee ret = null;
 		if (tableEmployee.getSelectionModel().isSelectionEmpty()) {

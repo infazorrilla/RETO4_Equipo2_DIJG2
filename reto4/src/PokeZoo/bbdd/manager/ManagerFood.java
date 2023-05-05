@@ -78,10 +78,122 @@ public class ManagerFood implements ManagerInterface<Food>{
 		return ret;
 	}
 	
+	public ArrayList<String> selectAllFoodNames() {
+		ArrayList<String> ret = null;
+
+		String sql = "SELECT nameFo FROM Food";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<String>();
+					}				
+					ret.add(resultSet.getString("nameFo"));
+				}while(resultSet.next());
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		return ret;
+	}
+	
 	public Food selectFoodById(int id) throws SQLException, AccountNotFoundException, Exception {
 		Food ret = null;
 		
 		String sql = "SELECT * FROM Food WHERE idFood = " + id;
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Food();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdFood(resultSet.getInt("idFood"));
+					ret.setQuantityFo(resultSet.getInt("quantityFo"));
+					ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					ret.setNameFo(resultSet.getString("nameFo"));
+					ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+				}while(resultSet.next());
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}		
+		return ret;
+	}
+	
+	public Food selectFoodByName(String nameFood) {
+Food ret = null;
+		
+		String sql = "SELECT * FROM Food WHERE nameFo = '" + nameFood + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -251,5 +363,5 @@ public class ManagerFood implements ManagerInterface<Food>{
 				// Nothing
 			};
 		}
-	}
+	}	
 }
