@@ -2563,27 +2563,6 @@ public class Views {
 			managerFile = new ManagerFile();
 		}
 		
-		managerFile.recipeMaker(quantity2);
-		
-		/*String path = System.getProperty("user.home") + "/Desktop/";
-
-		Date date = new Date();
-		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
-
-		File file = new File(path + "Ticket " + formatter.format(date) + ".txt");
-		FileWriter fileWriter = new FileWriter(file);
-		PrintWriter printWriter = new PrintWriter(fileWriter);
-
-		try {
-			printWriter.println("Cantidad de entradas: " + quantity2 + "\n");
-			printWriter.println("Precio: " + (quantity2 * 5) + "€");
-		} finally {
-			printWriter.close();
-			try {
-				fileWriter.close();
-			} catch (IOException e) {
-				// Nothing
-			}
-		}*/
+		managerFile.createFile(quantity2);
 	}
 }

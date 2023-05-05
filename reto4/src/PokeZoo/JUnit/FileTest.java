@@ -1,6 +1,6 @@
 package PokeZoo.JUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,11 @@ class FileTest {
 
 	@Test
 	void testFileCreationAndRead() {
-		
+		try {
+			managerFile.createFile(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

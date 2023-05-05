@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ManagerFile {
 	
-	public void recipeMaker(int quantity2) throws IOException {
+	public void createFile(int quantity2) throws IOException {
 		String path = System.getProperty("user.home") + "/Desktop/";
 
 		Date date = new Date();
