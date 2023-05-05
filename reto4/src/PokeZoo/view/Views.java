@@ -73,7 +73,7 @@ public class Views {
 	// Managers
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
-	//private ManagerDependent managerDependent = null;
+	// private ManagerDependent managerDependent = null;
 	private ManagerCleaner managerCleaner = null;
 	private ManagerCaretaker managerCaretaker = null;
 	private ManagerPokemon managerPokemon = null;
@@ -205,7 +205,7 @@ public class Views {
 		lblAd.setBounds(250, 440, 257, 14);
 		panelMain.add(lblAd);
 
-// PANEL MAIN MAP
+		// PANEL MAIN MAP
 		panelMap = new JPanel();
 		panelMap.setVisible(false);
 		panelMap.setBounds(10, 111, 714, 328);
@@ -484,7 +484,7 @@ public class Views {
 		JTextArea textPokemonName = new JTextArea();
 		textPokemonName.setBackground(new Color(251, 236, 171));
 		textPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonName.setBounds(131, 15, 139, 30);
+		textPokemonName.setBounds(131, 15, 175, 30);
 		textPokemonName.setEditable(false);
 		panelPokedex.add(textPokemonName);
 
@@ -496,7 +496,7 @@ public class Views {
 		JTextArea textPokemonEggGroup = new JTextArea();
 		textPokemonEggGroup.setBackground(new Color(251, 236, 171));
 		textPokemonEggGroup.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonEggGroup.setBounds(131, 53, 160, 30);
+		textPokemonEggGroup.setBounds(131, 53, 175, 30);
 		textPokemonEggGroup.setEditable(false);
 		panelPokedex.add(textPokemonEggGroup);
 
@@ -505,18 +505,24 @@ public class Views {
 		lblInfoTypes.setBounds(20, 90, 85, 30);
 		panelPokedex.add(lblInfoTypes);
 
-		JTextArea textPokemonTypeP = new JTextArea();
+		JTextField textPokemonTypeP = new JTextField();
 		textPokemonTypeP.setBackground(new Color(251, 236, 171));
 		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonTypeP.setBounds(131, 90, 139, 30);
+		textPokemonTypeP.setHorizontalAlignment(JTextField.CENTER);
+		textPokemonTypeP.setBounds(131, 90, 86, 30);
+		textPokemonTypeP.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		textPokemonTypeP.setEditable(false);
+		textPokemonTypeP.setVisible(false);
 		panelPokedex.add(textPokemonTypeP);
 
-		JTextArea textPokemonTypeS = new JTextArea();
+		JTextField textPokemonTypeS = new JTextField();
 		textPokemonTypeS.setBackground(new Color(251, 236, 171));
 		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textPokemonTypeS.setBounds(281, 90, 122, 30);
+		textPokemonTypeS.setHorizontalAlignment(JTextField.CENTER);
+		textPokemonTypeS.setBounds(220, 90, 86, 30);
+		textPokemonTypeS.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		textPokemonTypeS.setEditable(false);
+		textPokemonTypeS.setVisible(false);
 		panelPokedex.add(textPokemonTypeS);
 
 		JLabel lblDescription = new JLabel("Descripcion :");
@@ -546,6 +552,9 @@ public class Views {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pokemon pokemonSeleccionado = new Pokemon();
+				textPokemonTypeS.setVisible(true);
+				textPokemonTypeP.setBackground(new Color(251, 236, 171));
+				textPokemonTypeS.setBackground(new Color(251, 236, 171));
 				if (null == managerPokemon) {
 					managerPokemon = new ManagerPokemon();
 				}
@@ -562,7 +571,6 @@ public class Views {
 					pokemonSeleccionado.setTypeP("");
 					pokemonSeleccionado.setTypeS("");
 					pokemonSeleccionado.setDescriptionPo("");
-					lblSelectedPokemonImage.setIcon(null);
 				}
 				textPokemonName.setText(pokemonSeleccionado.getNamePo());
 				textPokemonEggGroup.setText(pokemonSeleccionado.getEggGroup());
@@ -571,14 +579,95 @@ public class Views {
 				textPokemonDescription.setText(pokemonSeleccionado.getDescriptionPo());
 				lblSelectedPokemonImage.setBounds(550, 0, 110, 110);
 				RSScaleLabel.setScaleLabel(lblSelectedPokemonImage, "img/pokemon/" + pokemonSeleccionado.getIdPokemon() + ".png");
+				if (pokemonSeleccionado.getTypeP() != "") {
+					textPokemonTypeP.setVisible(true);
+					if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Bicho")) {
+						textPokemonTypeP.setBackground(new Color(146, 170, 41, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Dragon")) {
+						textPokemonTypeP.setBackground(new Color(97, 57, 204, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Electrico")) {
+						textPokemonTypeP.setBackground(new Color(229, 218, 67, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Hada")) {
+						textPokemonTypeP.setBackground(new Color(215, 161, 211, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Lucha")) {
+						textPokemonTypeP.setBackground(new Color(177, 47, 33, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Fuego")) {
+						textPokemonTypeP.setBackground(new Color(238, 130, 44, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Volador")) {
+						textPokemonTypeP.setBackground(new Color(164, 147, 217, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Fantasma")) {
+						textPokemonTypeP.setBackground(new Color(106, 88, 146, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Planta")) {
+						textPokemonTypeP.setBackground(new Color(116, 191, 94, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Tierra")) {
+						textPokemonTypeP.setBackground(new Color(226, 210, 117, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Hielo")) {
+						textPokemonTypeP.setBackground(new Color(139, 220, 203, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Normal")) {
+						textPokemonTypeP.setBackground(new Color(166, 172, 129, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Veneno")) {
+						textPokemonTypeP.setBackground(new Color(139, 83, 142, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Psiquico")) {
+						textPokemonTypeP.setBackground(new Color(234, 117, 145, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Roca")) {
+						textPokemonTypeP.setBackground(new Color(181, 164, 49, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Acero")) {
+						textPokemonTypeP.setBackground(new Color(179, 182, 207, 255));
+					} else if (pokemonSeleccionado.getTypeP().equalsIgnoreCase("Agua")) {
+						textPokemonTypeP.setBackground(new Color(108, 143, 228, 255));
+					}
+				} else {
+					textPokemonTypeP.setVisible(false);
+				}
+				if (pokemonSeleccionado.getTypeS() == null) {
+					textPokemonTypeS.setVisible(false);
+				} else {
+					textPokemonTypeP.setVisible(true);
+					textPokemonTypeS.setText(pokemonSeleccionado.getTypeS());
+					if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Bicho")) {
+						textPokemonTypeS.setBackground(new Color(146, 170, 41, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Dragon")) {
+						textPokemonTypeS.setBackground(new Color(97, 57, 204, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Electrico")) {
+						textPokemonTypeS.setBackground(new Color(229, 218, 67, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Hada")) {
+						textPokemonTypeS.setBackground(new Color(215, 161, 211, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Lucha")) {
+						textPokemonTypeS.setBackground(new Color(177, 47, 33, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Fuego")) {
+						textPokemonTypeS.setBackground(new Color(238, 130, 44, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Volador")) {
+						textPokemonTypeS.setBackground(new Color(164, 147, 217, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Fantasma")) {
+						textPokemonTypeS.setBackground(new Color(106, 88, 146, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Planta")) {
+						textPokemonTypeS.setBackground(new Color(116, 191, 94, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Tierra")) {
+						textPokemonTypeS.setBackground(new Color(226, 210, 117, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Hielo")) {
+						textPokemonTypeS.setBackground(new Color(139, 220, 203, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Normal")) {
+						textPokemonTypeS.setBackground(new Color(166, 172, 129, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Veneno")) {
+						textPokemonTypeS.setBackground(new Color(139, 83, 142, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Psiquico")) {
+						textPokemonTypeS.setBackground(new Color(234, 117, 145, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Roca")) {
+						textPokemonTypeS.setBackground(new Color(181, 164, 49, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Acero")) {
+						textPokemonTypeS.setBackground(new Color(179, 182, 207, 255));
+					} else if (pokemonSeleccionado.getTypeS().equalsIgnoreCase("Agua")) {
+						textPokemonTypeS.setBackground(new Color(108, 143, 228, 255));
+					}
+				}
+				textPokemonDescription.setText(pokemonSeleccionado.getDescriptionPo());
 			}
 		});
 		panelPokedex.add(btnSearch);
 
 		JLabel lblPokedexImage = new JLabel();
 		lblPokedexImage.setBounds(0, 0, 714, 314);
-		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Pokedex.png")).getImage()
-				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
+		lblPokedexImage.setIcon(new ImageIcon(new ImageIcon(Views.class.getResource("/misc/Pokedex.png")).getImage().getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
 		// PANEL MAIN TIENDA
@@ -775,7 +864,7 @@ public class Views {
 				JTextField surName = new JTextField();
 				JTextField phone = new JTextField();
 				JTextField username = new JTextField();
-				JPasswordField password = new JPasswordField();		
+				JPasswordField password = new JPasswordField();
 
 				Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *", surName, "Telefono:", phone,
 						"Username: *", username, "Password: *", password };
@@ -1493,7 +1582,8 @@ public class Views {
 		scrollPaneTableFood.setViewportView(tableFood);
 
 		tableFood.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableFood.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Descripcion", "Cantidad", "Consumo Diario" }));
+		tableFood.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Nombre", "Descripcion", "Cantidad", "Consumo Diario" }));
 		tableFood.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewFood = new JButton("Nueva Comida");
@@ -1834,15 +1924,15 @@ public class Views {
 			managerEmployee = new ManagerEmployee();
 		}
 
-		/*if (null == managerDependent) {
-			managerDependent = new ManagerDependent();
-		}*/
+		/*
+		 * if (null == managerDependent) { managerDependent = new ManagerDependent(); }
+		 */
 
 		ArrayList<Employee> allEmployees = null;
-		//ArrayList<Dependent> allDependant = null;
+		// ArrayList<Dependent> allDependant = null;
 		try {
 			allEmployees = managerEmployee.selectAll();
-			//allDependant = managerDependent.selectAll();
+			// allDependant = managerDependent.selectAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1860,17 +1950,15 @@ public class Views {
 			}
 		}
 
-		/*if (null != allDependant) {
-			for (Dependent dependant : allDependant) {
-				String dni = dependant.getDni();
-				String name = dependant.getNameWo();
-				String surName = dependant.getSurnameWo();
-				String phone = dependant.getPhoneWo();
-				Boolean isBlocked = dependant.getUser().getIsBlocked();
-
-				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString() });
-			}
-		}*/
+		/*
+		 * if (null != allDependant) { for (Dependent dependant : allDependant) { String
+		 * dni = dependant.getDni(); String name = dependant.getNameWo(); String surName
+		 * = dependant.getSurnameWo(); String phone = dependant.getPhoneWo(); Boolean
+		 * isBlocked = dependant.getUser().getIsBlocked();
+		 * 
+		 * model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString()
+		 * }); } }
+		 */
 	}
 
 	private void loadTableCleanerData(JTable tableCleaner) {
