@@ -1929,7 +1929,7 @@ public class Views {
 		JButton btnDeletePokemon = new JButton("Borrar Pokemon");
 		btnDeletePokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Pokemon selectedPokemon = getSelectedPokemon();				
+				Pokemon selectedPokemon = getSelectedPokemon();
 				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el pokemon?",
 						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
 				if (confimation == JOptionPane.OK_OPTION) {
@@ -1961,35 +1961,45 @@ public class Views {
 		JButton btnAddNewEnclosure = new JButton("Añadir Recinto");
 		btnAddNewEnclosure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * JTextField id = new JTextField(); JTextField namePo = new JTextField();
-				 * JTextField eggGroup = new JTextField(); JTextField typeP = new JTextField();
-				 * JTextField typeS = new JTextField();
-				 * 
-				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
-				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Registrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { if (id.getText().isEmpty() ||
-				 * namePo.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
-				 * "Faltan datos obligatorios del Pokemon!", "Oye!", JOptionPane.ERROR_MESSAGE);
-				 * } else {
-				 * 
-				 * Pokemon pokemonToInsert = new Pokemon();
-				 * pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
-				 * pokemonToInsert.setNamePo(namePo.getText());
-				 * pokemonToInsert.setEggGroup(eggGroup.getText());
-				 * pokemonToInsert.setTypeP(typeP.getText());
-				 * pokemonToInsert.setTypeS(typeS.getText());
-				 * 
-				 * try { if (null == managerPokemon) { managerPokemon = new ManagerPokemon(); }
-				 * // TODO Comprobar que el usuario no existe ya
-				 * managerPokemon.insert(pokemonToInsert); JOptionPane.showMessageDialog(null,
-				 * "Pokemon registrado correctamente", "Yay!", JOptionPane.INFORMATION_MESSAGE);
-				 * loadTablePokemonData(tablePokemon); } catch (Exception e1) {
-				 * e1.printStackTrace(); } } }
-				 */
+
+				JTextField number = new JTextField();
+				JTextField name = new JTextField();
+
+				Object[] message = { "Número: ", number, "Nombre: ", name };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Recinto",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					if (number.getText().isEmpty() || name.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Recinto!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+
+						Enclosure enclosureToInsert = new Enclosure();
+						enclosureToInsert.setNumberEn(Integer.valueOf(number.getText()));
+						enclosureToInsert.setTypeEn(name.getText());
+
+						if(null == managerEnclosure) {
+							managerEnclosure = new ManagerEnclosure();
+						}
+						
+						if (!managerEnclosure.checkEnclosureTypeExists(enclosureToInsert) && !managerEnclosure.checkEnclosureNumberExists(enclosureToInsert)) {
+							try {								
+								// TODO Comprobar que el usuario no existe ya														
+								managerEnclosure.insert(enclosureToInsert);
+								JOptionPane.showMessageDialog(null, "Recinto registrado correctamente", "Yay!",
+										JOptionPane.INFORMATION_MESSAGE);
+								loadTableEnclosureData(tableEnclosure);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "El recinto ya existe en el sistema", "Oye!",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+
 			}
 		});
 		btnAddNewEnclosure.setBounds(10, 336, 150, 23);
@@ -2580,7 +2590,7 @@ public class Views {
 
 		if (null != allEnclosures) {
 			for (Enclosure enclo : allEnclosures) {
-				String number = Integer.toString(enclo.getIdEnclosure());
+				String number = Integer.toString(enclo.getNumberEn());
 				String type = enclo.getTypeEn();
 
 				model.addRow(new String[] { number, type });
