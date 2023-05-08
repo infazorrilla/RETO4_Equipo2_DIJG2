@@ -29,9 +29,4 @@ class FileTest {
 		}
 	}
 	
-	/*@Test
-	void testReadCreatedFile() {
-		//
-	} */
-
 }

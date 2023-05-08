@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.TextField;
@@ -875,7 +874,7 @@ public class Views {
 				.getScaledInstance(714, 314, Image.SCALE_DEFAULT)));
 		panelPokedex.add(lblPokedexImage);
 
-		// PANEL MAIN TIENDA
+		// PANEL MAIN SHOP
 		panelShop = new JPanel();
 		panelShop.setVisible(false);
 		panelShop.setBounds(10, 111, 714, 328);
@@ -888,13 +887,12 @@ public class Views {
 		lblShopImage1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
-				JLabel productName = new JLabel("-Eevee");
-				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
+				JLabel productName = new JLabel("Nombre: Eevee Primavera");
+				JLabel site = new JLabel("Ubicación: Disponible en la tienda del PokeZoo");
 
-				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
+				Object[] message = { productName, site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage1);
@@ -905,13 +903,12 @@ public class Views {
 		lblShopImage2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-Ajedrez Pokemon");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage2);
@@ -922,13 +919,12 @@ public class Views {
 		lblShopImage3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-Maceta Pokemon");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage3);
@@ -939,13 +935,12 @@ public class Views {
 		lblShopImage4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-Flotador Lapras");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage4);
@@ -956,13 +951,12 @@ public class Views {
 		lblShopImage5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-Marco Pokemon de Pikachu");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage5);
@@ -973,13 +967,12 @@ public class Views {
 		lblShopImage6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-LLavero Mareep de peluche");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage6);
@@ -990,13 +983,12 @@ public class Views {
 		lblShopImage7.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-Peluche Oshawott");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage7);
@@ -1007,13 +999,12 @@ public class Views {
 		lblShopImage8.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Frame frame = new Frame();
 				JLabel productName = new JLabel("-Figura de Pikachu comiendo");
 				JLabel site = new JLabel("-Disponible en la tienda del PokeZoo");
 
 				Object[] message = { "Nombre: ", productName, "Ubicación: ", site };
 
-				JOptionPane.showMessageDialog(frame, message, "Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "Producto", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		panelShop.add(lblShopImage8);
