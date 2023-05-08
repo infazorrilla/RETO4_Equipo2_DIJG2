@@ -2624,8 +2624,8 @@ public class Views {
 			ret = new Pokemon();
 
 			int row = tablePokemon.getSelectedRow();
-
-			int id = (int) tablePokemon.getValueAt(row, 0);
+			
+			int id = Integer.valueOf((String) tablePokemon.getValueAt(row, 0));
 			ret = managerPokemon.getPokemonById(id);
 		}
 
