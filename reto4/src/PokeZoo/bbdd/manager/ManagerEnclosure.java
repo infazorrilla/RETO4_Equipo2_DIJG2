@@ -15,7 +15,7 @@ import PokeZoo.bbdd.utils.DBUtils;
 
 public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 
-	@Override 
+	@Override
 	public ArrayList<Enclosure> selectAll() throws SQLException, AccountNotFoundException, Exception {
 		ArrayList<Enclosure> ret = null;
 
@@ -49,7 +49,7 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 					enclo.setNumberEn(resultSet.getInt("numberEn"));
 
 					ret.add(enclo);
-				}while(resultSet.next());
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -105,7 +105,7 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 					ret.setIdEnclosure(resultSet.getInt("idEnclosure"));
 					ret.setTypeEn(resultSet.getString("typeEn"));
 					ret.setNumberEn(resultSet.getInt("numberEn"));
-				}while(resultSet.next());
+				} while (resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -133,7 +133,7 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		}
 		return ret;
 	}
-	
+
 	public Enclosure selectEnclosureByTypeEn(String typeEn) {
 		Enclosure ret = null;
 		String sql = "SELECT * FROM Enclosure WHERE typeEn = '" + typeEn + "'";
@@ -186,6 +186,102 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		return ret;
 	}
 
+	public boolean checkEnclosureTypeExists(Enclosure enclosureToInsert) {
+		boolean ret = false;
+
+		String sql = "SELECT * FROM Enclosure WHERE typeEn = '" + enclosureToInsert.getTypeEn() + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				ret = true;
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+
+		return ret;
+	}
+
+	public boolean checkEnclosureNumberExists(Enclosure enclosureToInsert) {
+		boolean ret = false;
+
+		String sql = "SELECT * FROM Enclosure WHERE numberEn = '" + enclosureToInsert.getNumberEn() + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				ret = true;
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+
+		return ret;
+	}
+
 	@Override
 	public void insert(Enclosure t) throws SQLException, Exception {
 		Connection connection = null;
@@ -202,8 +298,8 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 				sql = "INSERT INTO Enclosure (typeEn, numberEn)" + "VALUES ('" + t.getTypeEn() + "', '"
 						+ t.getNumberEn() + "');";
 			} else {
-				sql = "INSERT INTO Enclosure (idEnclosure, typeEn, numberEn)" + "VALUES ('" + t.getIdEnclosure() +"', '" + t.getTypeEn() + "', '"
-						+ t.getNumberEn() + "');";
+				sql = "INSERT INTO Enclosure (idEnclosure, typeEn, numberEn)" + "VALUES ('" + t.getIdEnclosure()
+						+ "', '" + t.getTypeEn() + "', '" + t.getNumberEn() + "');";
 			}
 
 			statement.executeUpdate(sql);
@@ -300,5 +396,6 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 			}
 			;
 		}
-	}	
+	}
+
 }
