@@ -1813,7 +1813,7 @@ public class Views {
 
 		tablePokemon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePokemon.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Pokedex", "Nombre", "Grupo huevo", "Tipo P", "Tipo S" }));
+				new String[] { "Pokedex", "Nombre", "Grupo huevo", "Tipo P", "Tipo S", "Alimento" }));
 		tablePokemon.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewPokemon = new JButton("Añadir Pokemon");
@@ -1832,8 +1832,8 @@ public class Views {
 				ArrayList<String> allFoods = managerFood.selectAllFoodNames();
 				comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
 
-				Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:", typeP,
-						"typeS: ", typeS, "Alimento", comboFoods };
+				Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup, "Tipo principal:",
+						typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
 
 				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Pokemon",
 						JOptionPane.OK_CANCEL_OPTION);
@@ -1851,6 +1851,7 @@ public class Views {
 
 						String nameFood = String.valueOf(comboFoods.getSelectedItem());
 						pokemonToInsert.setFood(managerFood.selectFoodByName(nameFood));
+						
 						try {
 							if (null == managerPokemon) {
 								managerPokemon = new ManagerPokemon();
@@ -1885,11 +1886,20 @@ public class Views {
 					typeP.setText(selectedPokemon.getTypeP());
 					JTextField typeS = new JTextField();
 					typeS.setText(selectedPokemon.getTypeS());
+					JComboBox<String> comboFoods = new JComboBox<String>();					
 
-					Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *", eggGroup, "typeP:",
-							typeP, "typeS: ", typeS };
+					if(null == managerFood){
+						managerFood = new ManagerFood();
+					}
+					ArrayList<String> allFoods = managerFood.selectAllFoodNames();
+					
+					comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
+					comboFoods.setSelectedIndex(selectedPokemon.getFood().getIdFood()-1);
 
-					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Oficinista",
+					Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup, "Tipo principal:",
+							typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
+
+					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Pokemon",
 							JOptionPane.OK_CANCEL_OPTION);
 					if (option == JOptionPane.OK_OPTION) {
 						int confimation = JOptionPane.showConfirmDialog(null,
@@ -1901,6 +1911,10 @@ public class Views {
 							selectedPokemon.setEggGroup(eggGroup.getText());
 							selectedPokemon.setTypeP(typeP.getText());
 							selectedPokemon.setTypeS(typeS.getText());
+							
+							String nameFood = String.valueOf(comboFoods.getSelectedItem());
+							selectedPokemon.setFood(managerFood.selectFoodByName(nameFood));
+							
 							try {
 								managerPokemon.update(selectedPokemon);
 							} catch (Exception e1) {
@@ -2382,8 +2396,8 @@ public class Views {
 		if (null == managerPokemon) {
 			managerPokemon = new ManagerPokemon();
 		}
-		selectedPokemon.setIdPokemon(selectedPokemon.getNumPokedex());
 		try {
+			managerPokemon.delete(selectedPokemon);
 			JOptionPane.showMessageDialog(null, "Pokemon borrado correctamente", "Correcto!",
 					JOptionPane.PLAIN_MESSAGE);
 			loadTablePokemonData(tablePokemon);
@@ -2548,8 +2562,9 @@ public class Views {
 				String eggGroup = poke.getEggGroup();
 				String typeP = poke.getTypeP();
 				String typeS = poke.getTypeS();
+				String idfood = Integer.toString(poke.getFood().getIdFood());
 
-				model.addRow(new String[] { idPokemon, namePo, eggGroup, typeP, typeS });
+				model.addRow(new String[] { idPokemon, namePo, eggGroup, typeP, typeS, idfood });
 			}
 		}
 	}

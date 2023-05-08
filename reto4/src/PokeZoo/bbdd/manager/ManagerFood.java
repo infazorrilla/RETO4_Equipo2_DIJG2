@@ -81,7 +81,7 @@ public class ManagerFood implements ManagerInterface<Food>{
 	public ArrayList<String> selectAllFoodNames() {
 		ArrayList<String> ret = null;
 
-		String sql = "SELECT nameFo FROM Food";
+		String sql = "SELECT nameFo FROM Food ORDER BY idFood";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -191,7 +191,7 @@ public class ManagerFood implements ManagerInterface<Food>{
 	}
 	
 	public Food selectFoodByName(String nameFood) {
-Food ret = null;
+		Food ret = null;
 		
 		String sql = "SELECT * FROM Food WHERE nameFo = '" + nameFood + "'";
 

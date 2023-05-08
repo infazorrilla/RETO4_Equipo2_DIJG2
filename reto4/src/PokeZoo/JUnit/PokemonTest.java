@@ -28,7 +28,6 @@ class PokemonTest {
 			expectedPokemon.setTypeS("Veneno");
 			expectedPokemon.setDescriptionPo("Una extraña semilla fue plantada en su espalda al nacer. Las plantas brotan y crecen con este Pokémon.");
 			expectedPokemon.setNumPokedex(1);
-			expectedPokemon.setPhotoPo(null);
 			expectedPokemon.setFood(null);
 			
 			assertEquals(fistPokemonFromBBDD, expectedPokemon);			
@@ -47,7 +46,6 @@ class PokemonTest {
 		newPokemonInsertTest.setTypeS("prueba");
 		newPokemonInsertTest.setDescriptionPo("prueba");
 		newPokemonInsertTest.setNumPokedex(100);
-		newPokemonInsertTest.setPhotoPo(null);
 		Food pokemonTestFood = new Food();
 		pokemonTestFood.setIdFood(100);
 		newPokemonInsertTest.setFood(pokemonTestFood);
@@ -73,7 +71,6 @@ class PokemonTest {
 		foodToDelete.setTypeS("prueba");
 		foodToDelete.setDescriptionPo("prueba");
 		foodToDelete.setNumPokedex(100);
-		foodToDelete.setPhotoPo(null);
 		Food pokemonTestFood = new Food();
 		pokemonTestFood.setIdFood(100);
 		foodToDelete.setFood(pokemonTestFood);

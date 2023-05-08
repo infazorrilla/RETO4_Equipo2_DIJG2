@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
 import PokeZoo.bbdd.exception.NotFoundException;
+import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.pojo.Pokemon;
 import PokeZoo.bbdd.utils.DBUtils;
 
@@ -43,8 +44,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					Pokemon poke = new Pokemon();
 					
 					// añadir datos del Pokemon aqui
-					poke.setIdPokemon(resultSet.getInt("idPokemon"));
-					poke.setFood(null);
+					poke.setIdPokemon(resultSet.getInt("idPokemon"));					
 					poke.setNamePo(resultSet.getString("namePo"));
 					poke.setEggGroup(resultSet.getString("eggGroup"));
 					poke.setTypeP(resultSet.getString("typeP"));
@@ -52,6 +52,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					poke.setDescriptionPo(resultSet.getString("descriptionPo"));
 					poke.setNumPokedex(resultSet.getInt("numPokedex"));
 
+					Food food = new Food();
+					food.setIdFood(resultSet.getInt("idFood"));
+					poke.setFood(food);
+					
 					ret.add(poke);
 				}while(resultSet.next());
 			}
@@ -114,7 +118,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					ret.setTypeS(resultSet.getString("typeS"));
 					ret.setDescriptionPo(resultSet.getString("descriptionPo"));
 					ret.setNumPokedex(resultSet.getInt("numPokedex"));
-					ret.setFood(null);
+					
+					Food food = new Food();
+					food.setIdFood(resultSet.getInt("idFood"));
+					ret.setFood(food);								
 				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
@@ -281,8 +288,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 						+ t.getNumPokedex() + "');";
 			} else {
 				sql = "INSERT INTO Pokemon (idPokemon, idFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex) "
-						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo()
-						+ t.getEggGroup() + "', '" + "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '"
+						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '"
+						+ t.getEggGroup() + "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '"
 						+ t.getDescriptionPo() + "', '" + t.getNumPokedex() + "');";
 			}
 
@@ -308,7 +315,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 	}
 
 	@Override
-	public void update(Pokemon t) throws SQLException, Exception {
+	public void update(Pokemon pokemon) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -316,17 +323,17 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			Class.forName(DBUtils.DRIVER);
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "UPDATE Pokemon SET codFood = ?, namePo = ?, eggGroup = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ? WHERE idPokemon = ?";
+			String sql = "UPDATE Pokemon SET namePo = ?, eggGroup = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ?, idFood = ? WHERE idPokemon = ?";
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, t.getFood().getIdFood());
-			preparedStatement.setString(2, t.getNamePo());
-			preparedStatement.setString(3, t.getEggGroup());
-			preparedStatement.setString(4, t.getTypeP());
-			preparedStatement.setString(5, t.getTypeS());
-			preparedStatement.setString(6, t.getDescriptionPo());
-			preparedStatement.setInt(7, t.getNumPokedex());
-			preparedStatement.setInt(8, t.getIdPokemon());
-
+			preparedStatement.setString(1, pokemon.getNamePo());
+			preparedStatement.setString(2, pokemon.getEggGroup());
+			preparedStatement.setString(3, pokemon.getTypeP());
+			preparedStatement.setString(4, pokemon.getTypeS());
+			preparedStatement.setString(5, pokemon.getDescriptionPo());
+			preparedStatement.setInt(6, pokemon.getNumPokedex());
+			preparedStatement.setInt(7, pokemon.getFood().getIdFood());
+			preparedStatement.setInt(8, pokemon.getIdPokemon());
+			
 			preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
