@@ -46,7 +46,7 @@ public class ManagerProduct implements ManagerInterface<Product> {
 					// añadir datos del Pokemon aqui
 					product.setIdProduct(resultSet.getInt("idProduct"));
 					product.setNamePr(resultSet.getString("namePr"));
-					product.setDescriptionPr(resultSet.getString("descripcionPr"));
+					product.setDescriptionPr(resultSet.getString("descriptionPr"));
 					product.setPhotoPr(resultSet.getBlob("photoPr"));
 					product.setValuePr(resultSet.getDouble("valuePr"));
 					product.setQuantityPr(resultSet.getInt("quantityPr"));
