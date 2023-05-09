@@ -16,11 +16,11 @@ class FileTest {
 	@Test
 	void testFileCreationAndRead() {
 		try {
-			File newFile = managerFile.createFile(5);
+			File newFile = managerFile.createFile(5, 5.0);
 			
 			String textFromFile = managerFile.readFile(newFile);
 			
-			String expectedText = "Cantidad de entradas: 5Precio: 25€";
+			String expectedText = "Cantidad de entradas: 5Precio: 25.0€";
 			
 			assertEquals(textFromFile, expectedText);
 			
