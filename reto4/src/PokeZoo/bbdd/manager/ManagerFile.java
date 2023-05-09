@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class ManagerFile {
 
-	public File createFile(int quantity2) throws IOException {
+	public File createFile(int quantity2, Double ticketValue) throws IOException {
 		String path = System.getProperty("user.home") + "/Desktop/";
 
 		Date date = new Date();
@@ -24,7 +24,7 @@ public class ManagerFile {
 
 		try {
 			printWriter.println("Cantidad de entradas: " + quantity2 + "\n");
-			printWriter.println("Precio: " + (quantity2 * 5) + "€");
+			printWriter.println("Precio: " + (quantity2 * ticketValue) + "€");
 		} finally {
 			printWriter.close();
 			try {
