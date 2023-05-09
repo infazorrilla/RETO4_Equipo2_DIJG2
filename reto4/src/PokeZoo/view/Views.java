@@ -1063,13 +1063,13 @@ public class Views {
 		textFieldTicketJournal.setBounds(148, 153, 86, 21);
 		textFieldTicketJournal.setEditable(false);
 
-		JLabel lblNewLabel_1_1 = new JLabel("€");
-		lblNewLabel_1_1.setBounds(607, 184, 19, 14);
-		panelTickets.add(lblNewLabel_1_1);
+		JLabel lblTotalPriceEuro = new JLabel("€");
+		lblTotalPriceEuro.setBounds(607, 184, 19, 14);
+		panelTickets.add(lblTotalPriceEuro);		
 
-		JLabel lblNewLabel_1 = new JLabel("€");
-		lblNewLabel_1.setBounds(607, 125, 19, 14);
-		panelTickets.add(lblNewLabel_1);
+		JLabel lblIndividualTicketPrice = new JLabel("5€");
+		lblIndividualTicketPrice.setBounds(607, 125, 19, 14);
+		panelTickets.add(lblIndividualTicketPrice);
 
 		textFieldTicketDate = new JTextField();
 		textFieldTicketDate.setBounds(148, 98, 86, 21);
@@ -1088,13 +1088,6 @@ public class Views {
 		panelTickets.add(textFieldTicketQuantity);
 		textFieldTicketQuantity.setEditable(false);
 		textFieldTicketQuantity.setColumns(10);
-
-		textFieldTicketPrice = new JTextField();
-		textFieldTicketPrice.setText("5");
-		textFieldTicketPrice.setBounds(525, 122, 78, 20);
-		panelTickets.add(textFieldTicketPrice);
-		textFieldTicketPrice.setEditable(false);
-		textFieldTicketPrice.setColumns(10);
 		panelTickets.add(textFieldTicketTotalPrice);
 
 		textFieldTotalTicket = new JTextField();
@@ -1302,7 +1295,11 @@ public class Views {
 				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
-					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()) {
+					if (!dni.getText().matches("[0-9]{8,8}[A-Za-z]")) {
+						JOptionPane.showMessageDialog(null,
+								"El DNI del oficinista tiene un formato invalido, debe ser 8 Numeros y 1 Letra!",
+								"Oye!", JOptionPane.ERROR_MESSAGE);
+					} else if (name.getText().isEmpty() || surName.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else if (username.getText().isEmpty() || password.getPassword().length == 0) {
@@ -1497,7 +1494,11 @@ public class Views {
 				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Oficinista",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
-					if (dni.getText().isEmpty() || name.getText().isEmpty() || surName.getText().isEmpty()
+					if (!dni.getText().matches("[0-9]{8,8}[A-Za-z]")) {
+						JOptionPane.showMessageDialog(null,
+								"El DNI del oficinista tiene un formato invalido, debe ser 8 Numeros y 1 Letra!",
+								"Oye!", JOptionPane.ERROR_MESSAGE);
+					} else if (name.getText().isEmpty() || surName.getText().isEmpty()
 							|| enclosure.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Limpiador!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
@@ -1832,8 +1833,8 @@ public class Views {
 				ArrayList<String> allFoods = managerFood.selectAllFoodNames();
 				comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
 
-				Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup, "Tipo principal:",
-						typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
+				Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup,
+						"Tipo principal:", typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
 
 				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Pokemon",
 						JOptionPane.OK_CANCEL_OPTION);
@@ -1851,7 +1852,7 @@ public class Views {
 
 						String nameFood = String.valueOf(comboFoods.getSelectedItem());
 						pokemonToInsert.setFood(managerFood.selectFoodByName(nameFood));
-						
+
 						try {
 							if (null == managerPokemon) {
 								managerPokemon = new ManagerPokemon();
@@ -1886,18 +1887,18 @@ public class Views {
 					typeP.setText(selectedPokemon.getTypeP());
 					JTextField typeS = new JTextField();
 					typeS.setText(selectedPokemon.getTypeS());
-					JComboBox<String> comboFoods = new JComboBox<String>();					
+					JComboBox<String> comboFoods = new JComboBox<String>();
 
-					if(null == managerFood){
+					if (null == managerFood) {
 						managerFood = new ManagerFood();
 					}
 					ArrayList<String> allFoods = managerFood.selectAllFoodNames();
-					
-					comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
-					comboFoods.setSelectedIndex(selectedPokemon.getFood().getIdFood()-1);
 
-					Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup, "Tipo principal:",
-							typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
+					comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
+					comboFoods.setSelectedIndex(selectedPokemon.getFood().getIdFood() - 1);
+
+					Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup,
+							"Tipo principal:", typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
 
 					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Pokemon",
 							JOptionPane.OK_CANCEL_OPTION);
@@ -1911,10 +1912,10 @@ public class Views {
 							selectedPokemon.setEggGroup(eggGroup.getText());
 							selectedPokemon.setTypeP(typeP.getText());
 							selectedPokemon.setTypeS(typeS.getText());
-							
+
 							String nameFood = String.valueOf(comboFoods.getSelectedItem());
 							selectedPokemon.setFood(managerFood.selectFoodByName(nameFood));
-							
+
 							try {
 								managerPokemon.update(selectedPokemon);
 							} catch (Exception e1) {
@@ -1984,13 +1985,14 @@ public class Views {
 						enclosureToInsert.setNumberEn(Integer.valueOf(number.getText()));
 						enclosureToInsert.setTypeEn(name.getText());
 
-						if(null == managerEnclosure) {
+						if (null == managerEnclosure) {
 							managerEnclosure = new ManagerEnclosure();
 						}
-						
-						if (!managerEnclosure.checkEnclosureTypeExists(enclosureToInsert) && !managerEnclosure.checkEnclosureNumberExists(enclosureToInsert)) {
-							try {								
-								// TODO Comprobar que el usuario no existe ya														
+
+						if (!managerEnclosure.checkEnclosureTypeExists(enclosureToInsert)
+								&& !managerEnclosure.checkEnclosureNumberExists(enclosureToInsert)) {
+							try {
+								// TODO Comprobar que el usuario no existe ya
 								managerEnclosure.insert(enclosureToInsert);
 								JOptionPane.showMessageDialog(null, "Recinto registrado correctamente", "Yay!",
 										JOptionPane.INFORMATION_MESSAGE);
@@ -2190,9 +2192,6 @@ public class Views {
 		btnLogOut.setBounds(0, 437, 117, 24);
 		panelAdmin.add(btnLogOut);
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(0, 0, 46, 14);
-		panelAdmin.add(lblNewLabel);
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
 
@@ -2640,7 +2639,7 @@ public class Views {
 			ret = new Pokemon();
 
 			int row = tablePokemon.getSelectedRow();
-			
+
 			int id = Integer.valueOf((String) tablePokemon.getValueAt(row, 0));
 			ret = managerPokemon.getPokemonById(id);
 		}
