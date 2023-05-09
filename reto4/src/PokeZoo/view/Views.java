@@ -948,7 +948,7 @@ public class Views {
 		});
 		panelShop.add(lblShopImage4);
 
-		JLabel lblShopImage5 = new JLabel("New label");
+		JLabel lblShopImage5 = new JLabel("Marco");
 		lblShopImage5.setBounds(136, 162, 89, 85);
 		RSScaleLabel.setScaleLabel(lblShopImage5, "img/products/Marco para diploma de graduación Pikachu.png");
 		lblShopImage5.addMouseListener(new MouseAdapter() {
