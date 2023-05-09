@@ -1826,10 +1826,16 @@ public class Views {
 				JTextField id = new JTextField();
 				JTextField namePo = new JTextField();
 				JTextField eggGroup = new JTextField();
-				JTextField typeP = new JTextField();
-				JTextField typeS = new JTextField();
+				JComboBox<String> typeP = new JComboBox<String>();
+				JComboBox<String> typeS = new JComboBox<String>();
 				JComboBox<String> comboFoods = new JComboBox<String>();
 
+				String[] allTypes = new String[]{"Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
+				typeP.setModel(new DefaultComboBoxModel<String>(allTypes));
+				
+				allTypes = new String[]{"", "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
+				typeS.setModel(new DefaultComboBoxModel<String>(allTypes));
+								
 				ArrayList<String> allFoods = managerFood.selectAllFoodNames();
 				comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
 
@@ -1847,8 +1853,8 @@ public class Views {
 						pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
 						pokemonToInsert.setNamePo(namePo.getText());
 						pokemonToInsert.setEggGroup(eggGroup.getText());
-						pokemonToInsert.setTypeP(typeP.getText());
-						pokemonToInsert.setTypeS(typeS.getText());
+						pokemonToInsert.setTypeP((String) typeP.getSelectedItem());
+						pokemonToInsert.setTypeS((String) typeS.getSelectedItem());
 
 						String nameFood = String.valueOf(comboFoods.getSelectedItem());
 						pokemonToInsert.setFood(managerFood.selectFoodByName(nameFood));
@@ -1883,15 +1889,23 @@ public class Views {
 					namePo.setText(selectedPokemon.getNamePo());
 					JTextField eggGroup = new JTextField();
 					eggGroup.setText(selectedPokemon.getEggGroup());
-					JTextField typeP = new JTextField();
-					typeP.setText(selectedPokemon.getTypeP());
-					JTextField typeS = new JTextField();
-					typeS.setText(selectedPokemon.getTypeS());
+					JComboBox<String> typeP = new JComboBox<String>();				
+					JComboBox<String> typeS = new JComboBox<String>();					
 					JComboBox<String> comboFoods = new JComboBox<String>();
-
+																		
 					if (null == managerFood) {
 						managerFood = new ManagerFood();
 					}
+					
+					
+					String[] allTypes = new String[]{"Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
+					typeP.setModel(new DefaultComboBoxModel<String>(allTypes));
+					typeP.setSelectedItem(selectedPokemon.getTypeP());
+					
+					allTypes = new String[]{"", "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
+					typeS.setModel(new DefaultComboBoxModel<String>(allTypes));
+					typeS.setSelectedItem(selectedPokemon.getTypeS());
+					
 					ArrayList<String> allFoods = managerFood.selectAllFoodNames();
 
 					comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
@@ -1910,8 +1924,8 @@ public class Views {
 							selectedPokemon.setNumPokedex(selectedPokemon.getIdPokemon());
 							selectedPokemon.setNamePo(namePo.getText());
 							selectedPokemon.setEggGroup(eggGroup.getText());
-							selectedPokemon.setTypeP(typeP.getText());
-							selectedPokemon.setTypeS(typeS.getText());
+							selectedPokemon.setTypeP((String) typeP.getSelectedItem());
+							selectedPokemon.setTypeS((String) typeS.getSelectedItem());
 
 							String nameFood = String.valueOf(comboFoods.getSelectedItem());
 							selectedPokemon.setFood(managerFood.selectFoodByName(nameFood));
