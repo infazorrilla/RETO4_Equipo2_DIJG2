@@ -76,7 +76,6 @@ class UserTest {
 	}
 	
 	// sacar todos los usuarios arraylist
-
 		@Test
 		public void testAccesoABaseDeDatosEInclusionAArrayList() {
 			if (null == manager) {
