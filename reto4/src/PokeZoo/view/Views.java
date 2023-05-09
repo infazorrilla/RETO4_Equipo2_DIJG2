@@ -932,7 +932,7 @@ public class Views {
 		});
 		panelShop.add(lblShopImage3);
 
-		JLabel lblShopImage4 = new JLabel("New label");
+		JLabel lblShopImage4 = new JLabel("label4");
 		lblShopImage4.setBounds(472, 66, 89, 85);
 		RSScaleLabel.setScaleLabel(lblShopImage4, "img/products/Lapras Flotador de Piscina.png");
 		lblShopImage4.addMouseListener(new MouseAdapter() {
