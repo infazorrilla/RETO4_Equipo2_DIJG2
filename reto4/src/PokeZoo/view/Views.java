@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +79,8 @@ public class Views {
 
 	// Labels
 	private JLabel lblInfoTabla = null;
-
+	private JLabel lblAdd =null;
+	
 	// Managers
 	private ManagerUser managerUser = null;
 	private ManagerEmployee managerEmployee = null;
@@ -105,16 +107,17 @@ public class Views {
 	JButton btnEnclosure = null;
 	JButton btnFood = null;
 
-	// Variables for Tickts
+	// Variables for Tickets
+	DecimalFormat formato = new DecimalFormat("#.##");
 	private int totalTicket = 40;
 	private int quantity = 0;
+	private double ticketValue = 9.99;
 
 	// JTextFields Tickets
 	private JTextField textFieldTicketTotalPrice = null;
 	private JTextField textFieldTicketJournal = null;
 	private JTextField textFieldTicketDate = null;
 	private JTextField textFieldTicketQuantity = null;
-	private JTextField textFieldTicketPrice = null;
 	private JTextField textFieldTotalTicket = null;
 
 	/**
@@ -200,6 +203,16 @@ public class Views {
 		RSScaleLabel.setScaleLabel(lblLogo, "img/misc/LogoRecortado.png");
 		panelMain.add(lblLogo);
 
+		lblAdd = new JLabel("¡¡ Compre sus entradas por "+ticketValue+"€ aqui !!");
+		lblAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				switchMainPanels("TICKETS");
+			}
+		});
+		lblAdd.setBounds(250, 440, 257, 14);
+		panelMain.add(lblAdd);
+		
 		JButton btnMap = new JButton("Mapa");
 		btnMap.setFocusPainted(false);
 		btnMap.addActionListener(new ActionListener() {
@@ -243,16 +256,6 @@ public class Views {
 		});
 		btnTickets.setBounds(550, 61, 174, 39);
 		panelMain.add(btnTickets);
-
-		JLabel lblAd = new JLabel("¡¡ Compre sus entradas por 9,99€ aqui !!");
-		lblAd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				switchMainPanels("TICKETS");
-			}
-		});
-		lblAd.setBounds(250, 440, 257, 14);
-		panelMain.add(lblAd);
 
 		// PANEL MAIN MAP
 		panelMap = new JPanel();
@@ -711,7 +714,7 @@ public class Views {
 		textPokemonTypeP.setBackground(new Color(251, 236, 171));
 		textPokemonTypeP.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonTypeP.setHorizontalAlignment(JTextField.CENTER);
-		textPokemonTypeP.setBounds(131, 90, 86, 30);
+		textPokemonTypeP.setBounds(131, 90, 90, 30);
 		textPokemonTypeP.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		textPokemonTypeP.setEditable(false);
 		textPokemonTypeP.setVisible(false);
@@ -721,7 +724,7 @@ public class Views {
 		textPokemonTypeS.setBackground(new Color(251, 236, 171));
 		textPokemonTypeS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textPokemonTypeS.setHorizontalAlignment(JTextField.CENTER);
-		textPokemonTypeS.setBounds(220, 90, 86, 30);
+		textPokemonTypeS.setBounds(224, 90, 90, 30);
 		textPokemonTypeS.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		textPokemonTypeS.setEditable(false);
 		textPokemonTypeS.setVisible(false);
@@ -1067,8 +1070,13 @@ public class Views {
 		lblTotalPriceEuro.setBounds(607, 184, 19, 14);
 		panelTickets.add(lblTotalPriceEuro);		
 
-		JLabel lblIndividualTicketPrice = new JLabel("5€");
-		lblIndividualTicketPrice.setBounds(607, 125, 19, 14);
+		JLabel lblIndividualTicketPrice = new JLabel(ticketValue+" €");
+		if(ticketValue>=10) {
+			lblIndividualTicketPrice.setBounds(572, 125, 80, 14);
+		}
+		else {
+			lblIndividualTicketPrice.setBounds(580, 125, 80, 14);
+		}
 		panelTickets.add(lblIndividualTicketPrice);
 
 		textFieldTicketDate = new JTextField();
@@ -1114,7 +1122,7 @@ public class Views {
 		lblTicketCount.setBounds(46, 274, 130, 14);
 		panelTickets.add(lblTicketCount);
 
-		JLabel labelTicketDate = new JLabel("date");
+		JLabel labelTicketDate = new JLabel("Fecha");
 		labelTicketDate.setBounds(62, 98, 66, 21);
 		panelTickets.add(labelTicketDate);
 
@@ -1131,7 +1139,7 @@ public class Views {
 		labelTicketQuantitys.setBounds(440, 50, 200, 170);
 		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/misc/fondo.jpg");
 		panelTickets.add(labelTicketQuantitys);
-
+ 
 		JLabel labelTickets = new JLabel("");
 		labelTickets.setBounds(40, 263, 220, 38);
 		RSScaleLabel.setScaleLabel(labelTickets, "img/misc/fondo.jpg");
@@ -1814,150 +1822,157 @@ public class Views {
 
 		tablePokemon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePokemon.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Pokedex", "Nombre", "Grupo huevo", "Tipo P", "Tipo S", "Alimento" }));
+		new String[] { "Pokedex", "Nombre", "Grupo huevo", "Tipo P", "Tipo S", "Alimento" }));
 		tablePokemon.setDefaultEditor(Object.class, null);
 
 		JButton btnAddNewPokemon = new JButton("Añadir Pokemon");
 		btnAddNewPokemon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (null == managerFood) {
-					managerFood = new ManagerFood();
-				}
-				JTextField id = new JTextField();
-				JTextField namePo = new JTextField();
-				JTextField eggGroup = new JTextField();
-				JComboBox<String> typeP = new JComboBox<String>();
-				JComboBox<String> typeS = new JComboBox<String>();
-				JComboBox<String> comboFoods = new JComboBox<String>();
+		public void actionPerformed(ActionEvent e) {
+		if (null == managerFood) {
+		managerFood = new ManagerFood();
+		}
+		JTextField id = new JTextField();
+		JTextField namePo = new JTextField();
+		JTextField eggGroup = new JTextField();
+		JComboBox<String> typeP = new JComboBox<String>();
+		JComboBox<String> typeS = new JComboBox<String>();
+		JComboBox<String> comboFoods = new JComboBox<String>();
 
-				String[] allTypes = new String[]{"Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
-				typeP.setModel(new DefaultComboBoxModel<String>(allTypes));
-				
-				allTypes = new String[]{"", "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
-				typeS.setModel(new DefaultComboBoxModel<String>(allTypes));
-								
-				ArrayList<String> allFoods = managerFood.selectAllFoodNames();
-				comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
+		String[] allTypes = new String[] { "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador",
+		"Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero",
+		"Agua" };
+		typeP.setModel(new DefaultComboBoxModel<String>(allTypes));
 
-				Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup,
-						"Tipo principal:", typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
+		allTypes = new String[] { "", "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador",
+		"Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero",
+		"Agua" };
+		typeS.setModel(new DefaultComboBoxModel<String>(allTypes));
 
-				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Pokemon",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (option == JOptionPane.OK_OPTION) {
-					if (id.getText().isEmpty() || namePo.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Pokemon!", "Oye!",
-								JOptionPane.ERROR_MESSAGE);
-					} else {
-						Pokemon pokemonToInsert = new Pokemon();
-						pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
-						pokemonToInsert.setNamePo(namePo.getText());
-						pokemonToInsert.setEggGroup(eggGroup.getText());
-						pokemonToInsert.setTypeP((String) typeP.getSelectedItem());
-						pokemonToInsert.setTypeS((String) typeS.getSelectedItem());
+		ArrayList<String> allFoods = managerFood.selectAllFoodNames();
+		comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
 
-						String nameFood = String.valueOf(comboFoods.getSelectedItem());
-						pokemonToInsert.setFood(managerFood.selectFoodByName(nameFood));
+		Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup,
+		"Tipo principal:", typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
 
-						try {
-							if (null == managerPokemon) {
-								managerPokemon = new ManagerPokemon();
-							}
-							managerPokemon.insert(pokemonToInsert);
-							JOptionPane.showMessageDialog(null, "Pokemon registrado correctamente", "Yay!",
-									JOptionPane.INFORMATION_MESSAGE);
-							loadTablePokemonData(tablePokemon);
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-					}
-				}
-			}
+		int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Pokemon",
+		JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION) {
+		if (id.getText().isEmpty() || namePo.getText().isEmpty()) {
+		JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Pokemon!", "Oye!",
+		JOptionPane.ERROR_MESSAGE);
+		} else {
+		Pokemon pokemonToInsert = new Pokemon();
+		pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
+		pokemonToInsert.setNamePo(namePo.getText());
+		pokemonToInsert.setEggGroup(eggGroup.getText());
+		pokemonToInsert.setTypeP((String) typeP.getSelectedItem());
+		pokemonToInsert.setTypeS((String) typeS.getSelectedItem());
+
+		String nameFood = String.valueOf(comboFoods.getSelectedItem());
+		pokemonToInsert.setFood(managerFood.selectFoodByName(nameFood));
+
+		try {
+		if (null == managerPokemon) {
+		managerPokemon = new ManagerPokemon();
+		}
+		managerPokemon.insert(pokemonToInsert);
+		JOptionPane.showMessageDialog(null, "Pokemon registrado correctamente", "Yay!",
+		JOptionPane.INFORMATION_MESSAGE);
+		loadTablePokemonData(tablePokemon);
+		} catch (Exception e1) {
+		e1.printStackTrace();
+		}
+		}
+		}
+		}
 		});
-		btnAddNewPokemon.setBounds(10, 336, 150, 23);
+		btnAddNewPokemon.setBounds(10, 336, 224, 23);
 		panelAdminPokemon.add(btnAddNewPokemon);
 
 		JButton btnModifyPokemon = new JButton("Modificar Pokemon");
 		btnModifyPokemon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Pokemon selectedPokemon = getSelectedPokemon();
+		public void actionPerformed(ActionEvent e) {
+		Pokemon selectedPokemon = getSelectedPokemon();
 
-				if (null != selectedPokemon) {
-					JLabel id = new JLabel();
-					id.setText(Integer.toString(selectedPokemon.getIdPokemon()));
-					JTextField namePo = new JTextField();
-					namePo.setText(selectedPokemon.getNamePo());
-					JTextField eggGroup = new JTextField();
-					eggGroup.setText(selectedPokemon.getEggGroup());
-					JComboBox<String> typeP = new JComboBox<String>();				
-					JComboBox<String> typeS = new JComboBox<String>();					
-					JComboBox<String> comboFoods = new JComboBox<String>();
-																		
-					if (null == managerFood) {
-						managerFood = new ManagerFood();
-					}
-					
-					
-					String[] allTypes = new String[]{"Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
-					typeP.setModel(new DefaultComboBoxModel<String>(allTypes));
-					typeP.setSelectedItem(selectedPokemon.getTypeP());
-					
-					allTypes = new String[]{"", "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero", "Agua"};
-					typeS.setModel(new DefaultComboBoxModel<String>(allTypes));
-					typeS.setSelectedItem(selectedPokemon.getTypeS());
-					
-					ArrayList<String> allFoods = managerFood.selectAllFoodNames();
+		if (null != selectedPokemon) {
+		JLabel id = new JLabel();
+		id.setText(Integer.toString(selectedPokemon.getIdPokemon()));
+		JTextField namePo = new JTextField();
+		namePo.setText(selectedPokemon.getNamePo());
+		JTextField eggGroup = new JTextField();
+		eggGroup.setText(selectedPokemon.getEggGroup());
+		JComboBox<String> typeP = new JComboBox<String>();
+		JComboBox<String> typeS = new JComboBox<String>();
+		JComboBox<String> comboFoods = new JComboBox<String>();
 
-					comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
-					comboFoods.setSelectedIndex(selectedPokemon.getFood().getIdFood() - 1);
+		if (null == managerFood) {
+		managerFood = new ManagerFood();
+		}
 
-					Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup,
-							"Tipo principal:", typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
+		String[] allTypes = new String[] { "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego",
+		"Volador", "Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca",
+		"Acero", "Agua" };
+		typeP.setModel(new DefaultComboBoxModel<String>(allTypes));
+		typeP.setSelectedItem(selectedPokemon.getTypeP());
 
-					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Pokemon",
-							JOptionPane.OK_CANCEL_OPTION);
-					if (option == JOptionPane.OK_OPTION) {
-						int confimation = JOptionPane.showConfirmDialog(null,
-								"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-								JOptionPane.OK_CANCEL_OPTION);
-						if (confimation == JOptionPane.OK_OPTION) {
-							selectedPokemon.setNumPokedex(selectedPokemon.getIdPokemon());
-							selectedPokemon.setNamePo(namePo.getText());
-							selectedPokemon.setEggGroup(eggGroup.getText());
-							selectedPokemon.setTypeP((String) typeP.getSelectedItem());
-							selectedPokemon.setTypeS((String) typeS.getSelectedItem());
+		allTypes = new String[] { "", "Bicho", "Dragón", "Eléctrico", "Hada", "Lucha", "Fuego", "Volador",
+		"Fantasma", "Planta", "Tierra", "Hielo", "Normal", "Veneno", "Psíquico", "Roca", "Acero",
+		"Agua" };
+		typeS.setModel(new DefaultComboBoxModel<String>(allTypes));
+		typeS.setSelectedItem(selectedPokemon.getTypeS());
 
-							String nameFood = String.valueOf(comboFoods.getSelectedItem());
-							selectedPokemon.setFood(managerFood.selectFoodByName(nameFood));
+		ArrayList<String> allFoods = managerFood.selectAllFoodNames();
 
-							try {
-								managerPokemon.update(selectedPokemon);
-							} catch (Exception e1) {
-								e1.printStackTrace();
-							}
+		comboFoods.setModel(new DefaultComboBoxModel<String>(allFoods.toArray(new String[0])));
+		comboFoods.setSelectedIndex(selectedPokemon.getFood().getIdFood() - 1);
 
-							loadTablePokemonData(tablePokemon);
-						}
-					}
-				}
+		Object[] message = { "Id Pokemon: ", id, "Nombre: ", namePo, "Grupo huevo: ", eggGroup,
+		"Tipo principal:", typeP, "Tipo secundario: ", typeS, "Alimento", comboFoods };
 
-			}
+		int option = JOptionPane.showConfirmDialog(null, message, "Modificar Pokemon",
+		JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION) {
+		int confimation = JOptionPane.showConfirmDialog(null,
+		"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+		JOptionPane.OK_CANCEL_OPTION);
+		if (confimation == JOptionPane.OK_OPTION) {
+		selectedPokemon.setNumPokedex(selectedPokemon.getIdPokemon());
+		selectedPokemon.setNamePo(namePo.getText());
+		selectedPokemon.setEggGroup(eggGroup.getText());
+		selectedPokemon.setTypeP((String) typeP.getSelectedItem());
+		selectedPokemon.setTypeS((String) typeS.getSelectedItem());
+
+		String nameFood = String.valueOf(comboFoods.getSelectedItem());
+		selectedPokemon.setFood(managerFood.selectFoodByName(nameFood));
+
+		try {
+		managerPokemon.update(selectedPokemon);
+		} catch (Exception e1) {
+		e1.printStackTrace();
+		}
+
+		loadTablePokemonData(tablePokemon);
+		}
+		}
+		}
+
+		}
 		});
-		btnModifyPokemon.setBounds(180, 336, 141, 23);
+		btnModifyPokemon.setBounds(245, 336, 224, 23);
 		panelAdminPokemon.add(btnModifyPokemon);
 
 		JButton btnDeletePokemon = new JButton("Borrar Pokemon");
 		btnDeletePokemon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Pokemon selectedPokemon = getSelectedPokemon();
-				int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el pokemon?",
-						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
-				if (confimation == JOptionPane.OK_OPTION) {
-					deleteSelectedPokemon(selectedPokemon);
-				}
-			}
+		public void actionPerformed(ActionEvent e) {
+		Pokemon selectedPokemon = getSelectedPokemon();
+		int confimation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar el pokemon?",
+		"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+		if (confimation == JOptionPane.OK_OPTION) {
+		deleteSelectedPokemon(selectedPokemon);
+		}
+		}
 		});
-		btnDeletePokemon.setBounds(399, 336, 141, 23);
+		btnDeletePokemon.setBounds(480, 336, 224, 23);
 		panelAdminPokemon.add(btnDeletePokemon);
 
 		// PANEL ENCLOSURE
@@ -2023,7 +2038,7 @@ public class Views {
 
 			}
 		});
-		btnAddNewEnclosure.setBounds(10, 336, 150, 23);
+		btnAddNewEnclosure.setBounds(10, 336, 224, 23);
 		panelAdminEnclosure.add(btnAddNewEnclosure);
 
 		JButton btnModifyEnclosure = new JButton("Modificar Recinto");
@@ -2062,7 +2077,7 @@ public class Views {
 				 */
 			}
 		});
-		btnModifyEnclosure.setBounds(180, 336, 141, 23);
+		btnModifyEnclosure.setBounds(245, 336, 224, 23);
 		panelAdminEnclosure.add(btnModifyEnclosure);
 
 		JButton btnDeleteEnclosure = new JButton("Borrar Recinto");
@@ -2077,7 +2092,7 @@ public class Views {
 				 */
 			}
 		});
-		btnDeleteEnclosure.setBounds(399, 336, 141, 23);
+		btnDeleteEnclosure.setBounds(480, 336, 224, 23);
 		panelAdminEnclosure.add(btnDeleteEnclosure);
 
 		// PANEL FOOD
@@ -2133,7 +2148,7 @@ public class Views {
 				 */
 			}
 		});
-		btnAddNewFood.setBounds(10, 336, 150, 23);
+		btnAddNewFood.setBounds(10, 336, 224, 23);
 		panelAdminFood.add(btnAddNewFood);
 
 		JButton btnModifyFood = new JButton("Modificar Comida");
@@ -2172,7 +2187,7 @@ public class Views {
 				 */
 			}
 		});
-		btnModifyFood.setBounds(180, 336, 141, 23);
+		btnModifyFood.setBounds(245, 336, 224, 23);
 		panelAdminFood.add(btnModifyFood);
 
 		JButton btnDeleteFood = new JButton("Borrar Comida");
@@ -2187,7 +2202,7 @@ public class Views {
 				 */
 			}
 		});
-		btnDeleteFood.setBounds(399, 336, 141, 23);
+		btnDeleteFood.setBounds(480, 336, 224, 23);
 		panelAdminFood.add(btnDeleteFood);
 
 		// FIN PANELES ADMIN
@@ -2246,7 +2261,7 @@ public class Views {
 		lblUser.setBounds(142, 119, 109, 55);
 		panelLogin.add(lblUser);
 
-		JLabel lblPasswd = new JLabel("Contaseña: ");
+		JLabel lblPasswd = new JLabel("Contraseña: ");
 		lblPasswd.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPasswd.setBounds(142, 200, 146, 55);
 		panelLogin.add(lblPasswd);
@@ -2389,24 +2404,28 @@ public class Views {
 			panelPokedex.setVisible(false);
 			panelShop.setVisible(false);
 			panelTickets.setVisible(false);
+			lblAdd.setVisible(true);
 			break;
 		case "POKEDEX":
 			panelMap.setVisible(false);
 			panelPokedex.setVisible(true);
 			panelShop.setVisible(false);
 			panelTickets.setVisible(false);
+			lblAdd.setVisible(true);
 			break;
 		case "SHOP":
 			panelMap.setVisible(false);
 			panelPokedex.setVisible(false);
 			panelShop.setVisible(true);
 			panelTickets.setVisible(false);
+			lblAdd.setVisible(true);
 			break;
 		case "TICKETS":
 			panelMap.setVisible(false);
 			panelPokedex.setVisible(false);
 			panelShop.setVisible(false);
 			panelTickets.setVisible(true);
+			lblAdd.setVisible(false);
 			break;
 		default:
 			System.out.println("This is not supposed to happen");
@@ -2733,26 +2752,24 @@ public class Views {
 	// Methods of Ticket Panel
 	private void quantityPlusOne() {
 		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
-		int ticketValue = Integer.valueOf(textFieldTicketPrice.getText());
 		if (totalTicket != 0) {
 			ticketQuantity++;
 			totalTicket--;
 		}
-		int total = ticketQuantity * ticketValue;
-		textFieldTicketTotalPrice.setText(Integer.toString(total));
+		Double total = ticketQuantity * ticketValue;
+		textFieldTicketTotalPrice.setText(Double.toString(total));
 		textFieldTicketQuantity.setText(Integer.toString(ticketQuantity));
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 	}
 
 	private void quantityMinusOne() {
 		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
-		int ticketValue = Integer.valueOf(textFieldTicketPrice.getText());
 		if (ticketQuantity != 0) {
 			ticketQuantity--;
 			totalTicket++;
 		}
-		int total = ticketValue * ticketQuantity;
-		textFieldTicketTotalPrice.setText(Integer.toString(total));
+		Double total = ticketValue * ticketQuantity;
+		textFieldTicketTotalPrice.setText(Double.toString(total));
 		textFieldTicketQuantity.setText(Integer.toString(ticketQuantity));
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 	}
@@ -2767,11 +2784,11 @@ public class Views {
 
 				JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
 
-				int totalReset = Integer.valueOf(textFieldTicketTotalPrice.getText());
+				Double totalReset = Double.valueOf(textFieldTicketTotalPrice.getText());
 				int ticketDecreaser = Integer.valueOf(textFieldTotalTicket.getText());
-				totalReset = 0;
+				totalReset = 0.00;
 				textFieldTotalTicket.setText(Integer.toString(ticketDecreaser));
-				textFieldTicketTotalPrice.setText(Integer.toString(totalReset));
+				textFieldTicketTotalPrice.setText(Double.toString(totalReset));
 			} else if (totalTicket <= 0) {
 				JOptionPane.showMessageDialog(jFrame, "No quedan entradas, vuelva mañana");
 			}
@@ -2796,6 +2813,6 @@ public class Views {
 			managerFile = new ManagerFile();
 		}
 
-		managerFile.createFile(quantity2);
+		managerFile.createFile(quantity2,ticketValue);
 	}
 }
