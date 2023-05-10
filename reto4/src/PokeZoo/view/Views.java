@@ -1151,7 +1151,7 @@ public class Views {
 				buyTicket();
 			}
 		});
-		btnBuyTickets.setBounds(543, 267, 98, 38);
+		btnBuyTickets.setBounds(551, 279, 98, 38);
 		panelTickets.add(btnBuyTickets);
 
 		JLabel lblTicketBackground = new JLabel("");
@@ -2812,7 +2812,6 @@ public class Views {
 		}
 	}
 
-	//
 	// Methods of Ticket Panel
 	private void quantityPlusOne() {
 		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
@@ -2844,7 +2843,6 @@ public class Views {
 		} else {
 			JFrame jFrame = new JFrame();
 			if (totalTicket != 0) {
-
 				JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
 
 				Double totalReset = Double.valueOf(textFieldTicketTotalPrice.getText());
