@@ -1156,7 +1156,7 @@ public class Views {
 		buyTicket();
 		}
 		});
-		btnBuyTickets.setBounds(551, 279, 98, 38);
+		btnBuyTickets.setBounds(543, 267, 98, 38);
 		panelTickets.add(btnBuyTickets);
 
 		JLabel lblTicketBackground = new JLabel("");
