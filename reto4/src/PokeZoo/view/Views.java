@@ -2843,7 +2843,6 @@ public class Views {
 		} else {
 			JFrame jFrame = new JFrame();
 			if (totalTicket != 0) {
-				totalTicket--;
 
 				JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
 
