@@ -16,7 +16,7 @@ class FileTest {
 	@Test
 	void testFileCreationAndRead() {
 		try {
-			File newFile = managerFile.createFile(5);
+			File newFile = managerFile.createFile(5, 9.99);
 			
 			String textFromFile = managerFile.readFile(newFile);
 			

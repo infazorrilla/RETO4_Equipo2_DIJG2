@@ -14,7 +14,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,7 +98,7 @@ public class Views {
 	private JTable tableEnclosure = null;
 	private JTable tableFood = null;
 
-	// Buttons
+	// Buttons Admin Zone
 	JButton btnEmployee = null;
 	JButton btnCleaner = null;
 	JButton btnCaretakers = null;
@@ -108,7 +107,6 @@ public class Views {
 	JButton btnFood = null;
 
 	// Variables for Tickets
-	DecimalFormat formato = new DecimalFormat("#.##");
 	private int totalTicket = 40;
 	private int quantity = 0;
 	private double ticketValue = 9.99;
@@ -165,7 +163,6 @@ public class Views {
 		JButton btnWorkerArea = new JButton("Trabajadores");
 		btnWorkerArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO ocultar btnWorkerArea y mostrar los 3 botones hijos
 				btnWorkerArea.setVisible(false);
 				btnZooArea.setVisible(true);
 			}
@@ -176,7 +173,6 @@ public class Views {
 
 		btnZooArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO ocultar btnZooArea y mostrar los otros 3 bottones que estan abajo
 				btnWorkerArea.setVisible(true);
 				btnZooArea.setVisible(false);
 			}
@@ -1029,12 +1025,12 @@ public class Views {
 		int heightMore = 23;
 		int widthMore = 27;
 		ImageIcon iconoEscalaMore = new ImageIcon(
-		imageMore.getImage().getScaledInstance(widthMore, heightMore, java.awt.Image.SCALE_DEFAULT));
+				imageMore.getImage().getScaledInstance(widthMore, heightMore, java.awt.Image.SCALE_DEFAULT));
 		btnTicketMore.setIcon(iconoEscalaMore);
 		btnTicketMore.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		quantityPlusOne();
-		}
+			public void actionPerformed(ActionEvent e) {
+				quantityPlusOne();
+			}
 		});
 		btnTicketMore.setBounds(585, 75, 27, 23);
 		btnTicketMore.setBorder(null);
@@ -1044,12 +1040,12 @@ public class Views {
 		int heightLess = 23;
 		int widthLess = 27;
 		ImageIcon iconoEscalaLess = new ImageIcon(
-		imageLess.getImage().getScaledInstance(widthLess, heightLess, java.awt.Image.SCALE_DEFAULT));
+				imageLess.getImage().getScaledInstance(widthLess, heightLess, java.awt.Image.SCALE_DEFAULT));
 		btnTicketLess.setIcon(iconoEscalaLess);
 		btnTicketLess.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		quantityMinusOne();
-		}
+			public void actionPerformed(ActionEvent e) {
+				quantityMinusOne();
+			}
 		});
 		btnTicketLess.setBounds(525, 75, 27, 23);
 		btnTicketLess.setBorder(null);
@@ -1073,12 +1069,11 @@ public class Views {
 		lblTotalPriceEuro.setBounds(607, 160, 19, 14);
 		panelTickets.add(lblTotalPriceEuro);
 
-		JLabel lblIndividualTicketPrice = new JLabel(ticketValue+" €");
-		if(ticketValue>=10) {
-		lblIndividualTicketPrice.setBounds(572, 120, 80, 14);
-		}
-		else {
-		lblIndividualTicketPrice.setBounds(580, 120, 80, 14);
+		JLabel lblIndividualTicketPrice = new JLabel(ticketValue + " €");
+		if (ticketValue >= 10) {
+			lblIndividualTicketPrice.setBounds(572, 120, 80, 14);
+		} else {
+			lblIndividualTicketPrice.setBounds(580, 120, 80, 14);
 		}
 		panelTickets.add(lblIndividualTicketPrice);
 
@@ -1144,7 +1139,7 @@ public class Views {
 		lblTicketQuantitys.setBounds(440, 50, 200, 170);
 		RSScaleLabel.setScaleLabel(lblTicketQuantitys, "img/misc/marco.png");
 		panelTickets.add(lblTicketQuantitys);
-		 
+
 		JLabel labelTickets = new JLabel("");
 		labelTickets.setBounds(40, 263, 220, 38);
 		RSScaleLabel.setScaleLabel(labelTickets, "img/misc/marco2.png");
@@ -1152,9 +1147,9 @@ public class Views {
 
 		JButton btnBuyTickets = new JButton("Comprar");
 		btnBuyTickets.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		buyTicket();
-		}
+			public void actionPerformed(ActionEvent e) {
+				buyTicket();
+			}
 		});
 		btnBuyTickets.setBounds(551, 279, 98, 38);
 		panelTickets.add(btnBuyTickets);
@@ -1166,22 +1161,25 @@ public class Views {
 
 		// PANEL ADMIN WELCOME
 		panelAdminWelcome = new JPanel();
-		panelAdminWelcome.setBounds(10, 57, 24, 14);
+		panelAdminWelcome.setBounds(10, 57, 714, 381);
+		panelAdminWelcome.setVisible(true);
 		panelAdmin.add(panelAdminWelcome);
 		panelAdminWelcome.setLayout(null);
 
 		JLabel lblImageWorkers = new JLabel("(worker image)");
-		lblImageWorkers.setBounds(10, 11, 265, 371);
+		lblImageWorkers.setBounds(56, 53, 139, 244);
+		RSScaleLabel.setScaleLabel(lblImageWorkers, "img/misc/worker.png");
 		panelAdminWelcome.add(lblImageWorkers);
 
-		JLabel lbllogo2 = new JLabel("Logo");
-		lbllogo2.setIcon(new ImageIcon(Views.class.getResource("/misc/Logo.png")));
-		lbllogo2.setBounds(285, 154, 116, 73);
-		panelAdminWelcome.add(lbllogo2);
-
 		JLabel lblImageZoo = new JLabel("(zoo image)");
-		lblImageZoo.setBounds(411, 11, 293, 371);
+		lblImageZoo.setBounds(450, 53, 254, 244);
+		RSScaleLabel.setScaleLabel(lblImageZoo, "img/misc/victini.png");
 		panelAdminWelcome.add(lblImageZoo);
+
+		JLabel lblBgWelcomeAdmin = new JLabel("");
+		lblBgWelcomeAdmin.setBounds(0, 0, 714, 381);
+		RSScaleLabel.setScaleLabel(lblBgWelcomeAdmin, "img/misc/pokeballbg.jpg");
+		panelAdminWelcome.add(lblBgWelcomeAdmin);
 
 		btnEmployee = new JButton("Oficinistas");
 		btnEmployee.setFocusPainted(false);
@@ -1652,7 +1650,7 @@ public class Views {
 		panelAdminCleaner.add(btnBlockCleaner);
 
 		// PANEL Caretaker
-		// TODO
+		// TODO los 4 botones
 		panelAdminCaretaker = new JPanel();
 		panelAdminCaretaker.setBounds(10, 68, 714, 370);
 		panelAdmin.add(panelAdminCaretaker);
@@ -2072,7 +2070,7 @@ public class Views {
 					int confimation = JOptionPane.showConfirmDialog(null,
 							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
 							JOptionPane.OK_CANCEL_OPTION);
-					if (confimation == JOptionPane.OK_OPTION) {					
+					if (confimation == JOptionPane.OK_OPTION) {
 						if (!numberEn.getText().matches("[0-9]+")) {
 							JOptionPane.showMessageDialog(null, "Formato de NUMERO de Recinto INCORRECTO", "Oye!",
 									JOptionPane.ERROR_MESSAGE);
@@ -2082,7 +2080,7 @@ public class Views {
 						} else {
 							selectedEnclosure.setNumberEn(Integer.valueOf(numberEn.getText()));
 							selectedEnclosure.setTypeEn(typeEn.getText());
-							
+
 							if (null == managerEnclosure) {
 								managerEnclosure = new ManagerEnclosure();
 							}
@@ -2236,9 +2234,11 @@ public class Views {
 		JButton btnLogOut = new JButton("Cerrar Sesion");
 		btnLogOut.setBorderPainted(false);
 		btnLogOut.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				changeToClientZone();
+				btnWorkerArea.setVisible(true);
+				btnZooArea.setVisible(true);
+				setAllButtonsBackgroundToWhite();
 			}
 		});
 		btnLogOut.setBounds(0, 437, 117, 24);
@@ -2413,11 +2413,12 @@ public class Views {
 	}
 
 	private void changeToAdminZone() {
+		panelAdmin.setVisible(true);
+		panelAdminWelcome.setVisible(true);
 		panelWelcome.setVisible(false);
 		panelMain.setVisible(false);
 		panelMap.setVisible(false);
 		panelLogin.setVisible(false);
-		panelAdmin.setVisible(true);
 	}
 
 	private void switchMainPanels(String panel) {
