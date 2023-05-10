@@ -1151,7 +1151,7 @@ public class Views {
 				buyTicket();
 			}
 		});
-		btnBuyTickets.setBounds(551, 279, 98, 38);
+		btnBuyTickets.setBounds(543, 267, 98, 38);
 		panelTickets.add(btnBuyTickets);
 
 		JLabel lblTicketBackground = new JLabel("");
@@ -2844,7 +2844,6 @@ public class Views {
 		} else {
 			JFrame jFrame = new JFrame();
 			if (totalTicket != 0) {
-				totalTicket--;
 
 				JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
 
