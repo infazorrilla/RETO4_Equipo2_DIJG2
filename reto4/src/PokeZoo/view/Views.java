@@ -1025,61 +1025,63 @@ public class Views {
 		panelTickets.setLayout(null);
 
 		JButton btnTicketMore = new JButton("");
-		ImageIcon imageMore = new ImageIcon("img/misc/mas.png");
+		ImageIcon imageMore = new ImageIcon("img/misc/plus.png");
 		int heightMore = 23;
 		int widthMore = 27;
 		ImageIcon iconoEscalaMore = new ImageIcon(
-				imageMore.getImage().getScaledInstance(widthMore, heightMore, java.awt.Image.SCALE_DEFAULT));
+		imageMore.getImage().getScaledInstance(widthMore, heightMore, java.awt.Image.SCALE_DEFAULT));
 		btnTicketMore.setIcon(iconoEscalaMore);
 		btnTicketMore.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				quantityPlusOne();
-			}
+		public void actionPerformed(ActionEvent e) {
+		quantityPlusOne();
+		}
 		});
+		btnTicketMore.setBounds(585, 75, 27, 23);
 		btnTicketMore.setBorder(null);
 
 		JButton btnTicketLess = new JButton("");
-		ImageIcon imageLess = new ImageIcon("img/misc/menos.png");
+		ImageIcon imageLess = new ImageIcon("img/misc/minus.png");
 		int heightLess = 23;
 		int widthLess = 27;
 		ImageIcon iconoEscalaLess = new ImageIcon(
-				imageLess.getImage().getScaledInstance(widthLess, heightLess, java.awt.Image.SCALE_DEFAULT));
+		imageLess.getImage().getScaledInstance(widthLess, heightLess, java.awt.Image.SCALE_DEFAULT));
 		btnTicketLess.setIcon(iconoEscalaLess);
 		btnTicketLess.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				quantityMinusOne();
-			}
+		public void actionPerformed(ActionEvent e) {
+		quantityMinusOne();
+		}
 		});
-		btnTicketLess.setBounds(525, 65, 27, 23);
+		btnTicketLess.setBounds(525, 75, 27, 23);
 		btnTicketLess.setBorder(null);
 		panelTickets.add(btnTicketLess);
 
 		textFieldTicketTotalPrice = new JTextField();
 		textFieldTicketTotalPrice.setText("0");
 		textFieldTicketTotalPrice.setColumns(10);
-		textFieldTicketTotalPrice.setBounds(525, 181, 78, 20);
+		textFieldTicketTotalPrice.setBounds(525, 158, 78, 20);
 		textFieldTicketTotalPrice.setEditable(false);
 
 		textFieldTicketJournal = new JTextField();
 		textFieldTicketJournal.setText("10:00-17:00");
 		textFieldTicketJournal.setColumns(10);
-		textFieldTicketJournal.setBounds(148, 153, 86, 21);
+		textFieldTicketJournal.setBounds(140, 153, 86, 21);
 		textFieldTicketJournal.setEditable(false);
 
 		JLabel lblTotalPriceEuro = new JLabel("€");
-		lblTotalPriceEuro.setBounds(607, 184, 19, 14);
+		lblTotalPriceEuro.setBounds(607, 160, 19, 14);
 		panelTickets.add(lblTotalPriceEuro);
 
-		JLabel lblIndividualTicketPrice = new JLabel(ticketValue + " €");
-		if (ticketValue >= 10) {
-			lblIndividualTicketPrice.setBounds(572, 125, 80, 14);
-		} else {
-			lblIndividualTicketPrice.setBounds(580, 125, 80, 14);
+		JLabel lblIndividualTicketPrice = new JLabel(ticketValue+" €");
+		if(ticketValue>=10) {
+		lblIndividualTicketPrice.setBounds(572, 120, 80, 14);
+		}
+		else {
+		lblIndividualTicketPrice.setBounds(580, 120, 80, 14);
 		}
 		panelTickets.add(lblIndividualTicketPrice);
 
 		textFieldTicketDate = new JTextField();
-		textFieldTicketDate.setBounds(148, 98, 86, 21);
+		textFieldTicketDate.setBounds(140, 110, 86, 21);
 		panelTickets.add(textFieldTicketDate);
 		textFieldTicketDate.setEditable(false);
 		textFieldTicketDate.setColumns(10);
@@ -1091,64 +1093,63 @@ public class Views {
 
 		textFieldTicketQuantity = new JTextField();
 		textFieldTicketQuantity.setText("0");
-		textFieldTicketQuantity.setBounds(562, 65, 27, 23);
+		textFieldTicketQuantity.setBounds(555, 75, 27, 23);
 		panelTickets.add(textFieldTicketQuantity);
 		textFieldTicketQuantity.setEditable(false);
 		textFieldTicketQuantity.setColumns(10);
 		panelTickets.add(textFieldTicketTotalPrice);
 
 		textFieldTotalTicket = new JTextField();
-		textFieldTotalTicket.setBounds(182, 271, 66, 20);
+		textFieldTotalTicket.setBounds(175, 271, 66, 20);
 		panelTickets.add(textFieldTotalTicket);
 		textFieldTotalTicket.setEditable(false);
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
-		btnTicketMore.setBounds(599, 65, 27, 23);
 		panelTickets.add(btnTicketMore);
 
 		JLabel lblTotalPrice = new JLabel("Total");
-		lblTotalPrice.setBounds(448, 184, 46, 14);
+		lblTotalPrice.setBounds(460, 160, 46, 14);
 		panelTickets.add(lblTotalPrice);
 
 		JLabel lblPriceTicket = new JLabel("Precio");
-		lblPriceTicket.setBounds(448, 125, 46, 14);
+		lblPriceTicket.setBounds(460, 120, 46, 14);
 		panelTickets.add(lblPriceTicket);
 
 		JLabel lblTicketQuantity = new JLabel("Cantidad");
-		lblTicketQuantity.setBounds(448, 72, 58, 14);
+		lblTicketQuantity.setBounds(460, 75, 58, 14);
 		panelTickets.add(lblTicketQuantity);
 
 		JLabel lblTicketCount = new JLabel("Entradas restantes");
-		lblTicketCount.setBounds(46, 274, 130, 14);
+		lblTicketCount.setBounds(58, 274, 130, 14);
 		panelTickets.add(lblTicketCount);
 
 		JLabel labelTicketDate = new JLabel("Fecha");
-		labelTicketDate.setBounds(62, 98, 66, 21);
+		labelTicketDate.setBounds(70, 110, 66, 21);
 		panelTickets.add(labelTicketDate);
 
-		JLabel labelTicketJournal = new JLabel("Horario");
-		labelTicketJournal.setBounds(62, 153, 66, 21);
-		panelTickets.add(labelTicketJournal);
+		JLabel lblTicketJournal = new JLabel("Horario");
+		lblTicketJournal.setBounds(70, 153, 66, 21);
+		panelTickets.add(lblTicketJournal);
 
-		JLabel labelTicketDates = new JLabel("");
-		labelTicketDates.setBounds(50, 90, 200, 100);
-		RSScaleLabel.setScaleLabel(labelTicketDates, "img/misc/fondo.jpg");
-		panelTickets.add(labelTicketDates);
+		JLabel lblTicketDates = new JLabel("");
+		lblTicketDates.setBounds(50, 90, 200, 100);
+		RSScaleLabel.setScaleLabel(lblTicketDates, "img/misc/marco2.png");
+		panelTickets.add(lblTicketDates);
 
-		JLabel labelTicketQuantitys = new JLabel("");
-		labelTicketQuantitys.setBounds(440, 50, 200, 170);
-		RSScaleLabel.setScaleLabel(labelTicketQuantitys, "img/misc/fondo.jpg");
-		panelTickets.add(labelTicketQuantitys);
-
+		JLabel lblTicketQuantitys = new JLabel("");
+		lblTicketQuantitys.setBounds(440, 50, 200, 170);
+		RSScaleLabel.setScaleLabel(lblTicketQuantitys, "img/misc/marco.png");
+		panelTickets.add(lblTicketQuantitys);
+		 
 		JLabel labelTickets = new JLabel("");
 		labelTickets.setBounds(40, 263, 220, 38);
-		RSScaleLabel.setScaleLabel(labelTickets, "img/misc/fondo.jpg");
+		RSScaleLabel.setScaleLabel(labelTickets, "img/misc/marco2.png");
 		panelTickets.add(labelTickets);
 
 		JButton btnBuyTickets = new JButton("Comprar");
 		btnBuyTickets.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buyTicket();
-			}
+		public void actionPerformed(ActionEvent e) {
+		buyTicket();
+		}
 		});
 		btnBuyTickets.setBounds(551, 279, 98, 38);
 		panelTickets.add(btnBuyTickets);
@@ -2004,11 +2005,11 @@ public class Views {
 				int option = JOptionPane.showConfirmDialog(null, message, "Registrar nuevo Recinto",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
-					if (!number.getText().matches("[0-9]+)")) {
-						JOptionPane.showMessageDialog(null, "Numero de Recinto INCORRECTO", "Oye!",
+					if (!number.getText().matches("[0-9]+")) {
+						JOptionPane.showMessageDialog(null, "NUMERO de Recinto INCORRECTO", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
-					} else if (!name.getText().matches("[^\\d\\W")) {
-						JOptionPane.showMessageDialog(null, "Nombre de Recinto INCORRECTO!", "Oye!",
+					} else if (!name.getText().matches("[a-zA-Z]*")) {
+						JOptionPane.showMessageDialog(null, "NOMBRE de Recinto INCORRECTO!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						if (number.getText().isEmpty() || name.getText().isEmpty()) {
@@ -2034,8 +2035,8 @@ public class Views {
 									e1.printStackTrace();
 								}
 							} else {
-								JOptionPane.showMessageDialog(null, "El recinto ya existe en el sistema", "Oye!",
-										JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Ya Existe un recinto con los datos insertados",
+										"Oye!", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}
@@ -2049,37 +2050,49 @@ public class Views {
 		JButton btnModifyEnclosure = new JButton("Modificar Recinto");
 		btnModifyEnclosure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Pokemon selectedPokemon = getSelectedPokemon();
-				 * 
-				 * JLabel id = new JLabel(); id.setText(selectedPokemon.getIdPokemon());
-				 * JTextField namePo = new JTextField();
-				 * namePo.setText(selectedPokemon.getNamePo()); JTextField eggGroup = new
-				 * JTextField(); eggGroup.setText(selectedPokemon.getEggGroup()); JTextField
-				 * typeP = new JTextField(); typeP.setText(selectedPokemon.getTypeP());
-				 * JTextField typeS = new JTextField();
-				 * typeS.setText(selectedPokemon.getTypeS());
-				 * 
-				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
-				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * selectedPokemon.setIdPokemon(managerPokemon.getPokemonIdByName(
-				 * selectedPokemon.getIdPokemon()));
-				 * selectedPokemon.setNamePo(namePo.getText());
-				 * selectedPokemon.setEggGroup(eggGroup.getText());
-				 * selectedPokemon.setTypeP(typeP.getText());
-				 * selectedPokemon.setTypeS(typeS.getText()); try {
-				 * managerPokemon.update(selectedPokemon); } catch (Exception e1) {
-				 * e1.printStackTrace(); }
-				 * 
-				 * loadTablePokemonData(tablePokemon); } }
-				 */
+				Enclosure selectedEnclosure = getSelectedEnclosure();
+
+				JLabel idEn = new JLabel();
+				idEn.setText(Integer.toString(selectedEnclosure.getIdEnclosure()));
+				JTextField numberEn = new JTextField();
+				numberEn.setText(Integer.toString(selectedEnclosure.getNumberEn()));
+				JTextField typeEn = new JTextField();
+				typeEn.setText(selectedEnclosure.getTypeEn());
+
+				Object[] message = { "id: ", idEn, "Numero: ", numberEn, "Tipo: ", typeEn };
+
+				int option = JOptionPane.showConfirmDialog(null, message, "Modificar Recinto",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					int confimation = JOptionPane.showConfirmDialog(null,
+							"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (confimation == JOptionPane.OK_OPTION) {					
+						if (!numberEn.getText().matches("[0-9]+")) {
+							JOptionPane.showMessageDialog(null, "Formato de NUMERO de Recinto INCORRECTO", "Oye!",
+									JOptionPane.ERROR_MESSAGE);
+						} else if (!typeEn.getText().matches("[a-zA-Z]*")) {
+							JOptionPane.showMessageDialog(null, "Formato de NOMBRE de Recinto INCORRECTO!", "Oye!",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							selectedEnclosure.setNumberEn(Integer.valueOf(numberEn.getText()));
+							selectedEnclosure.setTypeEn(typeEn.getText());
+							
+							if (null == managerEnclosure) {
+								managerEnclosure = new ManagerEnclosure();
+							}
+
+							try {
+								managerEnclosure.update(selectedEnclosure);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+
+							loadTableEnclosureData(tableEnclosure);
+						}
+					}
+				}
+
 			}
 		});
 		btnModifyEnclosure.setBounds(245, 336, 224, 23);
@@ -2095,7 +2108,7 @@ public class Views {
 					deleteSelectedEnclosure(selectedEnclosure);
 				}
 
-			}					
+			}
 		});
 		btnDeleteEnclosure.setBounds(480, 336, 224, 23);
 		panelAdminEnclosure.add(btnDeleteEnclosure);
@@ -2473,15 +2486,14 @@ public class Views {
 			}
 		}
 	}
-	
+
 	private void deleteSelectedEnclosure(Enclosure selectedEnclosure) {
 		if (null == managerEnclosure) {
 			managerEnclosure = new ManagerEnclosure();
 		}
 
 		if (selectedEnclosure.getIdEnclosure() == 0) {
-			JOptionPane.showMessageDialog(null, "Error !!!!", "Oye!!",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error !!!!", "Oye!!", JOptionPane.ERROR_MESSAGE);
 		} else {
 			try {
 				managerEnclosure.delete(selectedEnclosure);
@@ -2736,20 +2748,21 @@ public class Views {
 
 		return ret;
 	}
-	
+
 	private Enclosure getSelectedEnclosure() {
 		Enclosure ret = null;
 		ManagerEnclosure managerEclosure = null;
 		if (tableEnclosure.getSelectionModel().isSelectionEmpty()) {
 			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para BORRAR.", "¡Error!",
 					JOptionPane.ERROR_MESSAGE);
+			return ret;
 		} else {
 			ret = new Enclosure();
 		}
 		int row = tableEnclosure.getSelectedRow();
 
-		int number = Integer.valueOf((String) tableEnclosure.getValueAt(row, 0));		
-		if(null == managerEclosure) {
+		int number = Integer.valueOf((String) tableEnclosure.getValueAt(row, 0));
+		if (null == managerEclosure) {
 			managerEclosure = new ManagerEnclosure();
 		}
 		ret = managerEclosure.selectEnclosureByNumber(number);
