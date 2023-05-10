@@ -1057,12 +1057,14 @@ public class Views {
 
 		textFieldTicketTotalPrice = new JTextField();
 		textFieldTicketTotalPrice.setText("0");
+		textFieldTicketTotalPrice.setHorizontalAlignment(SwingConstants.RIGHT);
 		textFieldTicketTotalPrice.setColumns(10);
 		textFieldTicketTotalPrice.setBounds(525, 158, 78, 20);
 		textFieldTicketTotalPrice.setEditable(false);
 
 		textFieldTicketJournal = new JTextField();
 		textFieldTicketJournal.setText("10:00-17:00");
+		textFieldTicketJournal.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldTicketJournal.setColumns(10);
 		textFieldTicketJournal.setBounds(140, 153, 86, 21);
 		textFieldTicketJournal.setEditable(false);
@@ -1089,10 +1091,12 @@ public class Views {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		String today = formatter.format(date);
 		textFieldTicketDate.setText(today);
+		textFieldTicketDate.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTickets.add(textFieldTicketJournal);
 
 		textFieldTicketQuantity = new JTextField();
 		textFieldTicketQuantity.setText("0");
+		textFieldTicketQuantity.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldTicketQuantity.setBounds(555, 75, 27, 23);
 		panelTickets.add(textFieldTicketQuantity);
 		textFieldTicketQuantity.setEditable(false);
@@ -1104,6 +1108,7 @@ public class Views {
 		panelTickets.add(textFieldTotalTicket);
 		textFieldTotalTicket.setEditable(false);
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
+		textFieldTotalTicket.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTickets.add(btnTicketMore);
 
 		JLabel lblTotalPrice = new JLabel("Total");
