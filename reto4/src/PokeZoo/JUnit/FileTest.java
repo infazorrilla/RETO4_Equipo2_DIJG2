@@ -24,7 +24,7 @@ class FileTest {
 
 	private ManagerFile managerFile = new ManagerFile();
 	private ManagerFood managerFood = new ManagerFood();
-/*
+
 	@Test
 	void testFileCreationAndRead() {
 		try {
@@ -39,7 +39,7 @@ class FileTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 	@Test
 	void testFileArrayList() {
