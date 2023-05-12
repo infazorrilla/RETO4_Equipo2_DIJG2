@@ -2482,8 +2482,8 @@ public class Views {
 
 // ----------------------------------------------------------------------------
 	/**
-	 * Delete from the database the Pokemon given in the method parameter and shows a
-	 * Pop-Up of confirmation
+	 * Delete from the database the Pokemon given in the method parameter and shows
+	 * a Pop-Up of confirmation
 	 * 
 	 * @param selectedPokemon The Pokemon object to be deleted
 	 */
@@ -2501,6 +2501,12 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Deletes the selected employee from the employee JTable row and shows a Pop-Up
+	 * of confirmation
+	 * 
+	 * @param selectedEmployee Selected row data into Employee Object
+	 */
 	private void deleteSelectedEmployee(Employee selectedEmployee) {
 		if (null == managerEmployee) {
 			managerEmployee = new ManagerEmployee();
@@ -2522,6 +2528,12 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Deletes the selected Enclosure from the Enclosure JTable row and shows a
+	 * Pop-Up of confirmation
+	 * 
+	 * @param selectedEnclosure Selected row data into Enclosure Object
+	 */
 	private void deleteSelectedEnclosure(Enclosure selectedEnclosure) {
 		if (null == managerEnclosure) {
 			managerEnclosure = new ManagerEnclosure();
@@ -2541,6 +2553,11 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Blocks the selectedEmployee from the database
+	 * 
+	 * @param selectedEmployee Selected row data to the Employee Object
+	 */
 	private void blockSelectedEmployee(Employee selectedEmployee) {
 		if (null == managerUser) {
 			managerUser = new ManagerUser();
@@ -2548,6 +2565,11 @@ public class Views {
 		managerUser.blockUserByIdUser(selectedEmployee.getUser().getIdUser());
 	}
 
+	/**
+	 * Adds rows to tableEmployee with the data returned from database
+	 * 
+	 * @param table to be changed
+	 */
 	private void loadTableEmployeeData(JTable table) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
@@ -2556,15 +2578,9 @@ public class Views {
 			managerEmployee = new ManagerEmployee();
 		}
 
-		/*
-		 * if (null == managerDependent) { managerDependent = new ManagerDependent(); }
-		 */
-
 		ArrayList<Employee> allEmployees = null;
-		// ArrayList<Dependent> allDependant = null;
 		try {
 			allEmployees = managerEmployee.selectAll();
-			// allDependant = managerDependent.selectAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2581,18 +2597,13 @@ public class Views {
 				model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString(), username });
 			}
 		}
-
-		/*
-		 * if (null != allDependant) { for (Dependent dependant : allDependant) { String
-		 * dni = dependant.getDni(); String name = dependant.getNameWo(); String surName
-		 * = dependant.getSurnameWo(); String phone = dependant.getPhoneWo(); Boolean
-		 * isBlocked = dependant.getUser().getIsBlocked();
-		 * 
-		 * model.addRow(new String[] { dni, name, surName, phone, isBlocked.toString()
-		 * }); } }
-		 */
 	}
 
+	/**
+	 * Adds rows to tableCleaner with the data returned from database
+	 * 
+	 * @param tableCleaner table to be changed
+	 */
 	private void loadTableCleanerData(JTable tableCleaner) {
 		DefaultTableModel model = (DefaultTableModel) tableCleaner.getModel();
 		model.setRowCount(0);
@@ -2623,6 +2634,11 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Adds rows to tableCaretaker with the data returned from database
+	 * 
+	 * @param tableCaretaker table to be changed
+	 */
 	private void loadTableCaretakerData(JTable tableCaretaker) {
 		DefaultTableModel model = (DefaultTableModel) tableCaretaker.getModel();
 		model.setRowCount(0);
@@ -2654,6 +2670,11 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Adds rows to tablePokemon with the data returned from database
+	 * 
+	 * @param tablePokemon table to be changed
+	 */
 	private void loadTablePokemonData(JTable tablePokemon) {
 		DefaultTableModel model = (DefaultTableModel) tablePokemon.getModel();
 		model.setRowCount(0);
@@ -2683,6 +2704,11 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Adds rows to tableEnclosure with the data returned from database
+	 * 
+	 * @param tableEnclosure table to be changed
+	 */
 	private void loadTableEnclosureData(JTable tableEnclosure) {
 		DefaultTableModel model = (DefaultTableModel) tableEnclosure.getModel();
 		model.setRowCount(0);
@@ -2708,6 +2734,11 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Adds rows to tableFood with the data returned from database
+	 * 
+	 * @param tableFood table to be changed
+	 */
 	private void loadTableFoodData(JTable tableFood) {
 		DefaultTableModel model = (DefaultTableModel) tableFood.getModel();
 		model.setRowCount(0);
@@ -2735,6 +2766,13 @@ public class Views {
 		}
 	}
 
+	/**
+	 * if tablePokemon has a selected row calls to managerPokemon with the id value
+	 * from the table and gets a Pokemon Object
+	 * 
+	 * @return Pokemon Object if tablePokemon has a selected row, null if
+	 *         tablePokemon doesn't have a selected row
+	 */
 	private Pokemon getSelectedPokemon() {
 		Pokemon ret = null;
 		if (tablePokemon.getSelectionModel().isSelectionEmpty()) {
@@ -2752,6 +2790,14 @@ public class Views {
 		return ret;
 	}
 
+	/**
+	 * if tableEmployee has a selected row calls to managerEmployee with the dni
+	 * value from the table and gets a Employee Object
+	 * 
+	 * @return Employee Object if tableEmployee has a selected row, null if
+	 *         tableEmployee doesn't have a selected row
+	 * @throws EmployeeNotSelected tableEmployee doesn't have a selected row
+	 */
 	private Employee getSelectedEmployee() throws EmployeeNotSelected {
 		Employee ret = null;
 		if (tableEmployee.getSelectionModel().isSelectionEmpty()) {
@@ -2768,6 +2814,13 @@ public class Views {
 		return ret;
 	}
 
+	/**
+	 * if tableCleaner has a selected row calls to managerCleaner with the dni value
+	 * from the table and gets a Cleaner Object
+	 * 
+	 * @return Cleaner Object if tableCleaner has a selected row, null if
+	 *         tableCleaner doesn't have a selected row
+	 */
 	private Cleaner getSelectedCleaner() {
 		Cleaner ret = null;
 		if (tableCleaner.getSelectionModel().isSelectionEmpty()) {
@@ -2784,6 +2837,13 @@ public class Views {
 		return ret;
 	}
 
+	/**
+	 * if tableEnclosure has a selected row calls to managerEnclosure with the dni
+	 * value from the table and gets a Enclosure Object
+	 * 
+	 * @return Enclosure Object if tableEnclosure has a selected row, null if
+	 *         tableEnclosure doesn't have a selected row
+	 */
 	private Enclosure getSelectedEnclosure() {
 		Enclosure ret = null;
 		ManagerEnclosure managerEclosure = null;
@@ -2805,6 +2865,13 @@ public class Views {
 		return ret;
 	}
 
+	/**
+	 * method that takes the text from the paramerters and sends different options
+	 * to loginOptions()
+	 * 
+	 * @param textFieldUserName   usename to be checked
+	 * @param passwordFieldPasswd password of the username to be checked
+	 */
 	private void checkLogin(JTextField textFieldUserName, JPasswordField passwordFieldPasswd) {
 		String userName = textFieldUserName.getText();
 		String passwd = new String(passwordFieldPasswd.getPassword());
@@ -2816,6 +2883,10 @@ public class Views {
 		loginOptions(result);
 	}
 
+	/**
+	 * Shows different Pop-ups depending on the value of the param and loads different JPanels
+	 * @param result if 0 user not exists, if 1 Employee zone, if 2 Admin zone, if 3 the user is blocked
+	 */
 	private void loginOptions(int result) {
 		switch (result) {
 		case 0:
@@ -2841,7 +2912,10 @@ public class Views {
 		}
 	}
 
-	// Methods of Ticket Panel
+// Methods of Ticket Panel
+	/**
+	 * Adds 1 to the textFieldTicketQuantity if is possible
+	 */
 	private void quantityPlusOne() {
 		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
 		if (totalTicket != 0) {
@@ -2854,6 +2928,9 @@ public class Views {
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 	}
 
+	/**
+	 * Subtracts 1 to the textFieldTicketQuantity if is possible
+	 */
 	private void quantityMinusOne() {
 		int ticketQuantity = Integer.valueOf(textFieldTicketQuantity.getText());
 		if (ticketQuantity != 0) {
@@ -2866,13 +2943,15 @@ public class Views {
 		textFieldTotalTicket.setText(Integer.toString(totalTicket));
 	}
 
+	/**
+	 * If textFieldTicketQuantity is > 0 buys the tickets and asks for recipe
+	 */
 	private void buyTicket() {
 		if (Integer.parseInt(textFieldTicketQuantity.getText()) == 0) {
 			JOptionPane.showMessageDialog(null, "No se han seleccionado entradas!!", "Oye!", JOptionPane.ERROR_MESSAGE);
 		} else {
-			JFrame jFrame = new JFrame();
 			if (totalTicket != 0) {
-				JOptionPane.showMessageDialog(jFrame, "Compra realizada con exito");
+				JOptionPane.showMessageDialog(null, "Compra realizada con exito");
 
 				Double totalReset = Double.valueOf(textFieldTicketTotalPrice.getText());
 				int ticketDecreaser = Integer.valueOf(textFieldTotalTicket.getText());
@@ -2880,9 +2959,9 @@ public class Views {
 				textFieldTotalTicket.setText(Integer.toString(ticketDecreaser));
 				textFieldTicketTotalPrice.setText(Double.toString(totalReset));
 			} else if (totalTicket <= 0) {
-				JOptionPane.showMessageDialog(jFrame, "No quedan entradas, vuelva mañana");
+				JOptionPane.showMessageDialog(null, "No quedan entradas, vuelva mañana");
 			}
-			int resp = JOptionPane.showConfirmDialog(jFrame, "¿Desea imprimir un recibo?", "Recibo",
+			int resp = JOptionPane.showConfirmDialog(null, "¿Desea imprimir un recibo?", "Recibo",
 					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 			if (resp == JOptionPane.YES_OPTION) {
@@ -2898,6 +2977,11 @@ public class Views {
 		}
 	}
 
+	/**
+	 * Creates the recipe for the bought tickets
+	 * @param quantity2 tickets that are going to be bought
+	 * @throws IOException error occurs during the creation of the Recipe
+	 */
 	private void recipeMaker(int quantity2) throws IOException {
 		if (null == managerFile) {
 			managerFile = new ManagerFile();
