@@ -94,6 +94,11 @@ public class ManagerCaretaker implements ManagerInterface<Caretaker> {
 		return ret;
 	}
 
+	/**
+	 * Selects all food where the param equals employee table idEmployee
+	 * @param idEmployee int used to select the food that concord with employee table idEmployee
+	 * @return ArrayList<Food> of all foods that idEmployee is responsible of
+	 */
 	private ArrayList<Food> selecAllFoodOfCaretakerByIdEmployee(int idEmployee) {
 		ArrayList<Food> ret = null;
 

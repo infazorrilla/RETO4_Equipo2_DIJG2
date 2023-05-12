@@ -94,6 +94,11 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		return ret;
 	}
 
+	/**
+	 * returns a Employee object that matches the dni param, if none match return null
+	 * @param dni to be selected
+	 * @return Employee object with all data from data base
+	 */
 	public Employee selectEmployeeByDni(String dni) {
 		Employee ret = null;
 
@@ -280,6 +285,11 @@ public class ManagerEmployee implements ManagerInterface<Employee> {
 		}
 	}
 
+	/**
+	 * Select idEmployee from database where param matches 
+	 * @param dni to match the select statement
+	 * @return int that contains the desired idEmployee, 0 if param doesn't match in select statement
+	 */
 	public int getEmployeeIdByDni(String dni) {
 		int ret = 0;
 

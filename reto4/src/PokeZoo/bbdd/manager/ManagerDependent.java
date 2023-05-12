@@ -84,6 +84,11 @@ public class ManagerDependent implements ManagerInterface<Dependent>{
 		return ret;
 	}
 	
+	/**
+	 * returns a Dependent object that matches the dni param, if none match return null
+	 * @param dni to be selected
+	 * @return Dependent object with all data from data base
+	 */
 	public Dependent selectDependentByDni(String dni) {
 		Dependent ret = null;
 

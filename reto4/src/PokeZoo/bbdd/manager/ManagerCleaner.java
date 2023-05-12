@@ -98,6 +98,11 @@ public class ManagerCleaner implements ManagerInterface<Cleaner> {
 		return ret;
 	}
 
+	/**
+	 * returns a Cleaner object that matches the dni param, if none match return null
+	 * @param dni to be selected
+	 * @return Cleaner object with all data from data base
+	 */
 	public Cleaner selectCleanerByDni(String dni) {
 		Cleaner ret = null;
 
