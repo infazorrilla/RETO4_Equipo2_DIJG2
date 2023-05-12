@@ -2967,7 +2967,7 @@ public class Views {
 			if (resp == JOptionPane.YES_OPTION) {
 				try {
 					quantity = Integer.parseInt(textFieldTicketQuantity.getText());
-					recipeMaker(quantity);
+					receiptMaker(quantity);
 					quantity = 0;
 					textFieldTicketQuantity.setText(Integer.toString(quantity));
 				} catch (IOException e) {
@@ -2982,7 +2982,7 @@ public class Views {
 	 * @param quantity2 tickets that are going to be bought
 	 * @throws IOException error occurs during the creation of the Recipe
 	 */
-	private void recipeMaker(int quantity2) throws IOException {
+	private void receiptMaker(int quantity2) throws IOException {
 		if (null == managerFile) {
 			managerFile = new ManagerFile();
 		}

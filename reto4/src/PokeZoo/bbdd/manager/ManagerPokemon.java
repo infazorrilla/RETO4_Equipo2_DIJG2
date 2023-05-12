@@ -87,6 +87,11 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		return ret;
 	}
 
+	/**
+	 * returns a Pokemon object that matches the id param
+	 * @param id to match on select statement
+	 * @return null if no Pokemon matched id param, else Pokemon object with all data 
+	 */
 	public Pokemon getPokemonById(int id) {
 		Pokemon ret = null;
 		String sql = "select * from Pokemon WHERE idPokemon = " + id;
@@ -152,6 +157,11 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		return ret;
 	}
 
+	/**
+	 * returns a Pokemon object that matches the numPokedex param
+	 * @param numPokedex to match on select statement
+	 * @return null if no Pokemon matched id param, else Pokemon object with all data
+	 */
 	public Pokemon getPokemonByNumPokedex(int numPokedex) {
 		Pokemon ret = null;
 		String sql = "select * from Pokemon WHERE numPokedex = " + numPokedex;
@@ -159,7 +169,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
-
 		try {
 			Class.forName(DBUtils.DRIVER);
 
@@ -172,7 +181,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-// añadir datos del Pokemon aqui
+				// Add Pokemon data here
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
 				ret.setEggGroup(resultSet.getString("eggGroup"));
@@ -187,29 +196,33 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		} catch (Exception e) {
 			System.out.println("Error generico - " + e.getMessage());
 		} finally {
-
 			try {
 				if (resultSet != null)
 					resultSet.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 		return ret;
 	}
 
+	/**
+	 * returns a Pokemon object that matches the namePo param
+	 * @param namePo to match the select statement
+	 * @return null if no Pokemon matched id param, else Pokemon object with all data
+	 */
 	public Pokemon getPokemonByName(String namePo) {
 		Pokemon ret = null;
 		String sql = "select * from Pokemon WHERE namePo = '" + namePo + "'";
@@ -230,7 +243,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-				// añadir datos del Pokemon aqui
+				// Add Pokemon data here
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
 				ret.setEggGroup(resultSet.getString("eggGroup"));
@@ -245,24 +258,23 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 		} catch (Exception e) {
 			System.out.println("Error generico - " + e.getMessage());
 		} finally {
-
 			try {
 				if (resultSet != null)
 					resultSet.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 		return ret;
@@ -303,13 +315,13 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-// Nothing
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-// Nothing
+				// Nothing
 			}
 		}
 	}
@@ -344,16 +356,14 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (preparedStatement != null)
 					preparedStatement.close();
 			} catch (Exception e) {
-// Nothing
+				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-// Nothing
+				// Nothing
 			}
-			;
 		}
 	}
 
@@ -381,16 +391,14 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				if (preparedStatement != null)
 					preparedStatement.close();
 			} catch (Exception e) {
-// Nothing
+				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-// Nothing
+				// Nothing
 			}
-			;
 		}
 	}
 }

@@ -81,6 +81,11 @@ public class ManagerProduct implements ManagerInterface<Product> {
 		return ret;
 	}
 
+	/**
+	 * returns a Product object that matches the id param, if none match return null
+	 * @param id param to match idProduct on select statement
+	 * @return null if no Product matched id param, else Product object with all data
+	 */
 	public Product selectProductById(int id) {
 		Product ret = null;
 
@@ -137,7 +142,6 @@ public class ManagerProduct implements ManagerInterface<Product> {
 				// Nothing
 			}
 		}
-
 		return ret;
 	}
 
@@ -175,13 +179,13 @@ public class ManagerProduct implements ManagerInterface<Product> {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 	}
@@ -252,14 +256,12 @@ public class ManagerProduct implements ManagerInterface<Product> {
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 		}
 	}
 }

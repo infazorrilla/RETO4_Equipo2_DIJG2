@@ -78,6 +78,11 @@ public class ManagerShop implements ManagerInterface<Shop>{
 		return ret;
 	}
 
+	/**
+	 * returns a Shop object that matches the id param, if none match return null
+	 * @param id param to match idProduct on select statement
+	 * @return null if no Shop matched id param, else Shop object with all data
+	 */
 	public Shop selectShopById(int id) {
 		Shop ret = null;
 
@@ -209,13 +214,12 @@ public class ManagerShop implements ManagerInterface<Shop>{
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
 		}
 	}
 

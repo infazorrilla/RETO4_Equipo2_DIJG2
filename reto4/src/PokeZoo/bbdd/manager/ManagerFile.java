@@ -10,9 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Class that contains the Methods for receipt of the purchase
+ */
 public class ManagerFile {
-
-	public File createFile(int quantity2, Double ticketValue) throws IOException {
+	/**
+	 * Creates the receipt into the users desktop
+	 * @param quantity of tickets to be bought
+	 * @param ticketValue price of the tickets
+	 * @return Created File
+	 * @throws IOException Error on file creation
+	 */
+	public File createFile(int quantity, Double ticketValue) throws IOException {
 		String path = System.getProperty("user.home") + "/Desktop/";
 
 		Date date = new Date();
@@ -23,8 +32,8 @@ public class ManagerFile {
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 
 		try {
-			printWriter.println("Cantidad de entradas: " + quantity2 + "\n");
-			printWriter.println("Precio: " + (quantity2 * ticketValue) + "€");
+			printWriter.println("Cantidad de entradas: " + quantity + "\n");
+			printWriter.println("Precio: " + (quantity * ticketValue) + "€");
 		} finally {
 			printWriter.close();
 			try {
@@ -36,6 +45,11 @@ public class ManagerFile {
 		return file;
 	}
 
+	/**
+	 * Methods that reads the param file and returns it
+	 * @param newFile File to be read
+	 * @return String with all the data written in the param file
+	 */
 	public String readFile(File newFile) {
 		String ret = "";
 		try {

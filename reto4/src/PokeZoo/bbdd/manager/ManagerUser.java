@@ -79,6 +79,11 @@ public class ManagerUser implements ManagerInterface<User> {
 		return ret;
 	}
 
+	/**
+	 * returns a User object that matches the id param, if none match return null
+	 * @param id param to match idUser on select statement
+	 * @return null if no User matched id param, else User object with all data
+	 */
 	public User selectUserById(int id) {
 		User ret = null;
 
@@ -137,6 +142,12 @@ public class ManagerUser implements ManagerInterface<User> {
 		return ret;
 	}
 
+	/**
+	 * returns a User object that matches the username param and passwd param, if none match return null
+	 * @param username param to match username on select statement
+	 * @param passwd param to match passwd on select statement
+	 * @return null if no User matched username param and passwd param, else User object with all data
+	 */
 	public User selectUserByUsernameAndPasswd(String username, String passwd) {
 		User ret = null;
 
@@ -272,6 +283,10 @@ public class ManagerUser implements ManagerInterface<User> {
 		}
 	}
 
+	/**
+	 * Blocks a user by it idUser (sets isBlock = true on data base)
+	 * @param idUser para to march on the select statement 
+	 */
 	public void blockUserByIdUser(int idUser) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -343,7 +358,7 @@ public class ManagerUser implements ManagerInterface<User> {
 	}
 
 	/**
-	 * 
+	 * Checks if a user exists with the given params
 	 * @param userName String to be check in database
 	 * @param passwd   String to be check in database
 	 * @return 0 if user Not Found, 1 if user Found and is not admin, 2 if user
@@ -403,6 +418,11 @@ public class ManagerUser implements ManagerInterface<User> {
 		return ret;
 	}
 
+	/**
+	 * Checks if a user exists in the data base that martches param username
+	 * @param username String to match on select statement
+	 * @return false if username is not in database, true if a user has already the param usename
+	 */
 	public boolean checkUserNameExists(String username) {
 		boolean ret = false;
 

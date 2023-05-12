@@ -78,6 +78,10 @@ public class ManagerFood implements ManagerInterface<Food>{
 		return ret;
 	}
 	
+	/**
+	 * Selects all foods mameFo from Food table in data base (for ComboBox)
+	 * @return ArrayList<String> with all nameFo
+	 */
 	public ArrayList<String> selectAllFoodNames() {
 		ArrayList<String> ret = null;
 
@@ -132,6 +136,14 @@ public class ManagerFood implements ManagerInterface<Food>{
 		return ret;
 	}
 	
+	/**
+	 * returns a Food object that matches the id param, if none match return null
+	 * @param id to be checked
+	 * @return null if no food matches param, Food object if param matches idFood
+	 * @throws SQLException
+	 * @throws AccountNotFoundException
+	 * @throws Exception
+	 */
 	public Food selectFoodById(int id) throws SQLException, AccountNotFoundException, Exception {
 		Food ret = null;
 		
@@ -190,6 +202,11 @@ public class ManagerFood implements ManagerInterface<Food>{
 		return ret;
 	}
 	
+	/**
+	 * returns a Enclosure object that matches the nameFo param, if none match return null
+	 * @param nameFood String to be checked
+	 * @return null if no food matches param, Food object if param matches idFood
+	 */
 	public Food selectFoodByName(String nameFood) {
 		Food ret = null;
 		

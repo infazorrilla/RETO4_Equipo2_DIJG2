@@ -78,6 +78,11 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		return ret;
 	}
 
+	/**
+	 * returns a Enclosure object that matches the id param, if none match return null
+	 * @param id to be selected
+	 * @return Enclosure object with all data from data base
+	 */
 	public Enclosure selectEnclosureById(int id) {
 		Enclosure ret = null;
 		String sql = "SELECT * FROM Enclosure WHERE idEnclosure = " + id;
@@ -134,6 +139,11 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		return ret;
 	}
 
+	/**
+	 * Selects a enclosure from data base with para typeEn
+	 * @param to be selected
+	 * @return Enclosure object with all data from data base
+	 */
 	public Enclosure selectEnclosureByTypeEn(String typeEn) {
 		Enclosure ret = null;
 		String sql = "SELECT * FROM Enclosure WHERE typeEn = '" + typeEn + "'";
@@ -186,6 +196,11 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		return ret;
 	}
 	
+	/**
+	 * Selects a enclosure from data base with para numberEn
+	 * @param number to be selected
+	 * @return Enclosure object with all data from data base
+	 */
 	public Enclosure selectEnclosureByNumber(int number) {
 		Enclosure ret = null;
 		String sql = "SELECT * FROM Enclosure WHERE numberEn = '" + number + "'";
@@ -238,6 +253,11 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		return ret;
 	}
 
+	/**
+	 * Method that checks if the Enclosure that is going to be inserted has duplicated data
+	 * @param enclosureToInsert to be selected
+	 * @return true if a Enclosure exists with the same TypeEn, false if not
+	 */
 	public boolean checkEnclosureTypeExists(Enclosure enclosureToInsert) {
 		boolean ret = false;
 
@@ -286,6 +306,11 @@ public class ManagerEnclosure implements ManagerInterface<Enclosure> {
 		return ret;
 	}
 
+	/**
+	 * Method that checks if the Enclosure that is going to be inserted has duplicated data
+	 * @param enclosureToInsert to be selected
+	 * @return true if a Enclosure exists with the same numberEn, false if not
+	 */
 	public boolean checkEnclosureNumberExists(Enclosure enclosureToInsert) {
 		boolean ret = false;
 

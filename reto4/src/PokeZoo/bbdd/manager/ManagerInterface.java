@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
 /**
- * Cada manager debe de implementar estos metodos
+ * Each manager must implement this generic methods
  */
 public interface ManagerInterface <T>{
 
