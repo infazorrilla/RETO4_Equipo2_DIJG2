@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+
+import PokeZoo.bbdd.pojo.Food;
 
 public class ManagerFile {
 
@@ -50,5 +53,36 @@ public class ManagerFile {
 		}
 		return ret;
 	}
+	
+	public File createFileTestFood(ArrayList<Food> allFood) throws IOException {
+		if(null == allFood) {
+			return null;
+		}
+		String path = System.getProperty("user.home") + "/Desktop/";
+
+		File ret = new File(path + "Ticket pruebaFood.txt");
+		FileWriter fileWriter = new FileWriter(ret);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+
+		try {
+			for(Food food : allFood) {
+				printWriter.println("	idFood: " + food.getIdFood() + "\n");
+				printWriter.println("	quantityFo: " + food.getQuantityFo() + "\n");
+				printWriter.println("	dailyConsumeFo: " + food.getDailyConsumeFo() + "\n");
+				printWriter.println("	nameFo: " + food.getNameFo() + "\n");
+				printWriter.println("	descriptionFo: " + food.getDescriptionFo() + "\n");
+				printWriter.println("\n");				
+			}		
+		} finally {
+			printWriter.close();
+			try {
+				fileWriter.close();
+			} catch (IOException e) {
+				// Nothing
+			}
+		}
+		return ret;
+	}
 
 }
+
