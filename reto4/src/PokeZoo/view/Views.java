@@ -1292,6 +1292,7 @@ public class Views {
 
 		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
 		btnAddNewEmployee.addActionListener(new ActionListener() {
+			// TODO regex nombre y apellido
 			public void actionPerformed(ActionEvent e) {
 				JTextField dni = new JTextField();
 				JTextField name = new JTextField();
@@ -2322,6 +2323,9 @@ public class Views {
 
 // --------------------------------------------------------------------------------------
 //PANELS METHODS	
+	/**
+	 * Sets the background color of all Buttons in admin Panel to White
+	 */
 	private void setAllButtonsBackgroundToWhite() {
 		btnEmployee.setBackground(Color.WHITE);
 		btnCleaner.setBackground(Color.WHITE);
@@ -2331,6 +2335,11 @@ public class Views {
 		btnFood.setBackground(Color.WHITE);
 	}
 
+	/**
+	 * Switches the visible panel in the admin Zone
+	 * 
+	 * @param i depending on the value of i various JPanels are displayed
+	 */
 	private void switchAdminPanels(int i) {
 		switch (i) {
 		case 1:
@@ -2394,6 +2403,9 @@ public class Views {
 
 	}
 
+	/**
+	 * Changes the current JPanel display to panelMain
+	 */
 	private void changeToClientZone() {
 		panelWelcome.setVisible(false);
 		panelMain.setVisible(true);
@@ -2404,6 +2416,9 @@ public class Views {
 		panelAdminEmployee.setVisible(false);
 	}
 
+	/**
+	 * Changes the current JPanel display to panelLogin
+	 */
 	private void changeToWorkerZone() {
 		panelWelcome.setVisible(false);
 		panelMain.setVisible(false);
@@ -2412,6 +2427,9 @@ public class Views {
 		panelAdmin.setVisible(false);
 	}
 
+	/**
+	 * Changes the current JPanel display to panelAdminWelcome
+	 */
 	private void changeToAdminZone() {
 		panelAdmin.setVisible(true);
 		panelAdminWelcome.setVisible(true);
@@ -2421,6 +2439,12 @@ public class Views {
 		panelLogin.setVisible(false);
 	}
 
+	/**
+	 * Changes the current JPanel display in Client Zone to different sub JPanels
+	 * that shows different information
+	 * 
+	 * @param panel The JPanel that is going to be displayed
+	 */
 	private void switchMainPanels(String panel) {
 		switch (panel) {
 		case "MAP":
@@ -2456,8 +2480,13 @@ public class Views {
 		}
 	}
 
-	// otros metodos
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+	/**
+	 * Delete from the database the Pokemon given in the method parameter and shows a
+	 * Pop-Up of confirmation
+	 * 
+	 * @param selectedPokemon The Pokemon object to be deleted
+	 */
 	private void deleteSelectedPokemon(Pokemon selectedPokemon) {
 		if (null == managerPokemon) {
 			managerPokemon = new ManagerPokemon();
