@@ -183,6 +183,7 @@ public class Views {
 
 		// PANEL MAIN
 		panelMain = new JPanel();
+		panelMain.setBackground(new Color(254, 235, 197));
 		panelMain.setBounds(0, 0, 734, 461);
 		panelMain.setVisible(false);
 		frame.getContentPane().add(panelMain);
@@ -2248,7 +2249,7 @@ public class Views {
 		frame.getContentPane().add(panelWelcome);
 		panelWelcome.setLayout(null);
 
-		JLabel lblWelcome = new JLabel("¡¡ Bienvenido !!");
+		JLabel lblWelcome = new JLabel("");
 		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblWelcome.setBounds(246, 10, 245, 105);
