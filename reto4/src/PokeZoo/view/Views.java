@@ -2436,7 +2436,7 @@ public class Views {
 		}
 		try {
 			managerFood.delete(selectedFood);
-			JOptionPane.showMessageDialog(null, "Pokemon borrado correctamente", "Correcto!",
+			JOptionPane.showMessageDialog(null, "Baya borrado correctamente", "Correcto!",
 					JOptionPane.PLAIN_MESSAGE);
 			loadTableFoodData(tableFood);
 		} catch (Exception e) {
