@@ -1991,7 +1991,50 @@ public class Views {
 		JButton btnAddNewFood = new JButton("Nueva Comida");
 		btnAddNewFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Add new Food method
+				JTextField name = new JTextField();
+				JTextField description = new JTextField();
+				JTextField quantity = new JTextField();
+				JTextField dailyConsume = new JTextField();
+
+				Object[] message = { "Nombre", name, "Descripcion", description, "Cantidad", quantity, "Consumo diario",
+						dailyConsume };
+
+				int opcion = JOptionPane.showConfirmDialog(null, message, "Registrar nueva baya",
+						JOptionPane.OK_CANCEL_OPTION);
+
+				if (opcion == JOptionPane.OK_OPTION) {
+
+					if ((name.getText().isEmpty()) || (description.getText().isEmpty())
+							|| (quantity.getText().isEmpty()) || dailyConsume.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Faltan datos por rellenar!", "Oye!",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						Food foodToInsert = new Food();
+
+						foodToInsert.setNameFo(name.getText());
+						foodToInsert.setDescriptionFo(description.getText());
+						foodToInsert.setQuantityFo(Integer.valueOf(quantity.getText()));
+						foodToInsert.setDailyConsumeFo(Integer.valueOf(dailyConsume.getText()));
+
+						if (null == managerFood) {
+							managerFood = new ManagerFood();
+						}
+						if (!managerFood.checkFoodNameExist(foodToInsert)) {
+							try {
+								managerFood.insert(foodToInsert);
+
+								JOptionPane.showMessageDialog(null, "Baya añadida correctamente!", "Oye!",
+										JOptionPane.INFORMATION_MESSAGE);
+								loadTableFoodData(tableFood);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "La baya ya existe!", "Oye!",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
 			}
 		});
 		btnAddNewFood.setBounds(10, 336, 224, 23);
@@ -2000,7 +2043,47 @@ public class Views {
 		JButton btnModifyFood = new JButton("Modificar Comida");
 		btnModifyFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Update Food method
+				Food selectedFood = getSelectedFood();
+
+				if (null != selectedFood) {
+					JTextField name = new JTextField();
+					name.setText(selectedFood.getNameFo());
+					JTextField description = new JTextField();
+					description.setText(selectedFood.getDescriptionFo());
+					JTextField quantity = new JTextField();
+					quantity.setText(Integer.toString(selectedFood.getQuantityFo()));
+					JTextField dailyConsume = new JTextField();
+					dailyConsume.setText(Integer.toString(selectedFood.getDailyConsumeFo()));
+
+					if (null == managerFood) {
+						managerFood = new ManagerFood();
+					}
+
+					Object[] message = { "Nombre: ", name, "Descripcion : ", description, "Cantidad:", quantity,
+							"Consumo diario: ", dailyConsume };
+
+					int option = JOptionPane.showConfirmDialog(null, message, "Modificar Baya",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (option == JOptionPane.OK_OPTION) {
+						int confimation = JOptionPane.showConfirmDialog(null,
+								"¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
+								JOptionPane.OK_CANCEL_OPTION);
+						if (confimation == JOptionPane.OK_OPTION) {
+							selectedFood.setNameFo(name.getText());
+							selectedFood.setDescriptionFo(description.getText());
+							selectedFood.setQuantityFo(Integer.valueOf(quantity.getText()));
+							selectedFood.setDailyConsumeFo(Integer.valueOf(dailyConsume.getText()));
+
+							try {
+								managerFood.update(selectedFood);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+
+							loadTableFoodData(tableFood);
+						}
+					}
+				}
 			}
 		});
 		btnModifyFood.setBounds(245, 336, 224, 23);
@@ -2009,7 +2092,15 @@ public class Views {
 		JButton btnDeleteFood = new JButton("Borrar Comida");
 		btnDeleteFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Delete Food method
+				Food selectedFood = getSelectedFood();
+
+				int confirmation = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas borrar la baya?",
+						"Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+
+				if (confirmation == JOptionPane.OK_OPTION) {
+					deleteSelectedFood(selectedFood);
+
+				}
 			}
 		});
 		btnDeleteFood.setBounds(480, 336, 224, 23);
@@ -2333,6 +2424,25 @@ public class Views {
 			}
 		}
 	}
+	
+	/**
+	 * Deletes the selected food from the Food JTable row and shows a Pop-up of confirmation
+	 *  
+	 * @param selectedFood selected row data into Food Object 
+	 */
+	private void deleteSelectedFood(Food selectedFood) {
+		if (null == managerFood) {
+			managerFood = new ManagerFood();
+		}
+		try {
+			managerFood.delete(selectedFood);
+			JOptionPane.showMessageDialog(null, "Pokemon borrado correctamente", "Correcto!",
+					JOptionPane.PLAIN_MESSAGE);
+			loadTableFoodData(tableFood);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Blocks the selectedEmployee from the database
@@ -2642,6 +2752,31 @@ public class Views {
 			managerEclosure = new ManagerEnclosure();
 		}
 		ret = managerEclosure.selectEnclosureByNumber(number);
+
+		return ret;
+	}
+	
+	/**
+	 * if tableFood has a selected row calls to managerFood with the name value
+	 * from the table and gets a Food Object
+	 * 
+	 * @return Food Object if tableFood has a selected row or null if
+	 *         tableEnclosure does not have a selected row
+	 */
+	private Food getSelectedFood() {
+		Food ret = null;
+		if (tableFood.getSelectionModel().isSelectionEmpty()) {
+			JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "¡Error!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			ret = new Food();
+
+			int row = tableFood.getSelectedRow();
+
+			String name = (String) tableFood.getValueAt(row, 0);
+			ret = managerFood.selectFoodByName(name);
+
+		}
 
 		return ret;
 	}

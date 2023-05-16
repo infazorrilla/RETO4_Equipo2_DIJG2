@@ -79,6 +79,59 @@ public class ManagerFood implements ManagerInterface<Food>{
 	}
 	
 	/**
+	 * Method that checks the food name that will be add does not exist
+	 * @param foodToInsert to be selected
+	 * @return true if the name is the same as the database name or false if the name does not exist
+	 */
+	public boolean checkFoodNameExist(Food foodToInsert) {
+		boolean ret = false;
+
+		String sql = "SELECT * FROM Food WHERE nameFo = '" + foodToInsert.getNameFo() + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				ret = true;
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+
+		return ret;
+	}
+	
+	/**
 	 * Selects all foods mameFo from Food table in data base (for ComboBox)
 	 * @return ArrayList<String> with all nameFo
 	 */
