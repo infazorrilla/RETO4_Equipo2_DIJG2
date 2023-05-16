@@ -99,12 +99,12 @@ public class Views {
 	private JTable tableFood = null;
 
 	// Buttons Admin Zone
-	JButton btnEmployee = null;
-	JButton btnCleaner = null;
-	JButton btnCaretakers = null;
-	JButton btnPokemon = null;
-	JButton btnEnclosure = null;
-	JButton btnFood = null;
+	private JButton btnEmployee = null;
+	private JButton btnCleaner = null;
+	private JButton btnCaretakers = null;
+	private JButton btnPokemon = null;
+	private JButton btnEnclosure = null;
+	private JButton btnFood = null;
 
 	// Variables for Tickets
 	private int totalTicket = 40;
@@ -1293,7 +1293,6 @@ public class Views {
 
 		JButton btnAddNewEmployee = new JButton("Añadir Empleado");
 		btnAddNewEmployee.addActionListener(new ActionListener() {
-			// TODO regex nombre y apellido
 			public void actionPerformed(ActionEvent e) {
 				JTextField dni = new JTextField();
 				JTextField name = new JTextField();
@@ -1312,6 +1311,7 @@ public class Views {
 						JOptionPane.showMessageDialog(null,
 								"El DNI del oficinista tiene un formato invalido, debe ser 8 Numeros y 1 Letra!",
 								"Oye!", JOptionPane.ERROR_MESSAGE);
+						// TODO Add regex to Name and Surname
 					} else if (name.getText().isEmpty() || surName.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Oficinista!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
@@ -1319,7 +1319,6 @@ public class Views {
 						JOptionPane.showMessageDialog(null, "Faltan datos obligatorios del Usuario!", "Oye!",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						// User(idUser, isAdmin, username, passwd, isBlocked)
 						User userToInsert = new User(0, false, username.getText(), new String(password.getPassword()),
 								false);
 
@@ -1342,7 +1341,6 @@ public class Views {
 								JOptionPane.showMessageDialog(null, "El nombre de usuario ya existe en el sistema",
 										"Oye!", JOptionPane.ERROR_MESSAGE);
 							} else {
-								// TODO Comprobar que el usuario no existe ya
 								managerUser.insert(userToInsert);
 								userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
 										userToInsert.getPasswd());
@@ -1365,7 +1363,6 @@ public class Views {
 		JButton btnModifyEmployee = new JButton("Modificar Empleado");
 		btnModifyEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO CUIDADO CON LA CONTRASEÑAAAAAAA
 				Employee selectedEmployee = null;
 				try {
 					selectedEmployee = getSelectedEmployee();
@@ -1448,7 +1445,6 @@ public class Views {
 		JButton btnBlockEmployee = new JButton("Bloquear Empleado");
 		btnBlockEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO SI SE SELECCIONA EL USUARIO QUE ES DEPENDENDIENTE NO FUNCIONA NADA :S
 				Employee selectedEmployee = null;
 				try {
 					selectedEmployee = getSelectedEmployee();
@@ -1471,7 +1467,6 @@ public class Views {
 		panelAdminEmployee.add(btnBlockEmployee);
 
 		// PANEL CLEANER
-		// TODO faltan cosis
 		panelAdminCleaner = new JPanel();
 		panelAdminCleaner.setBounds(10, 68, 714, 370);
 		panelAdmin.add(panelAdminCleaner);
@@ -1547,7 +1542,6 @@ public class Views {
 							if (null == managerEnclosure) {
 								managerEnclosure = new ManagerEnclosure();
 							}
-							// TODO Comprobar que el usuario no existe ya
 							managerUser.insert(userToInsert);
 							userToInsert = managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
 									userToInsert.getPasswd());
@@ -1577,42 +1571,7 @@ public class Views {
 		JButton btnModifyCleaner = new JButton("Modificar Limpiador");
 		btnModifyCleaner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
-				/*
-				 * Cleaner selectedEmployee = getSelectedCleaner();
-				 * 
-				 * JLabel dni = new JLabel(); dni.setText(selectedEmployee.getDni()); JTextField
-				 * name = new JTextField(); name.setText(selectedEmployee.getNameWo());
-				 * JTextField surName = new JTextField();
-				 * surName.setText(selectedEmployee.getSurnameWo()); JTextField phone = new
-				 * JTextField(); phone.setText(selectedEmployee.getPhoneWo()); JTextField
-				 * username = new JTextField();
-				 * username.setText(selectedEmployee.getUser().getUsername()); JPasswordField
-				 * password = new JPasswordField();
-				 * 
-				 * Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName,
-				 * "Telefono:", phone, "Username: *", username, "Password: *", password };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(
-				 * selectedEmployee.getDni())); selectedEmployee.setNameWo(name.getText());
-				 * selectedEmployee.setSurnameWo(surName.getText());
-				 * selectedEmployee.setPhoneWo(phone.getText());
-				 * selectedEmployee.getUser().setUsername(username.getText());
-				 * selectedEmployee.getUser().setPasswd(new String(password.getPassword())); try
-				 * { managerEmployee.update(selectedEmployee);
-				 * 
-				 * if (null == managerUser) { managerUser = new ManagerUser(); }
-				 * managerUser.update(selectedEmployee.getUser()); } catch (Exception e1) {
-				 * e1.printStackTrace(); }
-				 * 
-				 * loadTableEmployeeData(tableEmployee); } }
-				 */
+				// TODO Update Cleaner Method			
 			}
 		});
 		btnModifyCleaner.setBounds(180, 336, 141, 23);
@@ -1652,7 +1611,6 @@ public class Views {
 		panelAdminCleaner.add(btnBlockCleaner);
 
 		// PANEL Caretaker
-		// TODO los 4 botones
 		panelAdminCaretaker = new JPanel();
 		panelAdminCaretaker.setBounds(10, 68, 714, 370);
 		panelAdmin.add(panelAdminCaretaker);
@@ -1674,61 +1632,7 @@ public class Views {
 		JButton btnAddNewCaretaker = new JButton("Añadir Cuidador");
 		btnAddNewCaretaker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * JTextField dni = new JTextField(); JTextField name = new JTextField();
-				 * JTextField surName = new JTextField(); JTextField phone = new JTextField();
-				 * JTextField username = new JTextField(); JPasswordField password = new
-				 * JPasswordField(); JTextField enclosure = new JTextField();
-				 * 
-				 * Object[] message = { "DNI: *", dni, "Nombre: *", name, "Apellido: *",
-				 * surName, "Telefono:", phone, "Username: *", username, "Password: *",
-				 * password, "Recinto*: ", enclosure };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Registrar nuevo Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { if (dni.getText().isEmpty() ||
-				 * name.getText().isEmpty() || surName.getText().isEmpty() ||
-				 * enclosure.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
-				 * "Faltan datos obligatorios del Limpiador!", "Oye!",
-				 * JOptionPane.ERROR_MESSAGE); } else if (username.getText().isEmpty() ||
-				 * password.getPassword().length == 0) { JOptionPane.showMessageDialog(null,
-				 * "Faltan datos obligatorios del Usuario!", "Oye!", JOptionPane.ERROR_MESSAGE);
-				 * } else { // User(idUser, isAdmin, username, passwd, isBlocked) User
-				 * userToInsert = new User(0, false, username.getText(), new
-				 * String(password.getPassword()), false);
-				 * 
-				 * Cleaner CleanerToInsert = new Cleaner();
-				 * CleanerToInsert.setDni(dni.getText());
-				 * CleanerToInsert.setNameWo(name.getText());
-				 * CleanerToInsert.setSurnameWo(surName.getText());
-				 * CleanerToInsert.setPhoneWo(phone.getText());
-				 * 
-				 * Enclosure enclosureToInsert = new Enclosure();
-				 * enclosureToInsert.setTypeEn(enclosure.getText());
-				 * 
-				 * CleanerToInsert.setEnclosure(enclosureToInsert);
-				 * 
-				 * try { if (null == managerUser) { managerUser = new ManagerUser(); } if (null
-				 * == managerEmployee) { managerEmployee = new ManagerEmployee(); } if (null ==
-				 * managerCleaner) { managerCleaner = new ManagerCleaner(); } if (null ==
-				 * managerEnclosure) { managerEnclosure = new ManagerEnclosure(); } // TODO
-				 * Comprobar que el usuario no existe ya managerUser.insert(userToInsert);
-				 * userToInsert =
-				 * managerUser.selectUserByUsernameAndPasswd(userToInsert.getUsername(),
-				 * userToInsert.getPasswd()); CleanerToInsert.setUser(userToInsert);
-				 * 
-				 * managerEmployee.insert(CleanerToInsert);
-				 * 
-				 * CleanerToInsert.setIdEmployee(managerEmployee.getEmployeeIdByDni(
-				 * CleanerToInsert.getDni())); CleanerToInsert.setEnclosure((managerEnclosure
-				 * .selectEnclosureByTypeEn(CleanerToInsert.getEnclosure().getTypeEn())));
-				 * 
-				 * managerCleaner.insert(CleanerToInsert);
-				 * 
-				 * JOptionPane.showMessageDialog(null, "Limpiador registrado correctamente",
-				 * "Yay!", JOptionPane.INFORMATION_MESSAGE); loadTableCleanerData(tableCleaner);
-				 * } catch (Exception e1) { e1.printStackTrace(); } } }
-				 */
+				// TODO Add Caretaker
 			}
 		});
 		btnAddNewCaretaker.setBounds(10, 336, 150, 23);
@@ -1737,42 +1641,7 @@ public class Views {
 		JButton btnModifyCaretaker = new JButton("Modificar Cuidador");
 		btnModifyCaretaker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
-				/*
-				 * Cleaner selectedEmployee = getSelectedCleaner();
-				 * 
-				 * JLabel dni = new JLabel(); dni.setText(selectedEmployee.getDni()); JTextField
-				 * name = new JTextField(); name.setText(selectedEmployee.getNameWo());
-				 * JTextField surName = new JTextField();
-				 * surName.setText(selectedEmployee.getSurnameWo()); JTextField phone = new
-				 * JTextField(); phone.setText(selectedEmployee.getPhoneWo()); JTextField
-				 * username = new JTextField();
-				 * username.setText(selectedEmployee.getUser().getUsername()); JPasswordField
-				 * password = new JPasswordField();
-				 * 
-				 * Object[] message = { "DNI: ", dni, "Nombre: *", name, "Apellido: *", surName,
-				 * "Telefono:", phone, "Username: *", username, "Password: *", password };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * selectedEmployee.setIdEmployee(managerEmployee.getEmployeeIdByDni(
-				 * selectedEmployee.getDni())); selectedEmployee.setNameWo(name.getText());
-				 * selectedEmployee.setSurnameWo(surName.getText());
-				 * selectedEmployee.setPhoneWo(phone.getText());
-				 * selectedEmployee.getUser().setUsername(username.getText());
-				 * selectedEmployee.getUser().setPasswd(new String(password.getPassword())); try
-				 * { managerEmployee.update(selectedEmployee);
-				 * 
-				 * if (null == managerUser) { managerUser = new ManagerUser(); }
-				 * managerUser.update(selectedEmployee.getUser()); } catch (Exception e1) {
-				 * e1.printStackTrace(); }
-				 * 
-				 * loadTableEmployeeData(tableEmployee); } }
-				 */
+				// TODO Update Caretaker method		
 			}
 		});
 		btnModifyCaretaker.setBounds(180, 336, 141, 23);
@@ -1781,13 +1650,7 @@ public class Views {
 		JButton btnDeleteCaretaker = new JButton("Borrar Cuidador");
 		btnDeleteCaretaker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Cleaner selectedCleaner = getSelectedCleaner(); int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas borrar el limpiador?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * deleteSelectedEmployee(selectedCleaner); }
-				 */
+				// TODO Delete Caretaker method
 			}
 		});
 		btnDeleteCaretaker.setBounds(399, 336, 141, 23);
@@ -1796,16 +1659,7 @@ public class Views {
 		JButton btnBlockCaretaker = new JButton("Bloquear Cuidador");
 		btnBlockCaretaker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Cleaner selectedCleaner = getSelectedCleaner();
-				 * 
-				 * int confimation = JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas BLOQUEAR el limpiador?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * blockSelectedEmployee(selectedCleaner); }
-				 * 
-				 * loadTableCleanerData(tableCleaner);
-				 */
+				// TODO Block Caretaker method
 			}
 		});
 		btnBlockCaretaker.setBounds(563, 336, 141, 23);
@@ -1960,7 +1814,6 @@ public class Views {
 						}
 					}
 				}
-
 			}
 		});
 		btnModifyPokemon.setBounds(245, 336, 224, 23);
@@ -2097,7 +1950,6 @@ public class Views {
 						}
 					}
 				}
-
 			}
 		});
 		btnModifyEnclosure.setBounds(245, 336, 224, 23);
@@ -2112,7 +1964,6 @@ public class Views {
 				if (confimation == JOptionPane.OK_OPTION) {
 					deleteSelectedEnclosure(selectedEnclosure);
 				}
-
 			}
 		});
 		btnDeleteEnclosure.setBounds(480, 336, 224, 23);
@@ -2140,35 +1991,7 @@ public class Views {
 		JButton btnAddNewFood = new JButton("Nueva Comida");
 		btnAddNewFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * JTextField id = new JTextField(); JTextField namePo = new JTextField();
-				 * JTextField eggGroup = new JTextField(); JTextField typeP = new JTextField();
-				 * JTextField typeS = new JTextField();
-				 * 
-				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
-				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Registrar nuevo Pokemon", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { if (id.getText().isEmpty() ||
-				 * namePo.getText().isEmpty()) { JOptionPane.showMessageDialog(null,
-				 * "Faltan datos obligatorios del Pokemon!", "Oye!", JOptionPane.ERROR_MESSAGE);
-				 * } else {
-				 * 
-				 * Pokemon pokemonToInsert = new Pokemon();
-				 * pokemonToInsert.setIdPokemon(Integer.valueOf(id.getText()));
-				 * pokemonToInsert.setNamePo(namePo.getText());
-				 * pokemonToInsert.setEggGroup(eggGroup.getText());
-				 * pokemonToInsert.setTypeP(typeP.getText());
-				 * pokemonToInsert.setTypeS(typeS.getText());
-				 * 
-				 * try { if (null == managerPokemon) { managerPokemon = new ManagerPokemon(); }
-				 * // TODO Comprobar que el usuario no existe ya
-				 * managerPokemon.insert(pokemonToInsert); JOptionPane.showMessageDialog(null,
-				 * "Pokemon registrado correctamente", "Yay!", JOptionPane.INFORMATION_MESSAGE);
-				 * loadTablePokemonData(tablePokemon); } catch (Exception e1) {
-				 * e1.printStackTrace(); } } }
-				 */
+				// TODO Add new Food method
 			}
 		});
 		btnAddNewFood.setBounds(10, 336, 224, 23);
@@ -2177,37 +2000,7 @@ public class Views {
 		JButton btnModifyFood = new JButton("Modificar Comida");
 		btnModifyFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Pokemon selectedPokemon = getSelectedPokemon();
-				 * 
-				 * JLabel id = new JLabel(); id.setText(selectedPokemon.getIdPokemon());
-				 * JTextField namePo = new JTextField();
-				 * namePo.setText(selectedPokemon.getNamePo()); JTextField eggGroup = new
-				 * JTextField(); eggGroup.setText(selectedPokemon.getEggGroup()); JTextField
-				 * typeP = new JTextField(); typeP.setText(selectedPokemon.getTypeP());
-				 * JTextField typeS = new JTextField();
-				 * typeS.setText(selectedPokemon.getTypeS());
-				 * 
-				 * Object[] message = { "idPokemon: ", id, "namePo: *", namePo, "eggGroup: *",
-				 * eggGroup, "typeP:", typeP, "typeS: ", typeS };
-				 * 
-				 * int option = JOptionPane.showConfirmDialog(null, message,
-				 * "Modificar Oficinista", JOptionPane.OK_CANCEL_OPTION); if (option ==
-				 * JOptionPane.OK_OPTION) { int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas realizar los cambios?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * selectedPokemon.setIdPokemon(managerPokemon.getPokemonIdByName(
-				 * selectedPokemon.getIdPokemon()));
-				 * selectedPokemon.setNamePo(namePo.getText());
-				 * selectedPokemon.setEggGroup(eggGroup.getText());
-				 * selectedPokemon.setTypeP(typeP.getText());
-				 * selectedPokemon.setTypeS(typeS.getText()); try {
-				 * managerPokemon.update(selectedPokemon); } catch (Exception e1) {
-				 * e1.printStackTrace(); }
-				 * 
-				 * loadTablePokemonData(tablePokemon); } }
-				 */
+				// TODO Update Food method
 			}
 		});
 		btnModifyFood.setBounds(245, 336, 224, 23);
@@ -2216,13 +2009,7 @@ public class Views {
 		JButton btnDeleteFood = new JButton("Borrar Comida");
 		btnDeleteFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Pokemon selectedPokemon = getSelectedPokemon(); int confimation =
-				 * JOptionPane.showConfirmDialog(null,
-				 * "¿Estas seguro de que deseas borrar el empleado?", "Confirmacion",
-				 * JOptionPane.OK_CANCEL_OPTION); if (confimation == JOptionPane.OK_OPTION) {
-				 * deleteSelectedPokemon(selectedPokemon); }
-				 */
+				// TODO Delete Food method
 			}
 		});
 		btnDeleteFood.setBounds(480, 336, 224, 23);
@@ -2261,13 +2048,6 @@ public class Views {
 		lblWelcomeGif.setBounds(0, 0, 734, 461);
 		RSScaleLabel.setScaleLabel(lblWelcomeGif, "img/misc/openZoo.gif");
 		panelWelcome.add(lblWelcomeGif);
-
-		/*
-		 * JButton btnMap = new JButton("Mapa"); btnMap.addActionListener(new
-		 * ActionListener() { public void actionPerformed(ActionEvent e) {
-		 * switchMainPanels("MAP"); } }); btnMap.setBackground(new Color(255, 255,
-		 * 255)); btnMap.setBounds(10, 11, 186, 39); panelMain.add(btnMap);
-		 */
 
 		// PANEL LOGIN
 		panelLogin = new JPanel();
