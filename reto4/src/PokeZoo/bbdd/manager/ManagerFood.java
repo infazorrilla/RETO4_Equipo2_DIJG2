@@ -9,10 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerFood implements managerGeneral<Food>{
+public class ManagerFood implements ManagerInterface<Food>{
 
 	@Override
 	public ArrayList<Food> selectAll() throws SQLException, AccountNotFoundException, Exception {
@@ -32,21 +33,23 @@ public class ManagerFood implements managerGeneral<Food>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Food>();
-				}
-
-				Food food = new Food();
-
-				// añadir datos del Pokemon aqui
-				food.setIdFood(resultSet.getInt("idFood"));
-				food.setQuantityFo(resultSet.getInt("quantityFo"));
-				food.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
-				food.setNameFo(resultSet.getString("nameFo"));
-				food.setDescriptionFo(resultSet.getString("descriptionFo"));
-				
-				ret.add(food);
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Food>();
+					}
+					Food food = new Food();
+					// añadir datos del Pokemon aqui
+					food.setIdFood(resultSet.getInt("idFood"));
+					food.setQuantityFo(resultSet.getInt("quantityFo"));
+					food.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					food.setNameFo(resultSet.getString("nameFo"));
+					food.setDescriptionFo(resultSet.getString("descriptionFo"));
+					
+					ret.add(food);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -75,10 +78,129 @@ public class ManagerFood implements managerGeneral<Food>{
 		return ret;
 	}
 	
+	/**
+	 * Method that checks the food name that will be add does not exist
+	 * @param foodToInsert to be selected
+	 * @return true if the name is the same as the database name or false if the name does not exist
+	 */
+	public boolean checkFoodNameExist(Food foodToInsert) {
+		boolean ret = false;
+
+		String sql = "SELECT * FROM Food WHERE nameFo = '" + foodToInsert.getNameFo() + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				ret = true;
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+
+		return ret;
+	}
+	
+	/**
+	 * Selects all foods mameFo from Food table in data base (for ComboBox)
+	 * @return ArrayList<String> with all nameFo
+	 */
+	public ArrayList<String> selectAllFoodNames() {
+		ArrayList<String> ret = null;
+
+		String sql = "SELECT nameFo FROM Food ORDER BY idFood";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<String>();
+					}				
+					ret.add(resultSet.getString("nameFo"));
+				}while(resultSet.next());
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		return ret;
+	}
+	
+	/**
+	 * returns a Food object that matches the id param, if none match return null
+	 * @param id to be checked
+	 * @return null if no food matches param, Food object if param matches idFood
+	 * @throws SQLException
+	 * @throws AccountNotFoundException
+	 * @throws Exception
+	 */
 	public Food selectFoodById(int id) throws SQLException, AccountNotFoundException, Exception {
 		Food ret = null;
 		
-		String sql = "SELECT * FROM Food WHERE idFood = '" + id + "'";
+		String sql = "SELECT * FROM Food WHERE idFood = " + id;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -91,16 +213,83 @@ public class ManagerFood implements managerGeneral<Food>{
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			if (resultSet.next()) {
-				if (null == ret) {
-					ret = new Food();
-				}
-				// añadir datos del Pokemon aqui
-				ret.setIdFood(resultSet.getInt("idFood"));
-				ret.setQuantityFo(resultSet.getInt("quantityFo"));
-				ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
-				ret.setNameFo(resultSet.getString("nameFo"));
-				ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Food();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdFood(resultSet.getInt("idFood"));
+					ret.setQuantityFo(resultSet.getInt("quantityFo"));
+					ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					ret.setNameFo(resultSet.getString("nameFo"));
+					ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+				}while(resultSet.next());
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}		
+		return ret;
+	}
+	
+	/**
+	 * returns a Enclosure object that matches the nameFo param, if none match return null
+	 * @param nameFood String to be checked
+	 * @return null if no food matches param, Food object if param matches idFood
+	 */
+	public Food selectFoodByName(String nameFood) {
+		Food ret = null;
+		
+		String sql = "SELECT * FROM Food WHERE nameFo = '" + nameFood + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Comida");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Food();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdFood(resultSet.getInt("idFood"));
+					ret.setQuantityFo(resultSet.getInt("quantityFo"));
+					ret.setDailyConsumeFo(resultSet.getInt("dailyConsumeFo"));
+					ret.setNameFo(resultSet.getString("nameFo"));
+					ret.setDescriptionFo(resultSet.getString("descriptionFo"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -244,5 +433,5 @@ public class ManagerFood implements managerGeneral<Food>{
 				// Nothing
 			};
 		}
-	}
+	}	
 }

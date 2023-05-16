@@ -19,7 +19,7 @@ class PokemonTest {
 		}
 		
 		try {
-			Pokemon fistPokemonFromBBDD = manager.selectPokemonById(1);
+			Pokemon fistPokemonFromBBDD = manager.getPokemonById(1);
 			
 			Pokemon expectedPokemon = new Pokemon();
 			expectedPokemon.setIdPokemon(1);
@@ -28,7 +28,6 @@ class PokemonTest {
 			expectedPokemon.setTypeS("Veneno");
 			expectedPokemon.setDescriptionPo("Una extraña semilla fue plantada en su espalda al nacer. Las plantas brotan y crecen con este Pokémon.");
 			expectedPokemon.setNumPokedex(1);
-			expectedPokemon.setPhotopo(null);
 			expectedPokemon.setFood(null);
 			
 			assertEquals(fistPokemonFromBBDD, expectedPokemon);			
@@ -47,7 +46,6 @@ class PokemonTest {
 		newPokemonInsertTest.setTypeS("prueba");
 		newPokemonInsertTest.setDescriptionPo("prueba");
 		newPokemonInsertTest.setNumPokedex(100);
-		newPokemonInsertTest.setPhotopo(null);
 		Food pokemonTestFood = new Food();
 		pokemonTestFood.setIdFood(100);
 		newPokemonInsertTest.setFood(pokemonTestFood);
@@ -55,7 +53,7 @@ class PokemonTest {
 		try {
 			manager.insert(newPokemonInsertTest);
 			
-			Pokemon expectedPokemon = manager.selectPokemonById(100);
+			Pokemon expectedPokemon = manager.getPokemonById(100);
 			
 			assertEquals(newPokemonInsertTest, expectedPokemon);
 		} catch (Exception e) {
@@ -73,7 +71,6 @@ class PokemonTest {
 		foodToDelete.setTypeS("prueba");
 		foodToDelete.setDescriptionPo("prueba");
 		foodToDelete.setNumPokedex(100);
-		foodToDelete.setPhotopo(null);
 		Food pokemonTestFood = new Food();
 		pokemonTestFood.setIdFood(100);
 		foodToDelete.setFood(pokemonTestFood);
@@ -81,7 +78,7 @@ class PokemonTest {
 		try {
 			manager.delete(foodToDelete);
 			
-			Pokemon expectedFood = manager.selectPokemonById(100);
+			Pokemon expectedFood = manager.getPokemonById(100);
 			
 			assertEquals(null, expectedFood); // selectPokemonById returns null if nothing was found
 		} catch (Exception e) {

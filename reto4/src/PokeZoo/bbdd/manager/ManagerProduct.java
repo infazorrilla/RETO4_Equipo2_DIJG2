@@ -9,10 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
 import PokeZoo.bbdd.pojo.Product;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerProduct implements managerGeneral<Product> {
+public class ManagerProduct implements ManagerInterface<Product> {
 
 	@Override
 	public ArrayList<Product> selectAll() throws SQLException, AccountNotFoundException, Exception {
@@ -32,22 +33,26 @@ public class ManagerProduct implements managerGeneral<Product> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Product>();
-				}
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Productos");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Product>();
+					}
 
-				Product product = new Product();
+					Product product = new Product();
 
-				// añadir datos del Pokemon aqui
-				product.setIdProduct(resultSet.getInt("idProduct"));
-				product.setNamePr(resultSet.getString("namePr"));
-				product.setDescriptionPr(resultSet.getString("descripcionPr"));
-				product.setPhotoPr(resultSet.getBlob("photoPr"));
-				product.setValuePr(resultSet.getDouble("valuePr"));
-				product.setQuantityPr(resultSet.getInt("quantityPr"));
+					// añadir datos del Pokemon aqui
+					product.setIdProduct(resultSet.getInt("idProduct"));
+					product.setNamePr(resultSet.getString("namePr"));
+					product.setDescriptionPr(resultSet.getString("descriptionPr"));
+					product.setPhotoPr(resultSet.getBlob("photoPr"));
+					product.setValuePr(resultSet.getDouble("valuePr"));
+					product.setQuantityPr(resultSet.getInt("quantityPr"));
 
-				ret.add(product);
+					ret.add(product);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -76,6 +81,11 @@ public class ManagerProduct implements managerGeneral<Product> {
 		return ret;
 	}
 
+	/**
+	 * returns a Product object that matches the id param, if none match return null
+	 * @param id param to match idProduct on select statement
+	 * @return null if no Product matched id param, else Product object with all data
+	 */
 	public Product selectProductById(int id) {
 		Product ret = null;
 
@@ -92,17 +102,21 @@ public class ManagerProduct implements managerGeneral<Product> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			if (resultSet.next()) {
-				if (null == ret) {
-					ret = new Product();
-				}
-				// añadir datos del Pokemon aqui
-				ret.setIdProduct(resultSet.getInt("idProduct"));
-				ret.setNamePr(resultSet.getString("namePr"));
-				ret.setDescriptionPr(resultSet.getString("descriptionPr"));
-				ret.setPhotoPr(resultSet.getBlob("photoPr"));
-				ret.setValuePr(resultSet.getDouble("valuePr"));
-				ret.setQuantityPr(resultSet.getInt("quantityPr"));
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Productos");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Product();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdProduct(resultSet.getInt("idProduct"));
+					ret.setNamePr(resultSet.getString("namePr"));
+					ret.setDescriptionPr(resultSet.getString("descriptionPr"));
+					ret.setPhotoPr(resultSet.getBlob("photoPr"));
+					ret.setValuePr(resultSet.getDouble("valuePr"));
+					ret.setQuantityPr(resultSet.getInt("quantityPr"));
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -128,7 +142,6 @@ public class ManagerProduct implements managerGeneral<Product> {
 				// Nothing
 			}
 		}
-
 		return ret;
 	}
 
@@ -166,13 +179,13 @@ public class ManagerProduct implements managerGeneral<Product> {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 	}
@@ -243,14 +256,12 @@ public class ManagerProduct implements managerGeneral<Product> {
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 		}
 	}
 }

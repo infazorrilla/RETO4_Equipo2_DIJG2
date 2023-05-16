@@ -9,10 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.security.auth.login.AccountNotFoundException;
 
+import PokeZoo.bbdd.exception.NotFoundException;
+import PokeZoo.bbdd.pojo.Food;
 import PokeZoo.bbdd.pojo.Pokemon;
 import PokeZoo.bbdd.utils.DBUtils;
 
-public class ManagerPokemon implements managerGeneral<Pokemon> {
+public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
 	@Override
 	public ArrayList<Pokemon> selectAll() throws SQLException, AccountNotFoundException, Exception {
@@ -32,23 +34,30 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 
-			while (resultSet.next()) {
-				if (null == ret) {
-					ret = new ArrayList<Pokemon>();
-				}
-				Pokemon poke = new Pokemon();
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Pokemons");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new ArrayList<Pokemon>();
+					}
+					Pokemon poke = new Pokemon();
+					
+					// añadir datos del Pokemon aqui
+					poke.setIdPokemon(resultSet.getInt("idPokemon"));					
+					poke.setNamePo(resultSet.getString("namePo"));
+					poke.setEggGroup(resultSet.getString("eggGroup"));
+					poke.setTypeP(resultSet.getString("typeP"));
+					poke.setTypeS(resultSet.getString("typeS"));
+					poke.setDescriptionPo(resultSet.getString("descriptionPo"));
+					poke.setNumPokedex(resultSet.getInt("numPokedex"));
 
-				// añadir datos del Pokemon aqui
-				poke.setIdPokemon(resultSet.getInt("idPokemon"));
-				poke.setFood(null);
-				poke.setNamePo(resultSet.getString("namePo"));
-				poke.setTypeP(resultSet.getString("typeP"));
-				poke.setTypeS(resultSet.getString("typeS"));
-				poke.setDescriptionPo(resultSet.getString("descriptionPo"));
-				poke.setNumPokedex(resultSet.getInt("numPokedex"));
-				poke.setPhotopo(resultSet.getBlob("photoPo"));
-
-				ret.add(poke);
+					Food food = new Food();
+					food.setIdFood(resultSet.getInt("idFood"));
+					poke.setFood(food);
+					
+					ret.add(poke);
+				}while(resultSet.next());
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -78,9 +87,145 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 		return ret;
 	}
 
-	public Pokemon selectPokemonById(int id) {
+	/**
+	 * returns a Pokemon object that matches the id param
+	 * @param id to match on select statement
+	 * @return null if no Pokemon matched id param, else Pokemon object with all data 
+	 */
+	public Pokemon getPokemonById(int id) {
 		Pokemon ret = null;
 		String sql = "select * from Pokemon WHERE idPokemon = " + id;
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next() == false) {
+				throw new NotFoundException("No hay resultados para Pokemons");
+			} else {
+				do {
+					if (null == ret) {
+						ret = new Pokemon();
+					}
+					// añadir datos del Pokemon aqui
+					ret.setIdPokemon(resultSet.getInt("idPokemon"));
+					ret.setNamePo(resultSet.getString("namePo"));
+					ret.setEggGroup(resultSet.getString("eggGroup"));
+					ret.setTypeP(resultSet.getString("typeP"));
+					ret.setTypeS(resultSet.getString("typeS"));
+					ret.setDescriptionPo(resultSet.getString("descriptionPo"));
+					ret.setNumPokedex(resultSet.getInt("numPokedex"));
+					
+					Food food = new Food();
+					food.setIdFood(resultSet.getInt("idFood"));
+					ret.setFood(food);								
+				}while(resultSet.next());
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * returns a Pokemon object that matches the numPokedex param
+	 * @param numPokedex to match on select statement
+	 * @return null if no Pokemon matched id param, else Pokemon object with all data
+	 */
+	public Pokemon getPokemonByNumPokedex(int numPokedex) {
+		Pokemon ret = null;
+		String sql = "select * from Pokemon WHERE numPokedex = " + numPokedex;
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			Class.forName(DBUtils.DRIVER);
+
+			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			if (resultSet.next()) {
+				if (null == ret) {
+					ret = new Pokemon();
+				}
+				// Add Pokemon data here
+				ret.setIdPokemon(resultSet.getInt("idPokemon"));
+				ret.setNamePo(resultSet.getString("namePo"));
+				ret.setEggGroup(resultSet.getString("eggGroup"));
+				ret.setTypeP(resultSet.getString("typeP"));
+				ret.setTypeS(resultSet.getString("typeS"));
+				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
+				ret.setNumPokedex(resultSet.getInt("numPokedex"));
+				ret.setFood(null);
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Nothing
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * returns a Pokemon object that matches the namePo param
+	 * @param namePo to match the select statement
+	 * @return null if no Pokemon matched id param, else Pokemon object with all data
+	 */
+	public Pokemon getPokemonByName(String namePo) {
+		Pokemon ret = null;
+		String sql = "select * from Pokemon WHERE namePo = '" + namePo + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -98,14 +243,14 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 				if (null == ret) {
 					ret = new Pokemon();
 				}
-				// añadir datos del Pokemon aqui
+				// Add Pokemon data here
 				ret.setIdPokemon(resultSet.getInt("idPokemon"));
 				ret.setNamePo(resultSet.getString("namePo"));
+				ret.setEggGroup(resultSet.getString("eggGroup"));
 				ret.setTypeP(resultSet.getString("typeP"));
 				ret.setTypeS(resultSet.getString("typeS"));
 				ret.setDescriptionPo(resultSet.getString("descriptionPo"));
 				ret.setNumPokedex(resultSet.getInt("numPokedex"));
-				ret.setPhotopo(resultSet.getBlob("photoPo"));
 				ret.setFood(null);
 			}
 		} catch (SQLException sqle) {
@@ -113,24 +258,23 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 		} catch (Exception e) {
 			System.out.println("Error generico - " + e.getMessage());
 		} finally {
-
 			try {
 				if (resultSet != null)
 					resultSet.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-
+				// Nothing
 			}
 		}
 		return ret;
@@ -140,25 +284,27 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 	public void insert(Pokemon t) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-		
+
 		String sql = "";
-		
+
 		try {
 			Class.forName(DBUtils.DRIVER);
 
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
 			statement = connection.createStatement();
-			if(t.getIdPokemon() == 0) {
-				sql = "INSERT INTO Pokemon (codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
-			}else {
-				sql = "INSERT INTO Pokemon (idPokemon, codFood, namePo, typeP, typeS, descriptionPo, numPokedex, photoPo) "
-						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getTypeP() + "'"
-						+ ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '" + t.getNumPokedex() + "', NULL);";
+			if (t.getIdPokemon() == 0) {
+				sql = "INSERT INTO Pokemon (idFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex) "
+						+ "VALUES ('" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '" + t.getEggGroup()
+						+ "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '" + t.getDescriptionPo() + "', '"
+						+ t.getNumPokedex() + "');";
+			} else {
+				sql = "INSERT INTO Pokemon (idPokemon, idFood, namePo, eggGroup, typeP, typeS, descriptionPo, numPokedex) "
+						+ "VALUES ('" + t.getIdPokemon() + "', '" + t.getFood().getIdFood() + "', '" + t.getNamePo() + "', '"
+						+ t.getEggGroup() + "', '" + t.getTypeP() + "'" + ", '" + t.getTypeS() + "', '"
+						+ t.getDescriptionPo() + "', '" + t.getNumPokedex() + "');";
 			}
-			
+
 			statement.executeUpdate(sql);
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -181,7 +327,7 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 	}
 
 	@Override
-	public void update(Pokemon t) throws SQLException, Exception {
+	public void update(Pokemon pokemon) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -189,16 +335,17 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 			Class.forName(DBUtils.DRIVER);
 			connection = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 
-			String sql = "UPDATE Pokemon SET codFood = ?, namePo = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ? WHERE idPokemon = ?";
+			String sql = "UPDATE Pokemon SET namePo = ?, eggGroup = ?, typeP = ?, typeS = ?, descriptionPo = ?, numPokedex = ?, idFood = ? WHERE idPokemon = ?";
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, t.getFood().getIdFood());
-			preparedStatement.setString(2, t.getNamePo());
-			preparedStatement.setString(3, t.getTypeP());
-			preparedStatement.setString(4, t.getTypeS());
-			preparedStatement.setString(5, t.getDescriptionPo());
-			preparedStatement.setInt(6, t.getNumPokedex());
-			preparedStatement.setInt(7, t.getIdPokemon());
-
+			preparedStatement.setString(1, pokemon.getNamePo());
+			preparedStatement.setString(2, pokemon.getEggGroup());
+			preparedStatement.setString(3, pokemon.getTypeP());
+			preparedStatement.setString(4, pokemon.getTypeS());
+			preparedStatement.setString(5, pokemon.getDescriptionPo());
+			preparedStatement.setInt(6, pokemon.getNumPokedex());
+			preparedStatement.setInt(7, pokemon.getFood().getIdFood());
+			preparedStatement.setInt(8, pokemon.getIdPokemon());
+			
 			preparedStatement.executeUpdate();
 		} catch (SQLException sqle) {
 			System.out.println("Error con la BBDD - " + sqle.getMessage());
@@ -211,14 +358,12 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 		}
 	}
 
@@ -248,13 +393,12 @@ public class ManagerPokemon implements managerGeneral<Pokemon> {
 			} catch (Exception e) {
 				// Nothing
 			}
-			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
 				// Nothing
-			};
+			}
 		}
 	}
 }

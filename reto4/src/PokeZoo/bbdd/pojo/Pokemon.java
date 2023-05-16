@@ -1,7 +1,6 @@
 package PokeZoo.bbdd.pojo;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -16,8 +15,8 @@ public class Pokemon implements Serializable {
 	private int idPokemon = 0;
 
 	// Atrib
-	private Blob photopo = null;
 	private String namePo = null;
+	private String eggGroup = null;
 	private String typeP = null;
 	private String typeS = null;
 	private int numPokedex = 0;
@@ -29,6 +28,7 @@ public class Pokemon implements Serializable {
 	// link Pokemon with Enclosure
 	private ArrayList<Enclosure> enclosure = null;
 
+	// Getters and Setters
 	public int getIdPokemon() {
 		return idPokemon;
 	}
@@ -37,20 +37,20 @@ public class Pokemon implements Serializable {
 		this.idPokemon = idPokemon;
 	}
 
-	public Blob getPhotopo() {
-		return photopo;
-	}
-
-	public void setPhotopo(Blob photopo) {
-		this.photopo = photopo;
-	}
-
 	public String getNamePo() {
 		return namePo;
 	}
 
 	public void setNamePo(String namePo) {
 		this.namePo = namePo;
+	}
+
+	public String getEggGroup() {
+		return eggGroup;
+	}
+
+	public void setEggGroup(String eggGroup) {
+		this.eggGroup = eggGroup;
 	}
 
 	public String getTypeP() {
@@ -107,7 +107,8 @@ public class Pokemon implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(descriptionPo, enclosure, food, idPokemon, namePo, numPokedex, photopo, typeP, typeS);
+		return Objects.hash(descriptionPo, eggGroup, enclosure, food, idPokemon, namePo, numPokedex, typeP,
+				typeS);
 	}
 
 	@Override
@@ -119,18 +120,17 @@ public class Pokemon implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pokemon other = (Pokemon) obj;
-		return Objects.equals(descriptionPo, other.descriptionPo) && Objects.equals(enclosure, other.enclosure)
-				&& Objects.equals(food, other.food) && idPokemon == other.idPokemon
-				&& Objects.equals(namePo, other.namePo) && numPokedex == other.numPokedex
-				&& Objects.equals(photopo, other.photopo) && Objects.equals(typeP, other.typeP)
-				&& Objects.equals(typeS, other.typeS);
+		return Objects.equals(descriptionPo, other.descriptionPo) && Objects.equals(eggGroup, other.eggGroup)
+				&& Objects.equals(enclosure, other.enclosure) && Objects.equals(food, other.food)
+				&& idPokemon == other.idPokemon && Objects.equals(namePo, other.namePo)
+				&& numPokedex == other.numPokedex 
+				&& Objects.equals(typeP, other.typeP) && Objects.equals(typeS, other.typeS);
 	}
 
 	@Override
 	public String toString() {
-		return "Pokemon [idPokemon=" + idPokemon + ", photopo=" + photopo + ", namePo=" + namePo + ", typeP=" + typeP
-				+ ", typeS=" + typeS + ", numPokedex=" + numPokedex + ", descriptionPo=" + descriptionPo + ", food="
-				+ food + ", enclosure=" + enclosure + "]";
+		return "Pokemon [idPokemon=" + idPokemon + ", namePo=" + namePo + ", eggGroup="
+				+ eggGroup + ", typeP=" + typeP + ", typeS=" + typeS + ", numPokedex=" + numPokedex + ", descriptionPo="
+				+ descriptionPo + ", food=" + food + ", enclosure=" + enclosure + "]";
 	}
-
 }

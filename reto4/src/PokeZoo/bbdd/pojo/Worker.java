@@ -15,11 +15,12 @@ public abstract class Worker implements Serializable{
 	
 	// 
 	private User user = null;
+
 	
 	// Getters and Setters	
 	public String getDni() {
 		return dni;
-	}
+	}	
 	public void setDni(String dni) {
 		this.dni = dni;
 	}

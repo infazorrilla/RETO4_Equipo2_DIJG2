@@ -12,6 +12,21 @@ public class User implements Serializable{
 	private boolean isAdmin = false;
 	private String username = "";
 	private String passwd = "";
+	private Boolean isBlocked = false;
+	
+	//
+	public User(int idUser, boolean isAdmin, String username, String passwd, Boolean isBlocked) {
+		super();
+		this.idUser = idUser;
+		this.isAdmin = isAdmin;
+		this.username = username;
+		this.passwd = passwd;
+		this.isBlocked = isBlocked;
+	}
+	
+	public User() {
+		super();
+	}
 	
 	// Getters and Setters
 	public int getIdUser() {
@@ -38,15 +53,20 @@ public class User implements Serializable{
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
+	public Boolean getIsBlocked() {
+		return isBlocked;
+	}
+	public void setIsBlocked(Boolean isBlocked) {
+		this.isBlocked = isBlocked;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(idUser, isAdmin, passwd, username);
+		return Objects.hash(idUser, isAdmin, isBlocked, passwd, username);
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -56,14 +76,13 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return idUser == other.idUser && isAdmin == other.isAdmin && Objects.equals(passwd, other.passwd)
-				&& Objects.equals(username, other.username);
+		return idUser == other.idUser && isAdmin == other.isAdmin && Objects.equals(isBlocked, other.isBlocked)
+				&& Objects.equals(passwd, other.passwd) && Objects.equals(username, other.username);
 	}
-	
 	@Override
 	public String toString() {
 		return "User [idUser=" + idUser + ", isAdmin=" + isAdmin + ", username=" + username + ", passwd=" + passwd
-				+ "]";
+				+ ", isBlocked=" + isBlocked + "]";
 	}
 	
 }
