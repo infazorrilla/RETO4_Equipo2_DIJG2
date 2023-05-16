@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -34,6 +35,32 @@ public class ManagerFile {
 		try {
 			printWriter.println("Cantidad de entradas: " + quantity + "\n");
 			printWriter.println("Precio: " + (quantity * ticketValue) + "€");
+		} finally {
+			printWriter.close();
+			try {
+				fileWriter.close();
+			} catch (IOException e) {
+				// Nothing
+			}
+		}
+		return file;
+	}
+	
+	public File createFileWithArrayList(int quantity, ArrayList<Double> listPrices) throws IOException {
+		String path = System.getProperty("user.home") + "/Desktop/";
+
+		Date date = new Date();
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
+
+		File file = new File(path + "Ticket " + formatter.format(date) + ".txt");
+		FileWriter fileWriter = new FileWriter(file);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+
+		try {
+			for(Double price : listPrices) {
+				printWriter.println("Cantidad de entradas: " + quantity + "\n");
+				printWriter.println("Precio: " + price + "€");
+			}			
 		} finally {
 			printWriter.close();
 			try {

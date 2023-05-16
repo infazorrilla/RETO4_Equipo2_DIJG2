@@ -51,14 +51,14 @@ class ArrayListToViewTest {
 		// aaaaaaaaaaaaaaa
 		loadTableData(tableTest);
 		
-		ArrayList<Employee> allEmployees = null;
+		ArrayList<Employee> expected = null;
 		try {
-			allEmployees = managerEmployee.selectAll();
+			expected = managerEmployee.selectAll();
 		} catch (Exception e) {
 			// Nothing
 		}	
 				
-		assertEquals(allEmployees.size(), tableTest.getRowCount());
+		assertEquals(expected.size(), tableTest.getRowCount());
 	}
 	
 	private void loadTableData(JTable table) {		
